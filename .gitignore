@@ -2,4 +2,8 @@ Backend/Newsletter/appsettings.Development.json
 Backend/Newsletter/bin/Debug
 Backend/Newsletter/obj/Debug/
 Backend/Newsletter/obj/project.nuget.cache
+
+Frontend/news/.env.local
 Frontend/news/pnpm-lock.yaml
+
+Frontend/pnpm-lock.yaml
