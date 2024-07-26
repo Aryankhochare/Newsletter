@@ -1,7 +1,14 @@
 import HomePage from "./page";
-import Router from "next/navigation";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
+
+default function Login() {
+  const [data, setData] = useState({
+    name : '',
+    password : '',
+  })
+}
 
 const LoginPage = () => {
   return (

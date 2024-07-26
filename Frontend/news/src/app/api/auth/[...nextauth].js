@@ -35,6 +35,10 @@ export const authOptions = {
         strategy : "jwt", //Allows us to track users using JSON Web Tokens !
     },
     secret : process.env.NEXTAUTH_SECRET,
+    debug : process.env.NODE_ENV === 'development',
 }
 
+const handler = nextAuth(authOptions);
 //export default NextAuth(authOptions)
+
+export {handler as GET, handler as POST} //allows to take any get and post request that next auth allows 
