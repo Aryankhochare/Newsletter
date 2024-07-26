@@ -1,20 +1,36 @@
-import HomePage from "./page";
-import Router from "next/navigation";
+'use client'
+
+// import HomePage from "./page";
+// import Router from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 
-const LoginPage = () => {
+const LoginPage  = () => {
+  const[username, setUsername] = useState("");
+  const[password, setPassword] = useState("")
+
+  const onSubmit = async () => {
+    const result = await signIn("credentials",{
+      username,
+      password,
+      redirect: true,
+      callbackUrl:"/"
+    })
+    console.log(result)
+  }
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-gray-800 to-gray-900">
       <div className="bg-gray-700 p-8 rounded-lg shadow-xl w-80">
         <h1 className="text-4xl font-bold text-white mb-6 text-center">Login</h1>
-        <form className="space-y-4">
+        <form onSubmit = {onSubmit} className="space-y-4">
           <div>
             <label htmlFor="username" className="block text-white mb-1">Username:</label>
             <input
               id="username"
               type="text"
               className="w-full px-3 py-2 bg-gray-200 rounded"
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div>
@@ -23,6 +39,7 @@ const LoginPage = () => {
               id="password"
               type="password"
               className="w-full px-3 py-2 bg-gray-200 rounded"
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="text-right">
