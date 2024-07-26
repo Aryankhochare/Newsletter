@@ -1236,11 +1236,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API\\Newsletter\\Newsletter.csproj",
+      "projectUniqueName": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Newsletter.csproj",
       "projectName": "Newsletter",
-      "projectPath": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API\\Newsletter\\Newsletter.csproj",
+      "projectPath": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Newsletter.csproj",
       "packagesPath": "C:\\Users\\Sayhan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API\\Newsletter\\obj\\",
+      "outputPath": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Sayhan\\AppData\\Roaming\\NuGet\\NuGet.Config",
