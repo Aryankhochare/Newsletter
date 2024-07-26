@@ -1231,19 +1231,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Sayhan\\.nuget\\packages\\": {}
+    "C:\\Users\\macar\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API\\Newsletter\\Newsletter.csproj",
+      "projectUniqueName": "C:\\Users\\macar\\Desktop\\NextJS\\Newsletter\\Backend\\Newsletter\\Newsletter.csproj",
       "projectName": "Newsletter",
-      "projectPath": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API\\Newsletter\\Newsletter.csproj",
-      "packagesPath": "C:\\Users\\Sayhan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API\\Newsletter\\obj\\",
+      "projectPath": "C:\\Users\\macar\\Desktop\\NextJS\\Newsletter\\Backend\\Newsletter\\Newsletter.csproj",
+      "packagesPath": "C:\\Users\\macar\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\macar\\Desktop\\NextJS\\Newsletter\\Backend\\Newsletter\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Sayhan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\macar\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1303,7 +1303,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.302/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
