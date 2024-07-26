@@ -8,21 +8,9 @@ importers:
 
   .:
     dependencies:
-<<<<<<< HEAD
-      
       '@next-auth/supabase-adapter':
         specifier: ^0.2.1
         version: 0.2.1(@supabase/supabase-js@2.44.4)(next-auth@4.24.7(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
-=======
-      '@auth/supabase-adapter':
-        specifier: ^1.4.1
-        version: 1.4.1(@supabase/supabase-js@2.44.4)
-
-=======
-      '@auth/supabase-adapter':
-        specifier: ^1.4.1
-        version: 1.4.1(@supabase/supabase-js@2.44.4)
->>>>>>> 4683f067d68d7be976251583e092ce5c29cb5674
       '@supabase/supabase-js':
         specifier: ^2.44.4
         version: 2.44.4
@@ -69,25 +57,6 @@ packages:
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
-
-  '@auth/core@0.34.1':
-    resolution: {integrity: sha512-tuYU2VIbI8rFbkSwP710LmybB2FXJsPN7j3sjRVfN9SXVQBK2ej6LdewQaofpBGp4Mk+cC2UeiGNH0or4tgaeA==}
-    peerDependencies:
-      '@simplewebauthn/browser': ^9.0.1
-      '@simplewebauthn/server': ^9.0.2
-      nodemailer: ^6.8.0
-    peerDependenciesMeta:
-      '@simplewebauthn/browser':
-        optional: true
-      '@simplewebauthn/server':
-        optional: true
-      nodemailer:
-        optional: true
-
-  '@auth/supabase-adapter@1.4.1':
-    resolution: {integrity: sha512-HYXAvD8l4yGlG4urGT6siZHqMqKCy+8D0EgwlVLO1Fk0/g6pATfz+R9Y44coEnR5o94+9ymxS9E3GaeDnXhVlg==}
-    peerDependencies:
-      '@supabase/supabase-js': ^2.43.1
 
   '@babel/runtime@7.24.8':
     resolution: {integrity: sha512-5F7SDGs1T72ZczbRwbGO9lQi0NLjQxzl6i4lJxLxfW9U5UluCSyEJeniWvnhl3/euNiqQVbo8zruhsDfid0esA==}
@@ -145,6 +114,12 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
+
+  '@next-auth/supabase-adapter@0.2.1':
+    resolution: {integrity: sha512-BlIbBRd8QjdV84h/XH2QuuleZAFcmfRwT0pyvc9iqrVztxmjWOalNRvSA7xsbqsQq9mK16PMmNPRvsDEUAAgfQ==}
+    peerDependencies:
+      '@supabase/supabase-js': ^2.0.5
+      next-auth: ^4.18.7
 
   '@next/env@14.2.5':
     resolution: {integrity: sha512-/zZGkrTOsraVfYjGP8uM0p6r0BDT6xWpkjdVbcz66PJVSpwXX3yNiRycxAuDfBKGWBrZBXRuK/YVlkNgxHGwmA==}
@@ -255,9 +230,6 @@ packages:
 
   '@swc/helpers@0.5.5':
     resolution: {integrity: sha512-KGYxvIOXcceOAbEk4bi/dVLEK9z8sZ0uBB3Il5b1rhfClSpcX0yfRO0KmTkqR2cnQDymwLB+25ZyMzICg/cm/A==}
-
-  '@types/cookie@0.6.0':
-    resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
 
   '@types/json5@0.0.29':
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
@@ -472,10 +444,6 @@ packages:
 
   cookie@0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
-    engines: {node: '>= 0.6'}
-
-  cookie@0.6.0:
-    resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
     engines: {node: '>= 0.6'}
 
   cross-spawn@7.0.3:
@@ -1005,9 +973,6 @@ packages:
   jose@4.15.9:
     resolution: {integrity: sha512-1vUQX+IdDMVPj4k8kOxgUqlcK518yluMuGZwqlr44FS1ppZB/5GWh4rZG89erpOBOJjU/OBsnCVFfapsRz6nEA==}
 
-  jose@5.6.3:
-    resolution: {integrity: sha512-1Jh//hEEwMhNYPDDLwXHa2ePWgWiFNNUadVmguAAw2IJ6sj9mNxV5tGXJNqlMkJAybF6Lgw1mISDxTePP/187g==}
-
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -1150,9 +1115,6 @@ packages:
   normalize-path@3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
-
-  oauth4webapi@2.11.1:
-    resolution: {integrity: sha512-aNzOnL98bL6izG97zgnZs1PFEyO4WDVRhz2Pd066NPak44w5ESLRCYmJIyey8avSBPOMtBjhF3ZDDm7bIb7UOg==}
 
   oauth@0.9.15:
     resolution: {integrity: sha512-a5ERWK1kh38ExDEfoO6qUHJb32rd7aYmPHuyCu3Fta/cnICvYmgd2uhuKXvPD+PXB+gCEYYEaQdIRAjCOwAKNA==}
@@ -1317,18 +1279,10 @@ packages:
     resolution: {integrity: sha512-YF2kKIUzAofPMpfH6hOi2cGnv/HrUlfucspc7pDyvv7kGdqXrfj8SCl/t8owkEgKEuu8ZcRjSOxFxVLqwChZ2Q==}
     engines: {node: ^10 || ^12 || >=14}
 
-  preact-render-to-string@5.2.3:
-    resolution: {integrity: sha512-aPDxUn5o3GhWdtJtW0svRC2SS/l8D9MAgo2+AWml+BhDImb27ALf04Q2d+AHqUUOc6RdSXFIBVa2gxzgMKgtZA==}
-    peerDependencies:
-      preact: '>=10'
-
   preact-render-to-string@5.2.6:
     resolution: {integrity: sha512-JyhErpYOvBV1hEPwIxc/fHWXPfnEGdRKxc8gFdAZ7XV4tlzyzG847XAyEZqoDnynP88akM4eaHcSOzNcLWFguw==}
     peerDependencies:
       preact: '>=10'
-
-  preact@10.11.3:
-    resolution: {integrity: sha512-eY93IVpod/zG3uMF22Unl8h9KkrcKIRs2EGar8hwLZZDU1lkjph303V9HZBwufh2s736U6VXuhD109LYqPoffg==}
 
   preact@10.23.1:
     resolution: {integrity: sha512-O5UdRsNh4vdZaTieWe3XOgSpdMAmkIYBCT3VhQDlKrzyCm8lUYsk0fmVEvoQQifoOjFRTaHZO69ylrzTW2BH+A==}
@@ -1693,25 +1647,6 @@ snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
 
-  '@auth/core@0.34.1':
-    dependencies:
-      '@panva/hkdf': 1.2.1
-      '@types/cookie': 0.6.0
-      cookie: 0.6.0
-      jose: 5.6.3
-      oauth4webapi: 2.11.1
-      preact: 10.11.3
-      preact-render-to-string: 5.2.3(preact@10.11.3)
-
-  '@auth/supabase-adapter@1.4.1(@supabase/supabase-js@2.44.4)':
-    dependencies:
-      '@auth/core': 0.34.1
-      '@supabase/supabase-js': 2.44.4
-    transitivePeerDependencies:
-      - '@simplewebauthn/browser'
-      - '@simplewebauthn/server'
-      - nodemailer
-
   '@babel/runtime@7.24.8':
     dependencies:
       regenerator-runtime: 0.14.1
@@ -1776,6 +1711,11 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
+
+  '@next-auth/supabase-adapter@0.2.1(@supabase/supabase-js@2.44.4)(next-auth@4.24.7(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
+    dependencies:
+      '@supabase/supabase-js': 2.44.4
+      next-auth: 4.24.7(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
   '@next/env@14.2.5': {}
 
@@ -1877,8 +1817,6 @@ snapshots:
     dependencies:
       '@swc/counter': 0.1.3
       tslib: 2.6.3
-
-  '@types/cookie@0.6.0': {}
 
   '@types/json5@0.0.29': {}
 
@@ -2127,8 +2065,6 @@ snapshots:
   concat-map@0.0.1: {}
 
   cookie@0.5.0: {}
-
-  cookie@0.6.0: {}
 
   cross-spawn@7.0.3:
     dependencies:
@@ -2846,8 +2782,6 @@ snapshots:
 
   jose@4.15.9: {}
 
-  jose@5.6.3: {}
-
   js-tokens@4.0.0: {}
 
   js-yaml@4.1.0:
@@ -2986,8 +2920,6 @@ snapshots:
       - babel-plugin-macros
 
   normalize-path@3.0.0: {}
-
-  oauth4webapi@2.11.1: {}
 
   oauth@0.9.15: {}
 
@@ -3142,17 +3074,10 @@ snapshots:
       picocolors: 1.0.1
       source-map-js: 1.2.0
 
-  preact-render-to-string@5.2.3(preact@10.11.3):
-    dependencies:
-      preact: 10.11.3
-      pretty-format: 3.8.0
-
   preact-render-to-string@5.2.6(preact@10.23.1):
     dependencies:
       preact: 10.23.1
       pretty-format: 3.8.0
-
-  preact@10.11.3: {}
 
   preact@10.23.1: {}
 
