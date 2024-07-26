@@ -14,13 +14,21 @@ export default withAuth(
     const token = req.nextauth.token as CustomToken
     console.log("Pathname:", req.nextUrl.pathname);
     console.log("Has ADMIN role:", token?.roles?.includes("ADMIN"));
-    if (
-      !req.nextUrl.pathname.includes("/admin") &&
-      token?.roles?.includes("ADMIN")
-    ) {
+    if (!req.nextUrl.pathname.includes("/admin") && token?.roles?.includes("ADMIN")){
         console.log("Redirecting to admin page");
       return NextResponse.redirect(new URL("/admin",req.url));
     }
+
+    else if (!req.nextUrl.pathname.includes("/editor") && token?.roles?.includes("EDITOR")) {
+        console.log("Redirecting to editor page");
+      return NextResponse.redirect(new URL("/editor",req.url));
+    }
+
+    else if (!req.nextUrl.pathname.includes("/user") && token?.roles?.includes("USER")) {
+        console.log("Redirecting to user page");
+      return NextResponse.redirect(new URL("/user",req.url));
+    }
+
     console.log("Proceeding with request");
     return NextResponse.next();
   },
