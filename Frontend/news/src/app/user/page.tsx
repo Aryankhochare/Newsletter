@@ -1,9 +1,7 @@
-
-
-export default function Page(){
+export default function UserPage(){
     return(
         <div className="flex justify-center items-center h-screen ">
-            <h1>Admin Page</h1>
+            <h1 >User Page</h1>
         </div>
     );
 }
