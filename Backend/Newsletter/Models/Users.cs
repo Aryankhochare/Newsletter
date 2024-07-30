@@ -6,8 +6,8 @@ namespace Newsletter.Models
     [Table("Users")]
     public class Users:BaseModel
     {
-        [PrimaryKey("userid",false)]
-        public long Id { get; set; }
+        [PrimaryKey("user_id",false)]
+        public string Id { get; set; }
         [Column("username")]
         public string Username { get; set; }
         [Column("password")]
