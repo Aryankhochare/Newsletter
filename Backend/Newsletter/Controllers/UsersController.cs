@@ -55,7 +55,7 @@ namespace Newsletter.Controllers
                         .Where(u => u.UserRoleId == roleId)
                         .Get();
 
-                    Console.WriteLine($"USer roles query result count: {res.Models.Count()}");
+                    Console.WriteLine($"User roles query result count: {res.Models.Count()}");
 
                     var role = res.Models.FirstOrDefault();
                     if (role == null)
@@ -87,7 +87,7 @@ namespace Newsletter.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser(long id)
+        public async Task<IActionResult> GetUser(string id)
         {
             try
             {
@@ -209,7 +209,7 @@ namespace Newsletter.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(long id)
+        public async Task<IActionResult> DeleteUser(string id)
         {
             try
             {

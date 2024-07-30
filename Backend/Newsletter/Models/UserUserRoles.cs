@@ -8,9 +8,9 @@ namespace Newsletter.Models
     public class UserUserRoles : BaseModel
     {
         [PrimaryKey("id",false)]
-        public long UserUserRoleId { get; set; }
+        public string Id { get; set; }
         [Column("user_id")]
-        public long UserId { get; set; }
+        public string UserId { get; set; }
       
         [Column("user_role_id")]
         public long UserRoleId { get; set; }
