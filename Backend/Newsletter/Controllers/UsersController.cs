@@ -91,7 +91,6 @@ namespace Newsletter.Controllers
         {
             try
             {
-                
                 var response = await _client
                     .From<Users>()
                     .Where(u => u.Id == id)

@@ -16,7 +16,7 @@ const supabase: SupabaseClient = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-async function fetchUserRole(userId: number) {
+async function fetchUserRole(userId: string) {
   try {
     const response = await fetch(`${process.env.ASP_NET_URL}/users/${userId}`);
     if (!response.ok) {
@@ -64,11 +64,11 @@ export const authOptions: NextAuthOptions = {
         const user = data;
 
         if (credentials.password === user.password) {
-          const userData = await fetchUserRole(user.userid);
+          const userData = await fetchUserRole(user.user_id);
           console.log(userData);
 
           const customUser: CustomUser = {
-            id: data.userid.toString(),
+            id: data.user_id.toString(),
             name: data.username,
             email: data.user_email,
             roles: userData.userRole,
