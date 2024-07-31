@@ -2,9 +2,9 @@
 import React, { useState, useRef } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-
  
 export default function QuillEditor() {
+  const [value,setValue] = useState('')
   const [content, setContent] = useState<string>('');
   const quillRef = useRef(null);
  
@@ -42,7 +42,7 @@ export default function QuillEditor() {
     <button
     onClick={() => {console.log(content)}
     }
-    >loggggg</button>
+    >Log</button>
 </div>
   );
 }

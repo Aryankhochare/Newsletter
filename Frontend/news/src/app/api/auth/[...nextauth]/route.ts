@@ -112,6 +112,9 @@ export const authOptions: NextAuthOptions = {
       return randomUUID?.() ?? randomBytes(32).toString("hex");
     }
     
+  },
+  pages:{
+    signIn:"/login"
   }
  
 };
