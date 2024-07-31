@@ -11,9 +11,9 @@ interface CustomUser extends User {
   roles?: string[];
 }
 
-const supabase: SupabaseClient = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
+export const supabase: SupabaseClient = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY!
 );
 
 async function fetchUserRole(userId: string) {
