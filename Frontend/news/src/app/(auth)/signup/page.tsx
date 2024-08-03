@@ -2,7 +2,7 @@
 //import { Button } from '@/components/button';
 import Head from 'next/head';
 import { useState } from 'react';
-import { FcGoogle } from 'react-icons/fc';
+import { FcGoogle } from "react-icons/fc";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({

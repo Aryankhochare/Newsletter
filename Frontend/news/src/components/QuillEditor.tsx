@@ -4,6 +4,7 @@ import React, { useState, useCallback, memo, ChangeEvent } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import { ReactQuillProps } from 'react-quill';
 import { supabase } from '@/app/api/auth/[...nextauth]/route';
+import ImageUploader from './ImageUploader';
 
 const QuillNoSSRWrapper = dynamic<ReactQuillProps>(() => import('react-quill'), {
     ssr: false,
@@ -55,20 +56,31 @@ const QuillEditor : React.FC = memo(() => {
           return
         }
         // console.log(title, editorcontent);
-        const {data, error} = await supabase
-          .from('NewsTest')
-          .insert([{ title, editorcontent}])
-        
-        if (error) {
-          console.log(error);
+        const formData = new FormData();
+        formData.append('Title', title);
+        formData.append('EditorContent', editorcontent);
+        if(coverImage){
+          formData.append('CoverImage', coverImage);
         }
-    
-        if (data) {
-          console.log(data);
+        try{
+          const response = await fetch('/api/newsletter',{
+            method: 'POST',
+            body: formData,
+          });
+          if(!response.ok){
+            throw new Error('Network response was not okay');
+          }
+          const data = await response.json();
+          console.log("Newsletter created with id: ", data);          
+        }
+        catch(error){
+          console.error("Error creating newsletter",error);
         }
       } 
     const [editorcontent, setEditorContent] = useState<string>('');
     const [title, setTitle] = useState<string>('');
+    const [coverImage, setCoverImage] = useState<File|null>(null);
+
     const handleChange = useCallback((content : string) => { //setCallback is a hook that returns a memoized version of the callback function. It only changes if one of the dependencies has changed. In this case, the empty dependency array [] means this function will only be created once and reused across re-renders. This can be beneficial when passing callbacks to optimized child components that rely on reference equality to prevent unnecessary renders.
         setEditorContent(content);
     }, []);
@@ -76,9 +88,14 @@ const QuillEditor : React.FC = memo(() => {
     const handleTitle = (event : ChangeEvent<HTMLInputElement>) : void=> {
         setTitle(event.target.value);
     };
+
+    const handleImageChange = (file : File|null) => {
+      setCoverImage(file);
+    };
   
     return (
         <>
+        <ImageUploader onImageChange = {handleImageChange}/>
         <input 
           type="text" 
           className = "border-none focus:outline-none  focus:border-none p-2 w-full" 
