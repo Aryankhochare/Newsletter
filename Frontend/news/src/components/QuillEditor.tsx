@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic';
 import React, { useState, useCallback, memo, ChangeEvent } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import { ReactQuillProps } from 'react-quill';
-import { supabase } from '@/app/api/auth/[...nextauth]/route';
 import ImageUploader from './ImageUploader';
 
 const QuillNoSSRWrapper = dynamic<ReactQuillProps>(() => import('react-quill'), {
@@ -113,10 +112,6 @@ const QuillEditor : React.FC = memo(() => {
                 theme="snow" 
             />
             <button onClick = {saveNews}>Post</button>
-            {/* <div>
-              {title} <br/>
-              {parse(editorcontent)}
-            </div> */}
         </div>
       </>
     );

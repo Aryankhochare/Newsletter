@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Newsletter.Models;
 using Newsletter.ViewModels;
+using System.Text.RegularExpressions;
+using Supabase;
 
 namespace Newsletter.Controllers
 {
@@ -15,6 +17,7 @@ public class UploadImageController : ControllerBase
     {
         try
         {
+
             var newsletter = new NewsArticle
             {
                 Title = article.Title,
@@ -39,7 +42,43 @@ public class UploadImageController : ControllerBase
                     .Upload(memoryStream.ToArray(), $"newsletter-{newNewsletter.Id}.{extension}");
             }
 
-            return Ok(new { Id = newNewsletter.Id });
+            var base64ImageMatches = Regex.Matches(newsletter.EditorContent, @"data:image\/([^;]+);base64,([^""]+)");
+            foreach(Match match in base64ImageMatches)
+            {   
+                    
+
+                        var imageType= match.Groups[1].Value;
+                    var base64Image = match.Groups[2].Value;
+                    var blob = Convert.FromBase64String(base64Image);
+                    
+                    string fileExtension = imageType switch
+                    {
+                        "jpeg" => "jpg",
+                        "png" => "png",
+                        "gif" => "gif",
+                        "bmp" => "bmp",
+                        "webp" => "webp",
+                        _ => "png" 
+                    };
+                    var filename = $"newsletter-{newNewsletter.Id}-content-{Guid.NewGuid()}.{fileExtension}";
+                    var storageResponse = await client.Storage
+                        .From("news_image")
+                        .Upload(blob, filename );
+                    if (storageResponse == null)  
+                    {
+                        return BadRequest(new { error = "Failed to upload image to Supabase storage", details = "an unknown error occured" });
+                    }
+                    var imageUrl = client.Storage
+                        .From("news_image")
+                        .GetPublicUrl(filename);
+
+                    newsletter.EditorContent = newsletter.EditorContent.Replace(match.Value, imageUrl);
+            }
+                newsletter.Id = newNewsletter.Id;
+                await client.From<NewsArticle>()
+                     .Update(newsletter);
+
+                return Ok(new { Id = newNewsletter.Id });
         }
         catch (Exception ex)
         {

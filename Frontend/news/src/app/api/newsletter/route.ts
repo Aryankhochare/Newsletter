@@ -1,14 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import formidable from 'formidable';
-import fs from 'fs';
-import fetch from 'node-fetch';
 import FormData from 'form-data';
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+import fetch from 'node-fetch';
 
 export async function POST(req: NextRequest) {
   try {
@@ -24,7 +16,8 @@ export async function POST(req: NextRequest) {
       form.append('Title', title);
     }
     if (typeof content === 'string') {
-      form.append('EditorContent', content); // Note the change here
+      const updatedContent = content.replace(/<img[^>]+src="data:image\/[^;]+;base64,[^"]+"/g, '<img src="[IMAGE_URL]"');
+      form.append('EditorContent', content); 
     }
 
     const file = formData.get('CoverImage') as File | null;
@@ -35,6 +28,10 @@ export async function POST(req: NextRequest) {
         contentType: file.type,
       });
     }
+
+    console.log('FormData to be sent:', form);
+
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
     const response = await fetch(`${process.env.ASP_NET_URL}/newsletter`, {
       method: 'POST',
@@ -51,9 +48,11 @@ export async function POST(req: NextRequest) {
     }
 
     const data = JSON.parse(responseText);
+    console.log(data);
+    
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     console.error('Error in API route:', error);
-    return NextResponse.json({ error: 'Error submitting to backend', details: error.message }, { status: 500 });
+    return NextResponse.json({ error: 'Error submitting to backend', details:'an unknown error occured' }, { status: 500 });
   }
 }
