@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newsletter.Models;
 using Newsletter.ViewModels;
+using System.Data.Common;
 
 namespace Newsletter.Controllers
 {
@@ -228,6 +229,35 @@ namespace Newsletter.Controllers
             {
 
                 return StatusCode(StatusCodes.Status500InternalServerError, $"error occured while deleting user with id = {id}");
+            }
+        }
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> UpdateUser(string id,UpdateUserVM user)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                var existingUser = await _client.From<Users>().Where(u => u.Id == id).Get();
+                if (!existingUser.Models.Any())
+                {
+                    return NotFound($"User with id = {id} was not found");
+                }
+                var updateUser = existingUser.Models.First();
+
+                if(!string.IsNullOrEmpty(user.Username)) updateUser.Username = user.Username;
+                if(!string.IsNullOrEmpty(user.Password)) updateUser.Password = user.Password;
+                if (!string.IsNullOrEmpty(user.Email)) updateUser.Email = user.Email;
+                updateUser.ModifiedDate = DateTime.UtcNow;
+                await _client.From<Users>().Update(updateUser);
+                return Ok("User Update Successful.");
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error Updating user data");
             }
         }
     }

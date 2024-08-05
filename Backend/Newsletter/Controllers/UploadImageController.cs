@@ -7,13 +7,18 @@ using Supabase;
 
 namespace Newsletter.Controllers
 {
-   [Route("newsletter")]
+[Route("newsletter")]
 [ApiController]
 public class UploadImageController : ControllerBase
 {
+        private readonly Supabase.Client client;
+        public UploadImageController(Client _client)
+        {
+              client = _client ?? throw new ArgumentNullException(nameof(_client));
+        }
     [HttpPost]
     [Consumes("multipart/form-data")]
-    public async Task<IActionResult> CreateNewsLetter([FromForm] CreateNewsArticleVM article, Supabase.Client client)
+    public async Task<IActionResult> CreateNewsLetter([FromForm] CreateNewsArticleVM article)
     {
         try
         {
@@ -87,5 +92,8 @@ public class UploadImageController : ControllerBase
             return StatusCode(500, "An error occurred while creating the newsletter");
         }
     }
+        
+
 }
+
 }
