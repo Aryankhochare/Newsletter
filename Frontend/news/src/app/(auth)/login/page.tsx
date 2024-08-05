@@ -44,7 +44,6 @@ const LoginPage = () => {
           <h1 className="text-2xl sm:text-3xl font-semibold text-center mb-6">LOGIN</h1>
           <p className="text-gray-400 text-center mb-8">Welcome </p>
 
-          {/* <form onSubmit={onSubmit} className="space-y-6"> */}
           <div>
             <button className="flex items-center justify-center w-full gap-4 bg-white text-black hover:bg-gray-100 rounded-full py-2 px-4">
               <FcGoogle className="text-xl" />
@@ -86,7 +85,7 @@ const LoginPage = () => {
           </form>
 
           <div className="mt-4 text-center">
-            <p className="text-gray-400">Don't have an account?</p>
+            <p className="text-gray-400">Don&apos;t have an account?</p>
             <a href="/signup" className="text-blue-400 hover:underline">Sign up</a>
           </div>
         </div>

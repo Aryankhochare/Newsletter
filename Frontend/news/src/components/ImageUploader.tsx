@@ -4,7 +4,7 @@ import { useState } from "react";
 import ReactImageUploading, { ImageListType } from "react-images-uploading";
 import Image from 'next/image'; 
 
-export default function ImageUploader() {
+export default function ImageUploader({onImageChange}:any) {
   const [images, setImages] = useState([]);
   const maxNumber = 1;
 
@@ -14,6 +14,7 @@ export default function ImageUploader() {
   ) => {
     console.log(imageList, addUpdateIndex);
     setImages(imageList as never[]);
+    onImageChange(imageList[0].file);
   };
   return (
     <div>
