@@ -8,5 +8,6 @@ Frontend/news/.env.local
 Frontend/news/pnpm-lock.yaml
 
 Frontend/pnpm-lock.yaml
-
+Newsletter.API2/node_modules
+Frontend/node_modules
 
