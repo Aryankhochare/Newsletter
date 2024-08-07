@@ -1,0 +1,30 @@
+[
+    {
+      "category": "Politics",
+      "title": "How Trumponomics Could Undermine the U.S. Economy",
+      "createdDate": "2024-08-01",
+      "modifiedDate": "2024-08-02",
+      "writer": "John Doe",
+      "imageUrl": "https://i.postimg.cc/j20YvrSR/news2.jpg",
+      "content": "Next.js 14 has been released with amazing new features, including..."
+    },
+    {
+      "category": "Technology",
+      "title": "Tech Trends: The Rise of AI",
+      "createdDate": "2024-08-03",
+      "modifiedDate": "2024-08-04",
+      "writer": "Jane Smith",
+      "imageUrl": "https://i.postimg.cc/j20YvrSR/news2.jpg",
+      "content": "Artificial Intelligence is becoming more prevalent in various industries..."
+    },
+    {
+      "category": "Business",
+      "title": "Economy Update: Market Hits Record Highs",
+      "createdDate": "2024-08-05",
+      "modifiedDate": "2024-08-06",
+      "writer": "Alice Johnson",
+      "imageUrl": "https://i.postimg.cc/j20YvrSR/news2.jpg",
+      "content": "The stock market reached record highs today, driven by strong earnings reports..."
+    }
+  ]
+  
