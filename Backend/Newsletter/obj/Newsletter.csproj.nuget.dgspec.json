@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< Updated upstream
     "C:\\Users\\macar\\Desktop\\NextJS\\Newsletter\\Backend\\Newsletter\\Newsletter.csproj": {}
   },
   "projects": {
@@ -12,6 +13,19 @@
         "projectPath": "C:\\Users\\macar\\Desktop\\NextJS\\Newsletter\\Backend\\Newsletter\\Newsletter.csproj",
         "packagesPath": "C:\\Users\\macar\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\macar\\Desktop\\NextJS\\Newsletter\\Backend\\Newsletter\\obj\\",
+=======
+    "C:\\Users\\macar\\Desktop\\Database\\Newsletter\\Backend\\Newsletter\\Newsletter.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\macar\\Desktop\\Database\\Newsletter\\Backend\\Newsletter\\Newsletter.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\macar\\Desktop\\Database\\Newsletter\\Backend\\Newsletter\\Newsletter.csproj",
+        "projectName": "Newsletter",
+        "projectPath": "C:\\Users\\macar\\Desktop\\Database\\Newsletter\\Backend\\Newsletter\\Newsletter.csproj",
+        "packagesPath": "C:\\Users\\macar\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\macar\\Desktop\\Database\\Newsletter\\Backend\\Newsletter\\obj\\",
+>>>>>>> Stashed changes
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\macar\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -22,7 +36,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
