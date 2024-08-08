@@ -1,122 +1,271 @@
-'use client'
-import dynamic from 'next/dynamic';
-import React, { useState, useCallback, memo, ChangeEvent } from 'react';
-import 'react-quill/dist/quill.snow.css';
-import { ReactQuillProps } from 'react-quill';
-import ImageUploader from './ImageUploader';
+"use client";
+import dynamic from "next/dynamic";
+import React, { useState, useCallback, memo, ChangeEvent, useRef } from "react";
+import "react-quill/dist/quill.snow.css";
+import { ReactQuillProps } from "react-quill";
+import ImageUploader from "./ImageUploader";
+import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
-const QuillNoSSRWrapper = dynamic<ReactQuillProps>(() => import('react-quill'), {
-    ssr: false,
-    loading: () => <p>Loading ...</p>,
-});
-
-const modules = { //Also move these outside
-    toolbar: [
-        [{ header: '1' }, { header: '2' }, { font: [] }],
-        [{ size: [] }],
-        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-        [
-            { list: 'ordered' },
-            { list: 'bullet' },
-            { indent: '-1' },
-            { indent: '+1' },
-        ],
-        ['link', 'image', 'video'],
-        ['clean'],
-    ],
-    clipboard: {
-        matchVisual: false,
-    },
-};
-
-const formats = [
-    'header',
-    'font',
-    'size',
-    'bold',
-    'italic',
-    'underline',
-    'strike',
-    'blockquote',
-    'list',
-    'bullet',
-    'indent',
-    'link',
-    'image',
-    'video',
-];
-
-const QuillEditor : React.FC = memo(() => {
-    const saveNews = async (e : any) => {
-        e.preventDefault();
-        if (!title || !editorcontent)
-        {
-          alert("Please fill all details !");
-          return
-        }
-        // console.log(title, editorcontent);
-        const formData = new FormData();
-        formData.append('Title', title);
-        formData.append('EditorContent', editorcontent);
-        if(coverImage){
-          formData.append('CoverImage', coverImage);
-        }
-        try{
-          const response = await fetch('/api/newsletter',{
-            method: 'POST',
-            body: formData,
-          });
-          if(!response.ok){
-            throw new Error('Network response was not okay');
-          }
-          const data = await response.json();
-          console.log("Newsletter created with id: ", data);          
-        }
-        catch(error){
-          console.error("Error creating newsletter",error);
-        }
-      } 
-    const [editorcontent, setEditorContent] = useState<string>('');
-    const [title, setTitle] = useState<string>('');
-    const [coverImage, setCoverImage] = useState<File|null>(null);
-
-    const handleChange = useCallback((content : string) => { //setCallback is a hook that returns a memoized version of the callback function. It only changes if one of the dependencies has changed. In this case, the empty dependency array [] means this function will only be created once and reused across re-renders. This can be beneficial when passing callbacks to optimized child components that rely on reference equality to prevent unnecessary renders.
-        setEditorContent(content);
-    }, []);
-
-    const handleTitle = (event : ChangeEvent<HTMLInputElement>) : void=> {
-        setTitle(event.target.value);
-    };
-
-    const handleImageChange = (file : File|null) => {
-      setCoverImage(file);
-    };
-  
-    return (
-        <>
-        <ImageUploader onImageChange = {handleImageChange}/>
-        <input 
-          type="text" 
-          className = "border-none focus:outline-none  focus:border-none p-2 w-full" 
-          value = {title}
-          onChange = {handleTitle}
-          placeholder="Enter Title" 
-        />
-        <div>
-            <QuillNoSSRWrapper 
-                modules={modules} 
-                formats={formats} 
-                placeholder='Enter Article'
-                value={editorcontent} 
-                onChange={handleChange} 
-                theme="snow" 
-            />
-            <button onClick = {saveNews}>Post</button>
-        </div>
-      </>
+const ReactQuill = dynamic(
+  async () => {
+    const { default: RQ } = await import("react-quill");
+    const ForwardedQuill = ({
+      forwardedRef,
+      ...props
+    }: ReactQuillProps & { forwardedRef: React.Ref<ReactQuillRef> }) => (
+      <RQ ref={forwardedRef} {...props} />
     );
+    ForwardedQuill.displayName = "ForwardedQuill";
+    return ForwardedQuill;
+  },
+  { ssr: false }
+);
+
+const QuillNoSSRWrapper = React.forwardRef<ReactQuillRef, ReactQuillProps>(
+  (props, ref) => <ReactQuill forwardedRef={ref} {...props} />
+);
+
+QuillNoSSRWrapper.displayName = "QuillNoSSRWrapper";
+
+interface ReactQuillRef {
+  getEditor: () => any;
+}
+
+const QuillEditor: React.FC = memo(() => {
+  const [editorcontent, setEditorContent] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+  const [coverImage, setCoverImage] = useState<File | null>(null);
+  const [image, setImage] = useState<
+    { file: File; imageName: string; url: string; base64Content: string }[]
+  >([]);
+  const [dotnetPackage, setDotnetPackage] = useState([]);
+
+  const quillRef = useRef<ReactQuillRef>(null);
+
+  const normalizeBase64 = (base64: string): string => {
+    // Remove any metadata part if present, e.g., data:image/png;base64,
+    return base64.replace(/^data:image\/[^;]+;base64,/, "");
+  };
+
+  const cleanupImages = useCallback(() => {
+    if (quillRef.current) {
+      const quill = quillRef.current.getEditor();
+      if (quill) {
+        const content = quill.root.innerHTML;
+        const editorBase64Images = Array.from(
+          new DOMParser()
+            .parseFromString(content, "text/html")
+            .querySelectorAll("img")
+        ).map((img) => normalizeBase64(img.src));
+
+        setImage((prevImages) =>
+          prevImages.filter((image) =>
+            editorBase64Images.includes(normalizeBase64(image.base64Content))
+          )
+        );
+      }
+    }
+  }, []);
+
+  const handleChange = useCallback(
+    (content: string) => {
+      setEditorContent(content);
+      cleanupImages();
+    },
+    [cleanupImages]
+  );
+
+  const handleTitle = (event: ChangeEvent<HTMLInputElement>): void => {
+    setTitle(event.target.value);
+  };
+
+  const handleImageChange = (file: File | null) => {
+    setCoverImage(file);
+  };
+
+  const handleupload = () => {
+    console.log(image);
+  };
+
+  const imageHandler = useCallback(() => {
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    input.setAttribute("multiple", "multiple");
+
+    input.click();
+
+    input.onchange = async (event: Event) => {
+      cleanupImages();
+      const target = event.target as HTMLInputElement;
+      const files = target.files;
+      if (files) {
+        try {
+          const fileArray = Array.from(files);
+          const quill = quillRef.current?.getEditor();
+          if (quill) {
+            const range = quill.getSelection(true);
+            if (range) {
+              const newImages = await Promise.all(
+                fileArray.map(async (file) => {
+                  const reader = new FileReader();
+                  return new Promise<{
+                    file: File;
+                    imageName: string;
+                    url: string;
+                    base64Content: string;
+                  }>((resolve) => {
+                    reader.onload = () => {
+                      const base64Content = reader.result as string;
+                      const imageName = `newsletter-image-${uuidv4()}-${
+                        file.name
+                      }`;
+                      const url = `https://jlfphoepphgltjhlrwsp.supabase.co/storage/v1/object/public/news_image/${imageName}`;
+                      quill.insertEmbed(range.index, "image", base64Content);
+                      quill.setSelection({ index: range.index + 1, length: 0 });
+
+                      resolve({ file, imageName, url, base64Content });
+                    };
+                    reader.readAsDataURL(file);
+                  });
+                })
+              );
+              setImage((prevImages) => [...prevImages, ...newImages]);
+            }
+          }
+        } catch (error) {
+          console.error("Error uploading image:", error);
+          alert("Failed to upload image");
+        }
+      }
+    };
+  }, [cleanupImages]);
+
+  const modules = {
+    toolbar: {
+      container: [
+        [{ header: "1" }, { header: "2" }, { font: [] }],
+        [{ size: [] }],
+        ["bold", "italic", "underline", "strike", "blockquote"],
+        [
+          { list: "ordered" },
+          { list: "bullet" },
+          { indent: "-1" },
+          { indent: "+1" },
+        ],
+        ["link", "image", "video"],
+        ["clean"],
+      ],
+      handlers: {
+        image: imageHandler,
+      },
+    },
+    clipboard: {
+      matchVisual: false,
+    },
+  };
+
+  const formats = [
+    "header",
+    "font",
+    "size",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+    "image",
+    "video",
+  ];
+
+  const saveNews = async (e: any) => {
+    e.preventDefault();
+    if (!title || !editorcontent) {
+      alert("Please fill all details !");
+      return;
+    }
+
+    const quill = quillRef.current?.getEditor();
+    if (quill) {
+      let content = quill.root.innerHTML;
+
+      image.forEach((imgData) => {
+        const url = imgData.url;
+        const regex = /<img[^>]*src="data:image\/[^"]+;base64,[^"]+"[^>]*>/g;
+        content = content.replace(regex, (match: any) => {
+          if (match.includes(normalizeBase64(imgData.base64Content))) {
+            return `<img src="${url}" alt="newsletter image">`;
+          }
+          return match;
+        });
+      });
+      quill.root.innerHTML = content;
+    }
+
+    const formData = new FormData();
+    formData.append("Title", title);
+    formData.append(
+      "EditorContent",
+      quillRef.current?.getEditor().root.innerHTML || ""
+    );
+    if (coverImage) {
+      formData.append("CoverImage", coverImage);
+    }
+
+    if (image) {
+      image.forEach((img, index) => {
+        formData.append(`Images`, img.file);
+        formData.append(`ImageNames`, img.imageName);
+      });
+    }
+
+    try {
+      const response = await fetch("/api/newsletter", {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not okay");
+      }
+      const data = await response.json();
+      console.log("Newsletter created with id: ", data);
+    } catch (error) {
+      console.error("Error creating newsletter", error);
+    }
+  };
+
+  return (
+    <>
+      <ImageUploader onImageChange={handleImageChange} />
+      <input
+        type="text"
+        className="border-none focus:outline-none  focus:border-none p-2 w-full"
+        value={title}
+        onChange={handleTitle}
+        placeholder="Enter Title"
+      />
+      <div>
+        <QuillNoSSRWrapper
+          ref={quillRef}
+          modules={modules}
+          formats={formats}
+          placeholder="Enter Article"
+          value={editorcontent}
+          onChange={handleChange}
+          theme="snow"
+        />
+        <button onClick={handleupload}>Save</button>
+        <button onClick={saveNews}>Post</button>
+      </div>
+    </>
+  );
 });
 
-QuillEditor.displayName = 'QuillEditor';
+QuillEditor.displayName = "QuillEditor";
 
 export default QuillEditor;

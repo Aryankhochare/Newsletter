@@ -1,5 +1,6 @@
 {
 	"dependencies": {
-		"@types/node-fetch": "^2.6.11"
+		"@types/node-fetch": "^2.6.11",
+		"uuidv4": "^6.2.13"
 	}
 }
