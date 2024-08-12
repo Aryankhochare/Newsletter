@@ -1,9 +1,17 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse} from "next/server";
+import { getServerSession } from "next-auth";
 import FormData from "form-data";
 import fetch from "node-fetch";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 export async function POST(req: NextRequest) {
   try {
+
+    const session = await getServerSession(authOptions);
+    if (!session || !session.accessToken) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const formData = await req.formData();
     const form = new FormData();
 
@@ -47,7 +55,10 @@ export async function POST(req: NextRequest) {
     const response = await fetch(`${process.env.ASP_NET_URL}/newsletter`, {
       method: "POST",
       body: form as any,
-      headers: form.getHeaders(),
+      headers: {
+        ...form.getHeaders(),
+        'Authorization': `Bearer ${session.accessToken}`
+      },
     });
 
     console.log("Backend response status:", response.status);

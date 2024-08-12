@@ -1,6 +1,8 @@
 {
 	"dependencies": {
+		"@types/jsonwebtoken": "^9.0.6",
 		"@types/node-fetch": "^2.6.11",
+		"jsonwebtoken": "^9.0.2",
 		"uuidv4": "^6.2.13"
 	}
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newsletter.Models;
 using Newsletter.ViewModels;
@@ -13,7 +14,6 @@ namespace Newsletter.Controllers
     public class UploadImageController : ControllerBase
     {
         private readonly Supabase.Client client;
-        private static ConcurrentBag<(byte[] image, string fileName)> imageBag = new ConcurrentBag<(byte[] image, string fileName)>();
         public UploadImageController(Client _client)
         {
             client = _client ?? throw new ArgumentNullException(nameof(_client));
@@ -21,6 +21,7 @@ namespace Newsletter.Controllers
 
         [HttpPost]
         [Consumes("multipart/form-data")]
+        //[Authorize(Policy = "WriteAccess")]
         public async Task<IActionResult> CreateNewsLetter([FromForm] CreateNewsArticleVM article)
         {
             try
