@@ -4,8 +4,8 @@ import { randomBytes, randomUUID } from "crypto";
 import NextAuth from "next-auth/next";
 import { NextAuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { log } from "console";
-import { JWT } from "next-auth/jwt";
+import jwt from 'jsonwebtoken'
+
 
 interface CustomUser extends User {
   roles?: string[];
@@ -86,6 +86,19 @@ export const authOptions: NextAuthOptions = {
       if(user){
         token.id = user.id;
         token.roles = (user as CustomUser).roles;
+
+        const payload = {
+          id:user.id,
+          name: user.name,
+          email: user.email,
+          roles: (user as CustomUser).roles
+        };
+        
+        token.accessToken = jwt.sign(
+          payload,
+          process.env.JWT_SECRET!,
+          {expiresIn: 60}
+        ); 
         
       }
 
@@ -99,8 +112,11 @@ export const authOptions: NextAuthOptions = {
           id: parseInt(token.id as string),
           roles: token.roles as string[] | undefined
         },
+        accessToken: token.accessToken
       };
-      return updatedSession 
+      console.log(`this is updated sessin : `)
+      return updatedSession
+    
     }
   },
   session:{
