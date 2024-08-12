@@ -151,62 +151,7 @@ namespace Newsletter.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllUsers()
-        {
-            try
-            {
-                var response = await _client
-                    .From<Users>()
-                    .Get();
-                if (response?.Models == null || !response.Models.Any())
-                {
-                    return NotFound("No users found");
-                }
-                var users = response.Models;
-
-                var userRolesResponse = await _client.From<UserUserRoles>().Get();
-
-                var userRoles = userRolesResponse.Models ?? new List<UserUserRoles>();
-
-                var rolesResponse = await _client.From<UserRoles>().Get();
-
-                var roles = rolesResponse.Models ?? new List<UserRoles>();
-
-                var result = new List<object>();
-
-                foreach(var user in users)
-                {
-                    var userRoleIds = userRoles
-                        .Where(ur => ur.UserId == user.Id)
-                        .Select(ur => ur.UserRoleId);
-
-                    var userRoleNames = roles
-                        .Where(r => userRoleIds.Contains(r.UserRoleId))
-                        .Select(r => r.UserRoleName)
-                        .ToList();
-
-                    result.Add(new 
-                    {
-                        user.Id,
-                        user.Username,
-                        user.Email,
-                        user.isActive,
-                        user.Status,
-                        userRoleNames,
-                        user.CreatedDate,
-                        user.ModifiedDate,
-                    });
-                }
-                return Ok(result);
-
-            }
-            catch (Exception)
-            {
-
-                return StatusCode(StatusCodes.Status500InternalServerError, "Could not retrieve data from database");
-            }
-        }
+        
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(string id)

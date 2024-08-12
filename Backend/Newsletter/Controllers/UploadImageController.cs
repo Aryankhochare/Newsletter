@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace Newsletter.Controllers
 {
-    [Route("newsletter")]
+    [Route("newslettertest")]
     [ApiController]
     public class UploadImageController : ControllerBase
     {
@@ -22,18 +22,18 @@ namespace Newsletter.Controllers
         [HttpPost]
         [Consumes("multipart/form-data")]
         //[Authorize(Policy = "WriteAccess")]
-        public async Task<IActionResult> CreateNewsLetter([FromForm] CreateNewsArticleVM article)
+        public async Task<IActionResult> CreateNewsLetter([FromForm] CreateNewsTestVM article)
         {
             try
             {
 
-                var newsletter = new NewsArticle
+                var newsletter = new NewsTest
                 {
                     Title = article.Title,
                     EditorContent = article.EditorContent
                 };
 
-                var response = await client.From<NewsArticle>().Insert(newsletter);
+                var response = await client.From<NewsTest>().Insert(newsletter);
                 var newNewsletter = response.Models.FirstOrDefault();
 
                 if (newNewsletter == null)
@@ -66,14 +66,14 @@ namespace Newsletter.Controllers
                 }
 
                 newsletter.Id = newNewsletter.Id;
-                await client.From<NewsArticle>()
+                await client.From<NewsTest>()
                      .Update(newsletter);
 
                 return Ok(new { Id = newNewsletter.Id });
             }
             catch (Exception ex)
             {
-                // Log the exception
+   
                 Console.WriteLine($"Error creating newsletter: {ex}");
                 return StatusCode(500, "An error occurred while creating the newsletter");
             }

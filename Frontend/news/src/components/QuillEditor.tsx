@@ -28,6 +28,13 @@ const QuillNoSSRWrapper = React.forwardRef<ReactQuillRef, ReactQuillProps>(
 
 QuillNoSSRWrapper.displayName = "QuillNoSSRWrapper";
 
+interface ImageData {
+  file: File;
+  imageName: string;
+  url: string;
+  base64Content: string;
+}
+
 interface ReactQuillRef {
   getEditor: () => any;
 }
@@ -36,16 +43,14 @@ const QuillEditor: React.FC = memo(() => {
   const [editorcontent, setEditorContent] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [coverImage, setCoverImage] = useState<File | null>(null);
-  const [image, setImage] = useState<
-    { file: File; imageName: string; url: string; base64Content: string }[]
-  >([]);
-  const [dotnetPackage, setDotnetPackage] = useState([]);
+  const [image, setImage] = useState<ImageData[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [categories, setCategories] = useState<string[]>(["Politics", "Business", "Finance"]);
 
   const quillRef = useRef<ReactQuillRef>(null);
 
   const normalizeBase64 = (base64: string): string => {
-    // Remove any metadata part if present, e.g., data:image/png;base64,
-    return base64.replace(/^data:image\/[^;]+;base64,/, "");
+    return base64.replace(/^data:image\/[^;]+;base64,/, '');
   };
 
   const cleanupImages = useCallback(() => {
@@ -53,14 +58,11 @@ const QuillEditor: React.FC = memo(() => {
       const quill = quillRef.current.getEditor();
       if (quill) {
         const content = quill.root.innerHTML;
-        const editorBase64Images = Array.from(
-          new DOMParser()
-            .parseFromString(content, "text/html")
-            .querySelectorAll("img")
-        ).map((img) => normalizeBase64(img.src));
+        const editorBase64Images = Array.from(new DOMParser().parseFromString(content, 'text/html').querySelectorAll('img'))
+          .map(img => normalizeBase64((img as HTMLImageElement).src));
 
-        setImage((prevImages) =>
-          prevImages.filter((image) =>
+        setImage(prevImages =>
+          prevImages.filter(image =>
             editorBase64Images.includes(normalizeBase64(image.base64Content))
           )
         );
@@ -68,13 +70,10 @@ const QuillEditor: React.FC = memo(() => {
     }
   }, []);
 
-  const handleChange = useCallback(
-    (content: string) => {
-      setEditorContent(content);
-      cleanupImages();
-    },
-    [cleanupImages]
-  );
+  const handleChange = useCallback((content: string) => {
+    setEditorContent(content);
+    cleanupImages();
+  }, [cleanupImages]);
 
   const handleTitle = (event: ChangeEvent<HTMLInputElement>): void => {
     setTitle(event.target.value);
@@ -84,15 +83,19 @@ const QuillEditor: React.FC = memo(() => {
     setCoverImage(file);
   };
 
-  const handleupload = () => {
-    console.log(image);
+  const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCategory(event.target.value);
   };
 
+  const handleupload = () => {
+    console.log(image);
+  }
+
   const imageHandler = useCallback(() => {
-    const input = document.createElement("input");
-    input.setAttribute("type", "file");
-    input.setAttribute("accept", "image/*");
-    input.setAttribute("multiple", "multiple");
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.setAttribute('multiple', 'multiple');
 
     input.click();
 
@@ -107,36 +110,26 @@ const QuillEditor: React.FC = memo(() => {
           if (quill) {
             const range = quill.getSelection(true);
             if (range) {
-              const newImages = await Promise.all(
-                fileArray.map(async (file) => {
-                  const reader = new FileReader();
-                  return new Promise<{
-                    file: File;
-                    imageName: string;
-                    url: string;
-                    base64Content: string;
-                  }>((resolve) => {
-                    reader.onload = () => {
-                      const base64Content = reader.result as string;
-                      const imageName = `newsletter-image-${uuidv4()}-${
-                        file.name
-                      }`;
-                      const url = `https://jlfphoepphgltjhlrwsp.supabase.co/storage/v1/object/public/news_image/${imageName}`;
-                      quill.insertEmbed(range.index, "image", base64Content);
-                      quill.setSelection({ index: range.index + 1, length: 0 });
-
-                      resolve({ file, imageName, url, base64Content });
-                    };
-                    reader.readAsDataURL(file);
-                  });
-                })
-              );
-              setImage((prevImages) => [...prevImages, ...newImages]);
+              const newImages = await Promise.all(fileArray.map(async (file) => {
+                const reader = new FileReader();
+                return new Promise<ImageData>((resolve) => {
+                  reader.onload = () => {
+                    const base64Content = reader.result as string;
+                    const imageName = `newsletter-image-${uuidv4()}-${file.name}`;
+                    const url = `https://jlfphoepphgltjhlrwsp.supabase.co/storage/v1/object/public/news_image/${imageName}`;
+                    quill.insertEmbed(range.index, 'image', base64Content);
+                    quill.setSelection(range.index + 1, 0);
+                    resolve({ file, imageName, url, base64Content });
+                  };
+                  reader.readAsDataURL(file);
+                });
+              }));
+              setImage(prevImages => [...prevImages, ...newImages]);
             }
           }
         } catch (error) {
-          console.error("Error uploading image:", error);
-          alert("Failed to upload image");
+          console.error('Error uploading image:', error);
+          alert('Failed to upload image');
         }
       }
     };
@@ -145,17 +138,12 @@ const QuillEditor: React.FC = memo(() => {
   const modules = {
     toolbar: {
       container: [
-        [{ header: "1" }, { header: "2" }, { font: [] }],
+        [{ header: '1' }, { header: '2' }, { font: [] }],
         [{ size: [] }],
-        ["bold", "italic", "underline", "strike", "blockquote"],
-        [
-          { list: "ordered" },
-          { list: "bullet" },
-          { indent: "-1" },
-          { indent: "+1" },
-        ],
-        ["link", "image", "video"],
-        ["clean"],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+        ['link', 'image', 'video'],
+        ['clean'],
       ],
       handlers: {
         image: imageHandler,
@@ -164,26 +152,14 @@ const QuillEditor: React.FC = memo(() => {
     clipboard: {
       matchVisual: false,
     },
-  };
+  }
 
   const formats = [
-    "header",
-    "font",
-    "size",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "list",
-    "bullet",
-    "indent",
-    "link",
-    "image",
-    "video",
+    "header", "font", "size", "bold", "italic", "underline", "strike", "blockquote",
+    "list", "bullet", "indent", "link", "image", "video",
   ];
 
-  const saveNews = async (e: any) => {
+  const saveNews = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title || !editorcontent) {
       alert("Please fill all details !");
@@ -196,33 +172,28 @@ const QuillEditor: React.FC = memo(() => {
 
       image.forEach((imgData) => {
         const url = imgData.url;
-        const regex = /<img[^>]*src="data:image\/[^"]+;base64,[^"]+"[^>]*>/g;
-        content = content.replace(regex, (match: any) => {
-          if (match.includes(normalizeBase64(imgData.base64Content))) {
-            return `<img src="${url}" alt="newsletter image">`;
-          }
-          return match;
-        });
+        const regex = new RegExp(`<img[^>]*src="data:image\\/[^"]+;base64,${normalizeBase64(imgData.base64Content)}"[^>]*>`, 'g');
+        content = content.replace(regex, `<img src="${url}" alt="newsletter image">`);
       });
+
       quill.root.innerHTML = content;
     }
 
     const formData = new FormData();
     formData.append("Title", title);
-    formData.append(
-      "EditorContent",
-      quillRef.current?.getEditor().root.innerHTML || ""
-    );
+    formData.append("EditorContent", quillRef.current?.getEditor().root.innerHTML || '');
     if (coverImage) {
       formData.append("CoverImage", coverImage);
     }
 
-    if (image) {
-      image.forEach((img, index) => {
-        formData.append(`Images`, img.file);
-        formData.append(`ImageNames`, img.imageName);
-      });
+    if (selectedCategory) {
+      formData.append("CategoryName", selectedCategory);
     }
+
+    image.forEach((img, index) => {
+      formData.append(`Images`, img.file);
+      formData.append(`ImageNames`, img.imageName);
+    });
 
     try {
       const response = await fetch("/api/newsletter", {
@@ -241,26 +212,63 @@ const QuillEditor: React.FC = memo(() => {
 
   return (
     <>
-      <ImageUploader onImageChange={handleImageChange} />
-      <input
-        type="text"
-        className="border-none focus:outline-none  focus:border-none p-2 w-full"
-        value={title}
-        onChange={handleTitle}
-        placeholder="Enter Title"
-      />
+      <div className="flex gap-4 mb-4 w-full">
+        <div className="flex-grow w-full">
+          <h2 className="text-lg font-bold mb-2">Enter Title</h2>
+          <input
+            type="text"
+            className="border-none text-2xl font-extrabold focus:outline-none focus:border-none p-2 w-full"
+            value={title}
+            onChange={handleTitle}
+            placeholder="Enter Title"
+          />
+          <div className="mt-4">
+            <label htmlFor="category" className="text-lg font-bold mb-2 block">
+              Select Category
+            </label>
+            <select
+              id="category"
+              className="border border-gray-300 rounded-md p-2 w-full"
+              value={selectedCategory || ''}
+              onChange={handleCategoryChange}
+            >
+              <option value="">Select a category</option>
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <div className="w-full">
+          <ImageUploader onImageChange={handleImageChange} />
+        </div>
+      </div>
       <div>
         <QuillNoSSRWrapper
-          ref={quillRef}
+          ref={quillRef as React.Ref<ReactQuillRef>}
           modules={modules}
           formats={formats}
           placeholder="Enter Article"
           value={editorcontent}
           onChange={handleChange}
           theme="snow"
+          className="w-full justify-center h-full"
         />
-        <button onClick={handleupload}>Save</button>
-        <button onClick={saveNews}>Post</button>
+        <br/>
+        <div className=" py-0 justify-center mt-1 flex flex-grow sm:z-5">
+          <div className="hover:bg-gray-800 rounded-md px-4 py-2 m-2 text-center bg-black ">
+            <button onClick={handleupload} className="text-white transition duration-300 ease-in-out text-center">
+              Save
+            </button>
+          </div>
+          <div className=" hover:bg-gray-800 rounded-md px-4 py-2 bg-black m-2">
+            <button onClick={saveNews} className="text-white transition duration-300 ease-in-out text-center">
+              Post
+            </button>
+          </div>
+        </div>
       </div>
     </>
   );

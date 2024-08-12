@@ -26,7 +26,7 @@ export default withAuth(
 
     else if (!req.nextUrl.pathname.includes("/writer") && token?.roles?.includes("WRITER")) {
       console.log("Redirecting to writer page");
-    return NextResponse.redirect(new URL("/writer",req.url));
+    return NextResponse.redirect(new URL("/writer/quill_editor",req.url));
   }
 
     else if (!req.nextUrl.pathname.includes("/user") && token?.roles?.includes("USER")) {
