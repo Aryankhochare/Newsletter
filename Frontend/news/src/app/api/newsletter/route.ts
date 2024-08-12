@@ -4,6 +4,8 @@ import FormData from "form-data";
 import fetch from "node-fetch";
 import { authOptions } from "../auth/[...nextauth]/route";
 
+
+
 export async function POST(req: NextRequest) {
   try {
 
@@ -19,12 +21,17 @@ export async function POST(req: NextRequest) {
 
     const title = formData.get("Title");
     const content = formData.get("EditorContent");
+    const categoryName = formData.get("CategoryName");
 
     if (typeof title === "string") {
       form.append("Title", title);
     }
     if (typeof content === "string") {
       form.append("EditorContent", content);
+    }
+
+    if(typeof categoryName === "string"){
+      form.append("CategoryName", categoryName);
     }
 
     const file = formData.get("CoverImage") as File | null;

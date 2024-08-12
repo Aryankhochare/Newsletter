@@ -88,7 +88,7 @@ export const authOptions: NextAuthOptions = {
         token.roles = (user as CustomUser).roles;
 
         const payload = {
-          id:user.id,
+          sub:user.id,
           name: user.name,
           email: user.email,
           roles: (user as CustomUser).roles
