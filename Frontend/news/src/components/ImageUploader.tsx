@@ -1,20 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactImageUploading, { ImageListType } from "react-images-uploading";
 import Image from 'next/image'; 
 
-export default function ImageUploader({onImageChange}:any) {
-  const [images, setImages] = useState([]);
+export default function ImageUploader({onImageChange, resetTrigger}: {onImageChange: (file: File | null) => void, resetTrigger: number}) {
+  const [images, setImages] = useState<ImageListType>([]);
   const maxNumber = 1;
+
+  useEffect(() => {
+    if (resetTrigger > 0) {
+      setImages([]);
+      onImageChange(null);
+    }
+  }, [resetTrigger, onImageChange]);
 
   const onChange = (
     imageList: ImageListType,
     addUpdateIndex: number[] | undefined
   ) => {
-    console.log(imageList, addUpdateIndex);
-    setImages(imageList as never[]);
-    onImageChange(imageList[0].file);
+    setImages(imageList);
+    if (imageList.length > 0 && imageList[0].file instanceof File) {
+      onImageChange(imageList[0].file);
+    } else {
+      onImageChange(null);
+    }
   };
 
   return (

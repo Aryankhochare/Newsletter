@@ -43,6 +43,7 @@ const QuillEditor: React.FC = memo(() => {
   const [editorcontent, setEditorContent] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [coverImage, setCoverImage] = useState<File | null>(null);
+  const [resetTrigger, setResetTrigger] = useState(0);
   const [image, setImage] = useState<ImageData[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [categories, setCategories] = useState<string[]>(["Politics", "Business", "Finance"]);
@@ -172,8 +173,16 @@ const QuillEditor: React.FC = memo(() => {
 
       image.forEach((imgData) => {
         const url = imgData.url;
-        const regex = new RegExp(`<img[^>]*src="data:image\\/[^"]+;base64,${normalizeBase64(imgData.base64Content)}"[^>]*>`, 'g');
-        content = content.replace(regex, `<img src="${url}" alt="newsletter image">`);
+      
+      // Use a more general regex to match img tags with base64 content
+      const regex = /<img[^>]*src="data:image\/[^"]+;base64,[^"]+"[^>]*>/g;
+      content = content.replace(regex, (match: any) => {
+        // Replace only if the base64 content matches
+        if (match.includes(normalizeBase64(imgData.base64Content))) {
+          return `<img src="${url}" alt="newsletter image">`;
+        }
+        return match;
+      });
       });
 
       quill.root.innerHTML = content;
@@ -194,6 +203,15 @@ const QuillEditor: React.FC = memo(() => {
       formData.append(`Images`, img.file);
       formData.append(`ImageNames`, img.imageName);
     });
+    setTitle("");
+    setCoverImage(null);
+    setImage([]);
+    setEditorContent("");
+    setSelectedCategory(null);
+    if (quillRef.current) {
+      quillRef.current.getEditor().setText('');
+    }
+    setResetTrigger(prev => prev + 1);
 
     try {
       const response = await fetch("/api/newsletter", {
@@ -205,6 +223,7 @@ const QuillEditor: React.FC = memo(() => {
       }
       const data = await response.json();
       console.log("Newsletter created with id: ", data);
+     
     } catch (error) {
       console.error("Error creating newsletter", error);
     }
@@ -242,7 +261,7 @@ const QuillEditor: React.FC = memo(() => {
           </div>
         </div>
         <div className="w-full">
-          <ImageUploader onImageChange={handleImageChange} />
+          <ImageUploader onImageChange={handleImageChange} resetTrigger={resetTrigger} />
         </div>
       </div>
       <div>
