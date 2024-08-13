@@ -1,4 +1,5 @@
-﻿using Supabase.Postgrest.Attributes;
+﻿using Supabase.Gotrue;
+using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
 namespace Newsletter.Models
@@ -32,6 +33,5 @@ namespace Newsletter.Models
         public string CoverImage { get; set; }
         [Column("is_rejected")]
         public bool IsRejected { get; set; }
-
     }
 }
