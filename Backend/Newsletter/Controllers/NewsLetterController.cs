@@ -80,6 +80,128 @@ namespace Newsletter.Controllers
             return null;
         }
 
+        [HttpGet("search/category")]
+        public async Task<IActionResult> SearchByCategory([FromQuery] string categoryname)
+        {
+            try
+            {
+                var categoryId = await GetCategoryIdByName(categoryname);
+                if (string.IsNullOrEmpty(categoryId)) return BadRequest("Invalid Category Name");
+                var response = await client.From<NewsArticle>()
+                    .Where(x => x.CategoryId == categoryId)
+                    .Get();
+                if (response?.Models == null || !response.Models.Any())
+                {
+                    return NotFound($"No article was found for {categoryname}");
+                }
+                var articles = response.Models;
+                // Fetch categories
+                var categoriesResponse = await client.From<Category>().Get();
+                var categories = categoriesResponse.Models ?? new List<Category>();
+
+                // Fetch users
+                var usersResponse = await client.From<Users>().Get();
+                var users = usersResponse.Models ?? new List<Users>();
+
+                var result = new List<object>();
+                foreach(var article in articles)
+                {
+                    var category = categories.FirstOrDefault(c => c.CategoryId == article.CategoryId);
+                    var user = users.FirstOrDefault(u => u.Id == article.UserId);
+
+                    var categoryName = category?.CategoryName ?? string.Empty;
+                    var userName = user?.Username ?? string.Empty;
+                    result.Add(new
+                    {
+                        article.Id,
+                        article.UserId,
+                        userName,
+                        article.CategoryId,
+                        categoryName,
+                        article.Title,
+                        article.EditorContent,
+                        article.PostedOn,
+                        article.ModifiedDate,
+                        article.IsVerified,
+                        article.CoverImage,
+                        article.IsRejected,
+                    });
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error fetching article for searchbycategory: {ex}");
+                return StatusCode(500, "An error occurred while fetching article based on category");
+            }
+        }
+
+        [HttpGet("search/writer")]
+        public async Task<IActionResult> SearchByWriter([FromQuery] string writer)
+        {
+            try
+            {
+                var response = await client.From<Users>()
+                    .Select("user_id")
+                    .Where(u => u.Username == writer)
+                    .Single();
+                if (response == null)
+                {
+                    return BadRequest("Invalid writer name");
+                }
+
+                var userId = response.Id;
+
+                var articlesResponse = await client.From<NewsArticle>()
+                    .Where(a => a.UserId == userId)
+                    .Get();
+
+                if (articlesResponse?.Models == null || !articlesResponse.Models.Any())
+                {
+                    return NotFound($"No articles found for writer {writer}");
+                }
+                var articles = articlesResponse.Models;
+
+                
+                var categoriesResponse = await client.From<Category>().Get();
+                var categories = categoriesResponse.Models ?? new List<Category>();
+
+                var result = new List<object>();
+                foreach (var article in articles)
+                {
+                    var category = categories.FirstOrDefault(c => c.CategoryId == article.CategoryId);
+                    var categoryName = category?.CategoryName ?? string.Empty;
+
+                    result.Add(new
+                    {
+                        article.Id,
+                        article.UserId,
+                        writer,
+                        article.CategoryId,
+                        categoryName,
+                        article.Title,
+                        article.EditorContent,
+                        article.PostedOn,
+                        article.ModifiedDate,
+                        article.IsVerified,
+                        article.CoverImage,
+                        article.IsRejected,
+                    });
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching articles by writer: {ex}");
+                return StatusCode(500, "An error occurred while fetching articles based on writer");
+
+            }
+           
+            
+        }
+
 
         [HttpPost]
         [Consumes("multipart/form-data")]
@@ -147,6 +269,65 @@ namespace Newsletter.Controllers
             {
                 Console.WriteLine($"Error creating newsletter: {ex}");
                 return StatusCode(500, "An error occurred while creating the newsletter");
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetArticles()
+        {
+            try
+            {
+                // Fetch articles
+                var articlesResponse = await client.From<NewsArticle>().Get();
+                if (articlesResponse?.Models == null || !articlesResponse.Models.Any())
+                {
+                    return NotFound("Didn't find any article");
+                }
+                var articles = articlesResponse.Models;
+
+                // Fetch categories
+                var categoriesResponse = await client.From<Category>().Get();
+                var categories = categoriesResponse.Models ?? new List<Category>();
+
+                // Fetch users
+                var usersResponse = await client.From<Users>().Get();
+                var users = usersResponse.Models ?? new List<Users>();
+
+                var result = new List<object>();
+                foreach(var article in articles)
+                {
+
+                    var category = categories.FirstOrDefault(c => c.CategoryId == article.CategoryId);
+                    var user = users.FirstOrDefault(u => u.Id == article.UserId);
+
+                    var categoryName = category?.CategoryName ?? string.Empty;
+                    var userName = user?.Username?? string.Empty;
+
+                    result.Add(new
+                    {
+                        article.Id,
+                        article.UserId,
+                        userName,
+                        article.CategoryId,
+                        categoryName,
+                        article.Title,
+                        article.EditorContent,
+                        article.PostedOn,
+                        article.ModifiedDate,
+                        article.IsVerified,
+                        article.CoverImage,
+                        article.IsRejected,
+                    });
+
+                };
+                return Ok(result);
+            
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error fetching newsletter: {ex}");
+                return StatusCode(500, "An error occurred while fetching data from newsletter");
             }
         }
     

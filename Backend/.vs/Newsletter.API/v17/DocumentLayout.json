@@ -7,24 +7,20 @@
       "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\controllers\\newslettercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\viewmodels\\createnewsarticlevm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\viewmodels\\createnewsarticlevm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\models\\newsarticle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\models\\newsarticle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\models\\newsarticle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\models\\newsarticle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\viewmodels\\createnewstestvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\viewmodels\\createnewstestvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\models\\useruserroles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\models\\useruserroles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\viewmodels\\createnewsarticlevm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\viewmodels\\createnewsarticlevm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\controllers\\uploadimagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -35,12 +31,16 @@
       "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\viewmodels\\createnewstestvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\viewmodels\\createnewstestvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\models\\useruserroles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\models\\useruserroles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\models\\users.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -82,7 +82,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 7,
               "Title": "Category.cs",
               "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Models\\Category.cs",
               "RelativeDocumentMoniker": "Newsletter\\Models\\Category.cs",
@@ -90,7 +90,8 @@
               "RelativeToolTip": "Newsletter\\Models\\Category.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-12T11:48:41.52Z"
+              "WhenOpened": "2024-08-12T11:48:41.52Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -100,14 +101,14 @@
               "RelativeDocumentMoniker": "Newsletter\\Controllers\\NewsLetterController.cs",
               "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\NewsLetterController.cs",
               "RelativeToolTip": "Newsletter\\Controllers\\NewsLetterController.cs",
-              "ViewState": "AQIAAGgAAAAAAAAAAAAswG4AAAAxAAAA",
+              "ViewState": "AQIAAEgAAAAAAAAAAAAqwFIAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-12T07:04:04.549Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "CreateNewsArticleVM.cs",
               "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\ViewModels\\CreateNewsArticleVM.cs",
               "RelativeDocumentMoniker": "Newsletter\\ViewModels\\CreateNewsArticleVM.cs",
@@ -115,47 +116,49 @@
               "RelativeToolTip": "Newsletter\\ViewModels\\CreateNewsArticleVM.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-12T07:01:56.051Z"
+              "WhenOpened": "2024-08-12T07:01:56.051Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "NewsArticle.cs",
               "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Models\\NewsArticle.cs",
               "RelativeDocumentMoniker": "Newsletter\\Models\\NewsArticle.cs",
               "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Models\\NewsArticle.cs",
               "RelativeToolTip": "Newsletter\\Models\\NewsArticle.cs",
-              "ViewState": "AQIAABIAAAAAAAAAAAA9wA8AAAAuAAAA",
+              "ViewState": "AQIAABkAAAAAAAAAAAA7wCIAAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-12T06:48:56.19Z"
+              "WhenOpened": "2024-08-12T06:48:56.19Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 6,
               "Title": "UsersController.cs",
               "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\UsersController.cs",
               "RelativeDocumentMoniker": "Newsletter\\Controllers\\UsersController.cs",
               "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\UsersController.cs",
               "RelativeToolTip": "Newsletter\\Controllers\\UsersController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAIMAAAAsAAAA",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAAwIMAAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-12T06:23:08.995Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "AdminController.cs",
               "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\AdminController.cs",
               "RelativeDocumentMoniker": "Newsletter\\Controllers\\AdminController.cs",
               "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\AdminController.cs",
               "RelativeToolTip": "Newsletter\\Controllers\\AdminController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEwAAAAAAAAA",
+              "ViewState": "AQIAAFkAAAAAAAAAAAAgwGwAAAAPAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-12T06:23:02.024Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "UploadImageController.cs",
               "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\UploadImageController.cs",
               "RelativeDocumentMoniker": "Newsletter\\Controllers\\UploadImageController.cs",
@@ -167,7 +170,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
               "Title": "UserUserRoles.cs",
               "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Models\\UserUserRoles.cs",
               "RelativeDocumentMoniker": "Newsletter\\Models\\UserUserRoles.cs",
@@ -175,11 +178,12 @@
               "RelativeToolTip": "Newsletter\\Models\\UserUserRoles.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-12T06:50:34.302Z"
+              "WhenOpened": "2024-08-12T06:50:34.302Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\appsettings.json",
               "RelativeDocumentMoniker": "Newsletter\\appsettings.json",
@@ -199,7 +203,8 @@
               "RelativeToolTip": "Newsletter\\Models\\NewsTest.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-12T06:49:21.188Z"
+              "WhenOpened": "2024-08-12T06:49:21.188Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -211,7 +216,8 @@
               "RelativeToolTip": "Newsletter\\Models\\UserRoles.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-12T06:50:45.819Z"
+              "WhenOpened": "2024-08-12T06:50:45.819Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -223,11 +229,12 @@
               "RelativeToolTip": "Newsletter\\Models\\Users.cs",
               "ViewState": "AQIAAA4AAAAAAAAAAAAgwBcAAAAyAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-12T06:50:49.879Z"
+              "WhenOpened": "2024-08-12T06:50:49.879Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 3,
               "Title": "CreateNewsTestVM.cs",
               "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\ViewModels\\CreateNewsTestVM.cs",
               "RelativeDocumentMoniker": "Newsletter\\ViewModels\\CreateNewsTestVM.cs",
@@ -235,7 +242,8 @@
               "RelativeToolTip": "Newsletter\\ViewModels\\CreateNewsTestVM.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAA0AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-12T07:02:03.353Z"
+              "WhenOpened": "2024-08-12T07:02:03.353Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -247,7 +255,8 @@
               "RelativeToolTip": "Newsletter\\Program.cs",
               "ViewState": "AQIAACQAAAAAAAAAAAAAADQAAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-12T03:51:40.772Z"
+              "WhenOpened": "2024-08-12T03:51:40.772Z",
+              "EditorCaption": ""
             }
           ]
         }
