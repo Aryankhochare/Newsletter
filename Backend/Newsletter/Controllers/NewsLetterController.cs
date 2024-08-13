@@ -16,6 +16,7 @@ namespace Newsletter.Controllers
     {
         private readonly Supabase.Client client;
         private readonly IConfiguration configuration;
+        private Dictionary<string, string> categoryCache = new Dictionary<string, string>();
         public NewsLetterController(Client _client, IConfiguration _configuration)
         {
             client = _client ?? throw new ArgumentNullException(nameof(_client));
@@ -40,11 +41,43 @@ namespace Newsletter.Controllers
 
         private async Task<string> GetCategoryIdByName(string categoryName)
         {
+            if(categoryCache.TryGetValue(categoryName, out string cacheId))
+            {
+                return cacheId;
+            }
             var response = await client.From<Category>()
                                        .Select("category_id")
                                        .Where(x => x.CategoryName == categoryName)
                                        .Single();
-            return response?.CategoryId;
+            if (response?.CategoryId != null)
+            {
+                categoryCache[categoryName] = response.CategoryId;
+                return response.CategoryId;
+            }
+            return null;
+        }
+
+        private async Task<string>UploadCoverImage(IFormFile coverImage, string newsletterId)
+        {
+            if (coverImage == null) return null;
+            using var memoryStream = new MemoryStream();
+            await coverImage.CopyToAsync(memoryStream);
+            var lastIndexOfDot = coverImage.FileName.LastIndexOf('.');
+            var extension = coverImage.FileName.Substring(lastIndexOfDot + 1);
+            var filename = $"newsletter-{newsletterId}.{extension}";
+            await client.Storage.From("news_image").Upload(memoryStream.ToArray(), filename);
+            return client.Storage.From("news_image").GetPublicUrl(filename);
+        }
+
+        private async Task<string> ValidateAndGetUserId()
+        {
+            var authHeader = Request.Headers["Authorization"].FirstOrDefault();
+            if (authHeader != null && authHeader.StartsWith("Bearer "))
+            {
+                var token = authHeader.Substring(7);
+                return GetUserIdFromToken(token);
+            }
+            return null;
         }
 
 
@@ -54,17 +87,25 @@ namespace Newsletter.Controllers
         {
             try
             {
-                var authHeader = Request.Headers["Authorization"].FirstOrDefault();
-                if (authHeader != null && authHeader.StartsWith("Bearer "))
-                {
-                    var token = authHeader.Substring(7);
-                    var userId = GetUserIdFromToken(token);
+
+                    var userId = await ValidateAndGetUserId();
+                    if (userId == null) return Unauthorized("User not found");
                     var categoryId = await GetCategoryIdByName(article.CategoryName);
                     if (string.IsNullOrEmpty(categoryId))
                     {
                         return BadRequest("Invalid category name");
                     }
-                    var newsletter = new NewsArticle
+
+                    var tempId = Guid.NewGuid().ToString();
+
+                    string coverImageUrl = null;
+                    if (article.CoverImage != null)
+                    {
+                       coverImageUrl = await UploadCoverImage(article.CoverImage, tempId);
+                    }
+
+
+                var newsletter = new NewsArticle
                     {
                         UserId = userId,
                         CategoryId = categoryId, 
@@ -72,6 +113,7 @@ namespace Newsletter.Controllers
                         EditorContent = article.EditorContent,
                         IsVerified = false,
                         IsRejected = false,
+                        CoverImage = coverImageUrl,
                         PostedOn = DateTime.UtcNow,
                         ModifiedDate = DateTime.UtcNow,
                     };
@@ -81,23 +123,7 @@ namespace Newsletter.Controllers
                     {
                         return BadRequest("Failed To create newsletter");
                     }
-                    if (article.CoverImage != null)
-                    {
-                        using var memoryStream = new MemoryStream();
-                        await article.CoverImage.CopyToAsync(memoryStream);
-                        var lastIndexOfDot = article.CoverImage.FileName.LastIndexOf('.');
-                        var extension = article.CoverImage.FileName.Substring(lastIndexOfDot + 1);
-                        var filename = $"newsletter-{newNewsletter.Id}.{extension}";
-                        await client.Storage.From("news_image")
-                            .Upload(memoryStream.ToArray(), filename);
-                        var url = client.Storage.From("news_image").GetPublicUrl(filename);
-                        newNewsletter.CoverImage = url;
-
-                        await client.From<NewsArticle>()
-                            .Where(n => n.Id == newNewsletter.Id)
-                            .Set(n => n.CoverImage, url)
-                            .Update();
-                    }
+                   
                     if (article.Images != null && article.ImageNames != null)
                     {
                         for (int i = 0; i < article.Images.Count; i++)
@@ -113,10 +139,7 @@ namespace Newsletter.Controllers
                     await client.From<NewsArticle>()
                          .Update(newsletter);
 
-                    return Ok(new { Id = newNewsletter.Id });
-
-                }
-                return BadRequest("User Not Found");
+                return Ok(new { Id = newNewsletter.Id });
 
               
             }
