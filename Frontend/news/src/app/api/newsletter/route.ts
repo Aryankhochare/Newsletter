@@ -4,6 +4,11 @@ import FormData from "form-data";
 import fetch from "node-fetch";
 import { authOptions } from "../auth/[...nextauth]/route";
 
+declare module "next-auth" {
+  interface Session {
+    accessToken: string;
+  }
+}
 
 
 export async function POST(req: NextRequest) {
