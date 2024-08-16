@@ -1,10 +1,10 @@
 "use client";
-import { revalidatePath } from "next/cache";
+import { useState } from "react";
 import { Button } from "./ui/button";
-import { useState, useEffect } from "react";
-import { useArticleStore } from "@/components/ArticleStore";
+import { useArticleStore } from "@/app/ArticleStore";
 import { Badge } from "./ui/badge";
 import { useRouter } from "next/navigation";
+import { FiTrash2 } from "react-icons/fi";
 
 interface News {
   id: string;
@@ -25,11 +25,15 @@ function EditorButtons({ Data }: { Data: News[] }) {
   const [articles, setArticles] = useState<News[]>(Data);
   const [loading, setLoading] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState("all");
+  const [feedback, setFeedback] = useState("");
+  const [showFeedbackDialog, setShowFeedbackDialog] = useState(false);
+  const [currentArticleId, setCurrentArticleId] = useState<string | null>(null);
   const send_article = useArticleStore((state) => state.setArticle);
   const router = useRouter();
 
   const handleVerify = async (id: string) => {
     try {
+      setLoading(true);
       await fetch(
         `${process.env.NEXT_PUBLIC_ASP_NET_URL}/editor/verify/${id}`,
         {
@@ -48,67 +52,69 @@ function EditorButtons({ Data }: { Data: News[] }) {
             : article
         )
       );
-
-      router.refresh();
     } catch (error) {
-      console.error("Error fetching content:", error);
+      console.error("Error verifying content:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleReject = async (id: string) => {
-    try {
-      await fetch(
-        `${process.env.NEXT_PUBLIC_ASP_NET_URL}/editor/reject/${id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ id }),
-        }
-      );
+    setCurrentArticleId(id);
+    setShowFeedbackDialog(true);
+  };
 
-      setArticles((prevArticles) =>
-        prevArticles.map((article) =>
-          article.id === id
-            ? { ...article, isVerified: true, isRejected: true }
-            : article
-        )
-      );
+  const handleSendBackConfirm = async () => {
+    if (currentArticleId) {
+      try {
+        setLoading(true);
+        await fetch(
+          `${process.env.NEXT_PUBLIC_ASP_NET_URL}/editor/reject/${currentArticleId}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ feedback }),
+          }
+        );
 
-
-      router.refresh();
-    } catch (error) {
-      console.error("Error rejecting content:", error);
+        setArticles((prevArticles) =>
+          prevArticles.map((article) =>
+            article.id === currentArticleId
+              ? { ...article, isVerified: true, isRejected: true }
+              : article
+          )
+        );
+        setShowFeedbackDialog(false);
+        setFeedback("");
+        setCurrentArticleId(null);
+      } catch (error) {
+        console.error("Error rejecting content:", error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
   const handleDelete = async (id: string) => {
     try {
+      setLoading(true);
       await fetch(`${process.env.NEXT_PUBLIC_ASP_NET_URL}/editor/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id }),
       });
-      router.refresh();
+      setArticles((prevArticles) =>
+        prevArticles.filter((article) => article.id !== id)
+      );
     } catch (error) {
       console.error("Error deleting content:", error);
+    } finally {
+      setLoading(false);
     }
   };
-
-  // search query
-  const filteredArticles = articles.filter((article) => {
-    let status = "Pending";
-    if (article.isVerified) {
-      status = article.isRejected ? "Rejected" : "Approved";
-    }
-    const matchesSelectedStatus =
-      selectedStatus === "all" ||
-      status.toLowerCase() === selectedStatus.toLowerCase();
-    return matchesSelectedStatus;
-  });
 
   const handleTitleClick = (id: string) => {
     const article_content = articles.find((e) => e.id == id);
@@ -120,9 +126,21 @@ function EditorButtons({ Data }: { Data: News[] }) {
     }
   };
 
+  // Filtering based on status selection
+  const filteredArticles = articles.filter((article) => {
+    let status = "Pending";
+    if (article.isVerified) {
+      status = article.isRejected ? "Rejected" : "Approved";
+    }
+    const matchesSelectedStatus =
+      selectedStatus === "all" ||
+      status.toLowerCase() === selectedStatus.toLowerCase();
+    return matchesSelectedStatus;
+  });
+
   return (
-    <div className="container mx-auto px-4 py-8 md:px-6 md:py-12">
-      <div className="bg-gradient-to-r from-black via-gray-800 to-white p-4 shadow-lg">
+    <div className="container grid px-4 py-8 md:px-0 md:py-12">
+      <div className="bg-gradient-to-r from-black via-gray-800 to-black p-4 shadow-lg">
         <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
           <h1 className="text-2xl md:text-3xl font-extrabold text-white mb-4 md:mb-0">
             Post Requests
@@ -131,7 +149,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
-              className="pl-3 pr-8 py-2 rounded-full border-none bg-white text-gray-700 shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-300"
+              className="pl-1 pr-3 py-2 rounded border-none bg-slate-100 text-gray-900 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-indigo-200"
             >
               <option value="all">Status</option>
               <option value="approved">Approved</option>
@@ -152,7 +170,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
               <th className="px-4 py-2 text-left text-sm md:text-base font-medium">
                 Status
               </th>
-              <th className="px-4 py-2 text-left text-sm md:text-base font-medium">
+              <th className="px-4 py-2 text-right text-sm md:text-base font-medium">
                 Actions
               </th>
             </tr>
@@ -177,14 +195,14 @@ function EditorButtons({ Data }: { Data: News[] }) {
                 </td>
               </tr>
             ) : (
-              filteredArticles.map((article, index) => {
+              filteredArticles.map((article) => {
                 let status = "Pending";
                 if (article.isVerified) {
                   status = article.isRejected ? "Rejected" : "Approved";
                 }
 
                 return (
-                  <tr key={index} className="border-b md:table-row">
+                  <tr key={article.id} className="border-b md:table-row">
                     <td
                       className="px-4 py-2 cursor-pointer text-sm md:text-base"
                       onClick={() => handleTitleClick(article.id)}
@@ -205,28 +223,35 @@ function EditorButtons({ Data }: { Data: News[] }) {
                         {status}
                       </Badge>
                     </td>
-                    <td className="px-4 py-2 flex flex-col gap-2 text-sm md:text-base md:flex-row">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => handleVerify(article.id)}
-                      >
-                        Approve
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => handleReject(article.id)}
-                      >
-                        Reject
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => handleDelete(article.id)}
-                      >
-                        Send Back
-                      </Button>
+                    <td className="px-4 py-2 text-right text-sm md:text-base">
+                      <div className="flex justify-end gap-2">
+                        {!article.isVerified && (
+                          <>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => handleVerify(article.id)}
+                            >
+                              Approve
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => handleReject(article.id)}
+                            >
+                              Sendback
+                            </Button>
+                          </>
+                        )}
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleDelete(article.id)}
+                          className="text-red-600"
+                        >
+                          <FiTrash2 />
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 );
@@ -235,6 +260,36 @@ function EditorButtons({ Data }: { Data: News[] }) {
           </tbody>
         </table>
       </div>
+
+      {/* Feedback Dialog */}
+      {showFeedbackDialog && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-xl font-semibold mb-4">Send Back Feedback</h2>
+            <textarea
+              className="w-full p-2 border rounded"
+              rows={4}
+              placeholder="Enter your feedback here..."
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
+            />
+            <div className="flex justify-end mt-4">
+              <Button
+                variant="outline"
+                onClick={() => setShowFeedbackDialog(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                className="ml-2"
+                onClick={handleSendBackConfirm}
+              >
+                Send Back
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
