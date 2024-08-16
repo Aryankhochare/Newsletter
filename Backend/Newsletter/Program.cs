@@ -47,7 +47,20 @@ new Supabase.Client(
         AutoRefreshToken = true,
     }));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:3000")
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 app.UseSwagger();
@@ -56,6 +69,8 @@ if (app.Environment.IsDevelopment())
    
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowSpecificOrigin");
 
 app.UseHttpsRedirection();
 
