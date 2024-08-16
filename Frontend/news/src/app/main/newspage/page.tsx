@@ -110,21 +110,21 @@ const NewsPage: React.FC<NewsPageProps> = ({ params }) => {
             />
             <div className="prose prose-xl max-w-none">
               <p className="mb-6 text-xl leading-relaxed">
-                "A secret appointment exists between past generations and our own," Walter Benjamin wrote. 
-                "Our arrival on earth was expected." At pivotal moments, the philosopher argued, voices from 
+              &quot;A secret appointment exists between past generations and our own,&quot; Walter Benjamin wrote. 
+              &quot;Our arrival on earth was expected.&quot; At pivotal moments, the philosopher argued, voices from 
                 the past reach out to us with prophetic force.
               </p>
               <p className="mb-6 text-xl leading-relaxed">
-                To review Biden's proposals, though, is to be reminded of why reforming the Court is so hard,
+                To review Biden&apos;s proposals, though, is to be reminded of why reforming the Court is so hard,
                 despite the dissatisfaction and a wealth of ideas. He proposed three measures, 
-                the first of which is not so much a reform as a rebuke: the "No One Is Above the Law Amendment" to the Constitution. 
-                It would effectively overrule the Court's decision, in Trump v. United States, dangerously asserting that former Presidents 
+                the first of which is not so much a reform as a rebuke: the &quot;No One Is Above the Law Amendment&quot; to the Constitution. 
+                It would effectively overrule the Court&apos;s decision, in Trump v. United States, dangerously asserting that former Presidents 
                 have broad immunity from criminal prosecution for their actions in office. But any amendment requires first a two-thirds majority in each house of Congress, 
                 and then ratification by three-quarters of the states—thirty-eight in all, a big number. Alternatively, two-thirds of the state legislatures could demand a 
                 constitutional convention, which might put the entire document up for grabs. This has never happened, and could be calamitous in a time of Trumpism.
               </p>
               <p className="mb-6 text-xl leading-relaxed">
-                The rediscovery of this female composer's work sheds new light on the musical landscape of 
+                The rediscovery of this female composer&apos;s work sheds new light on the musical landscape of 
                 two centuries ago, challenging our understanding of gender roles in classical music composition.
               </p>
             </div>

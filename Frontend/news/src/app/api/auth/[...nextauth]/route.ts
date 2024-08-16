@@ -18,7 +18,7 @@ export const supabase: SupabaseClient = createClient(
 
 async function fetchUserRole(userId: string) {
   try {
-    const response = await fetch(`${process.env.ASP_NET_URL}/users/${userId}`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_ASP_NET_URL}/users/${userId}`);
     if (!response.ok) {
       throw new Error(`Failed to fetch data: ${response.status} ${response.statusText}`);
     }
@@ -117,7 +117,8 @@ export const authOptions: NextAuthOptions = {
       console.log(`this is updated sessin : `)
       return updatedSession
     
-    }
+    },
+
   },
   session:{
     maxAge:1*60,

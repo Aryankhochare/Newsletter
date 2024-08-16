@@ -51,7 +51,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ params }) => {
   const ViewMoreButton = ({ article }: { article: Article }) => {
     if (userRole && userRole !== 'user') {
       return (
-        <Link href={`/newspage/${article.title.toLowerCase().replace(/ /g, '-')}`} className="underline text-blue-600 hover:text-blue-800">
+        <Link href={`/main/newspage/${article.title.toLowerCase().replace(/ /g, '-')}`} className="underline text-blue-600 hover:text-blue-800">
           View more...
         </Link>
       );

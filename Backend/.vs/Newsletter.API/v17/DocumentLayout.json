@@ -3,24 +3,56 @@
   "WorkspaceRootPath": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\controllers\\editorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\controllers\\editorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\controllers\\newslettercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\controllers\\newslettercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\models\\users.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\models\\users.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\models\\newsarticle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\models\\newsarticle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\controllers\\newslettercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\controllers\\newslettercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\viewmodels\\createcategoryvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\viewmodels\\createcategoryvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\models\\usercategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\models\\usercategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\viewmodels\\getcategoryvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\viewmodels\\getcategoryvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\controllers\\editorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\controllers\\editorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\viewmodels\\createuservm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\viewmodels\\createuservm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\controllers\\uploadimagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,7 +66,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -50,16 +82,64 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "NewsLetterController.cs",
+              "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\NewsLetterController.cs",
+              "RelativeDocumentMoniker": "Newsletter\\Controllers\\NewsLetterController.cs",
+              "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\NewsLetterController.cs",
+              "RelativeToolTip": "Newsletter\\Controllers\\NewsLetterController.cs",
+              "ViewState": "AQIAAFwAAAAAAAAAAAAAAG4AAABfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-16T07:30:50.928Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "Users.cs",
+              "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Models\\Users.cs",
+              "RelativeDocumentMoniker": "Newsletter\\Models\\Users.cs",
+              "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Models\\Users.cs",
+              "RelativeToolTip": "Newsletter\\Models\\Users.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAowAwAAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-16T07:20:21.299Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "Newsletter\\Controllers\\UsersController.cs",
+              "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "Newsletter\\Controllers\\UsersController.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAFUAAABjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-16T04:02:10.24Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "Newsletter\\Controllers\\AdminController.cs",
+              "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "Newsletter\\Controllers\\AdminController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-14T04:39:14.148Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Program.cs",
               "RelativeDocumentMoniker": "Newsletter\\Program.cs",
               "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Program.cs",
               "RelativeToolTip": "Newsletter\\Program.cs",
-              "ViewState": "AQIAADEAAAAAAAAAAAAcwDoAAAADAAAA",
+              "ViewState": "AQIAADkAAAAAAAAAAAAcwFMAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-15T07:48:08.808Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-15T07:48:08.808Z"
             },
             {
               "$type": "Document",
@@ -69,37 +149,97 @@
               "RelativeDocumentMoniker": "Newsletter\\Models\\NewsArticle.cs",
               "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Models\\NewsArticle.cs",
               "RelativeToolTip": "Newsletter\\Models\\NewsArticle.cs",
-              "ViewState": "AQIAABMAAAAAAAAAAAA5wCQAAAABAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACQAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-14T11:53:01.368Z"
             },
             {
               "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "CategoryController.cs",
+              "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\CategoryController.cs",
+              "RelativeDocumentMoniker": "Newsletter\\Controllers\\CategoryController.cs",
+              "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\CategoryController.cs",
+              "RelativeToolTip": "Newsletter\\Controllers\\CategoryController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-16T03:54:23.521Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "CreateCategoryVM.cs",
+              "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\ViewModels\\CreateCategoryVM.cs",
+              "RelativeDocumentMoniker": "Newsletter\\ViewModels\\CreateCategoryVM.cs",
+              "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\ViewModels\\CreateCategoryVM.cs",
+              "RelativeToolTip": "Newsletter\\ViewModels\\CreateCategoryVM.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-16T04:02:30.722Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "UserCategory.cs",
+              "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Models\\UserCategory.cs",
+              "RelativeDocumentMoniker": "Newsletter\\Models\\UserCategory.cs",
+              "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Models\\UserCategory.cs",
+              "RelativeToolTip": "Newsletter\\Models\\UserCategory.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAtAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-16T03:49:22.058Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "GetCategoryVM.cs",
+              "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\ViewModels\\GetCategoryVM.cs",
+              "RelativeDocumentMoniker": "Newsletter\\ViewModels\\GetCategoryVM.cs",
+              "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\ViewModels\\GetCategoryVM.cs",
+              "RelativeToolTip": "Newsletter\\ViewModels\\GetCategoryVM.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-16T05:37:22.683Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "EditorController.cs",
+              "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\EditorController.cs",
+              "RelativeDocumentMoniker": "Newsletter\\Controllers\\EditorController.cs",
+              "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\EditorController.cs",
+              "RelativeToolTip": "Newsletter\\Controllers\\EditorController.cs",
+              "ViewState": "AQIAAGQAAAAAAAAAAAAkwA4AAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-14T03:40:32.634Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "AdminController.cs",
-              "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\AdminController.cs",
-              "RelativeDocumentMoniker": "Newsletter\\Controllers\\AdminController.cs",
-              "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\AdminController.cs",
-              "RelativeToolTip": "Newsletter\\Controllers\\AdminController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Title": "Category.cs",
+              "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Models\\Category.cs",
+              "RelativeDocumentMoniker": "Newsletter\\Models\\Category.cs",
+              "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Models\\Category.cs",
+              "RelativeToolTip": "Newsletter\\Models\\Category.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-14T04:39:14.148Z"
+              "WhenOpened": "2024-08-16T04:14:00.287Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "NewsLetterController.cs",
-              "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\NewsLetterController.cs",
-              "RelativeDocumentMoniker": "Newsletter\\Controllers\\NewsLetterController.cs",
-              "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\NewsLetterController.cs",
-              "RelativeToolTip": "Newsletter\\Controllers\\NewsLetterController.cs",
-              "ViewState": "AQIAAEsAAAAAAAAAAAAowBYBAAANAAAA",
+              "DocumentIndex": 12,
+              "Title": "CreateUserVM.cs",
+              "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\ViewModels\\CreateUserVM.cs",
+              "RelativeDocumentMoniker": "Newsletter\\ViewModels\\CreateUserVM.cs",
+              "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\ViewModels\\CreateUserVM.cs",
+              "RelativeToolTip": "Newsletter\\ViewModels\\CreateUserVM.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-14T04:12:30.244Z"
+              "WhenOpened": "2024-08-16T04:07:27.819Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 13,
               "Title": "UploadImageController.cs",
               "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\UploadImageController.cs",
               "RelativeDocumentMoniker": "Newsletter\\Controllers\\UploadImageController.cs",
@@ -108,19 +248,6 @@
               "ViewState": "AQIAABYAAAAAAAAAAAAQwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-14T04:11:56.752Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "EditorController.cs",
-              "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\EditorController.cs",
-              "RelativeDocumentMoniker": "Newsletter\\Controllers\\EditorController.cs",
-              "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\EditorController.cs",
-              "RelativeToolTip": "Newsletter\\Controllers\\EditorController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-14T03:40:32.634Z",
-              "EditorCaption": ""
             }
           ]
         }

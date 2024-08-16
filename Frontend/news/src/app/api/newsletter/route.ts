@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
 
     console.log("FormData to be sent:", form);
 
-    const response = await fetch(`${process.env.ASP_NET_URL}/newsletter`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_ASP_NET_URL}/newsletter`, {
       method: "POST",
       body: form as any,
       headers: {

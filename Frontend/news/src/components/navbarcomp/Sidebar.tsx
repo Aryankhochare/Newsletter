@@ -85,7 +85,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   {categories.map((category, index) => (
                     <li key={index}>
                       <Link
-                        href={`/category/${category.toLowerCase()}`}
+                        href={`/main/category/${category.toLowerCase()}`}
                         className="scrollbar-hide block py-2 px-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 rounded transition-colors duration-200"
                       >
                         {category}
