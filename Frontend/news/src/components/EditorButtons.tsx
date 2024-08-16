@@ -2,7 +2,7 @@
 import { revalidatePath } from "next/cache";
 import { Button } from "./ui/button";
 import { useState, useEffect } from "react";
-import { useArticleStore } from "@/app/ArticleStore";
+import { useArticleStore } from "@/components/ArticleStore";
 import { Badge } from "./ui/badge";
 import { useRouter } from "next/navigation";
 
