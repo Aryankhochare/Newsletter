@@ -68,6 +68,15 @@ function EditorButtons({ Data }: { Data: News[] }) {
         }
       );
 
+      setArticles((prevArticles) =>
+        prevArticles.map((article) =>
+          article.id === id
+            ? { ...article, isVerified: true, isRejected: true }
+            : article
+        )
+      );
+
+
       router.refresh();
     } catch (error) {
       console.error("Error rejecting content:", error);
