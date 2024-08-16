@@ -1,39 +1,66 @@
-
-
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 import { JWT } from "next-auth/jwt";
 
 interface CustomToken extends JWT {
-    roles?: string[];
-  }
+  roles?: string[];
+}
 
 export default withAuth(
   function middleware(req) {
-    console.log(req.nextauth.token);
-    const token = req.nextauth.token as CustomToken
-    console.log("Pathname:", req.nextUrl.pathname);
-    console.log("Has ADMIN role:", token?.roles?.includes("ADMIN"));
-    if (!req.nextUrl.pathname.includes("/admin") && token?.roles?.includes("ADMIN")){
-        console.log("Redirecting to admin page");
-      return NextResponse.redirect(new URL("/admin",req.url));
+    const token = req.nextauth.token as CustomToken;
+    const pathname = req.nextUrl.pathname;
+
+    console.log("Pathname:", pathname);
+    console.log("Token Roles:", token?.roles);
+
+    if (pathname === "/") {
+      console.log("Redirecting to /user page upon login");
+      return NextResponse.redirect(new URL("/main", req.url));
     }
 
-    else if (!req.nextUrl.pathname.includes("/editor") && token?.roles?.includes("EDITOR")) {
-        console.log("Redirecting to editor page");
-      return NextResponse.redirect(new URL("/editor",req.url));
+    if (token?.roles?.includes("ADMIN")) {
+      console.log("ADMIN accessing all routes");
+      return NextResponse.next();
     }
 
-    else if (!req.nextUrl.pathname.includes("/writer") && token?.roles?.includes("WRITER")) {
-      console.log("Redirecting to writer page");
-    return NextResponse.redirect(new URL("/writer/quill_editor",req.url));
-  }
-
-    else if (!req.nextUrl.pathname.includes("/user") && token?.roles?.includes("USER")) {
-        console.log("Redirecting to user page");
-      return NextResponse.redirect(new URL("/user",req.url));
+    if (token?.roles?.includes("EDITOR")) {
+      if (pathname.includes("/admin") || pathname.includes("/writer")) {
+        return NextResponse.error();
+      }
+      if (!pathname.includes("/editor") && !pathname.includes("/user")) {
+        console.log("Redirecting EDITOR to editor page");
+        return NextResponse.redirect(new URL("/editor", req.url));
+      }
+      console.log("EDITOR accessing editor or user routes");
+      return NextResponse.next();
     }
 
+    if (token?.roles?.includes("WRITER")) {
+      if (pathname.includes("/admin") || pathname.includes("/editor")) {
+        return NextResponse.error();
+      }
+      if (!pathname.includes("/writer") && !pathname.includes("/user")) {
+        console.log("Redirecting WRITER to writer page");
+        return NextResponse.redirect(new URL("/writer/quill_editor", req.url));
+      }
+      console.log("WRITER accessing writer or user routes");
+      return NextResponse.next();
+    }
+
+    if (token?.roles?.includes("USER")) {
+      if (pathname.includes("/admin") || pathname.includes("/editor") || pathname.includes("/writer")) {
+        return NextResponse.error();
+      }
+      if (!pathname.includes("/user")) {
+        console.log("Redirecting USER to user page");
+        return NextResponse.redirect(new URL("/user", req.url));
+      }
+      console.log("USER accessing user routes");
+      return NextResponse.next();
+    }
+
+    
     console.log("Proceeding with request");
     return NextResponse.next();
   },
@@ -47,4 +74,4 @@ export default withAuth(
   }
 );
 
-export const config = {matcher:['/']};
+export const config = { matcher: ['/', '/admin', '/editor', '/writer', '/user'] };

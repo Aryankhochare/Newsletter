@@ -1,8 +1,7 @@
 'use client'
 
 import React, { useState } from "react";
-import QuillEditor from '../../../components/QuillEditor';
-import ImageUploader from "@/components/ImageUploader";
+import QuillEditor from "@/components/quilleditor/QuillEditor";
 import { PenTool} from 'lucide-react';
 
 

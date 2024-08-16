@@ -4,6 +4,8 @@ using Microsoft.IdentityModel.Tokens;
 using Newsletter.Models;
 using Newsletter.ViewModels;
 using Supabase;
+using Supabase.Postgrest;
+using Supabase.Postgrest.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.AccessControl;
 using System.Text;
@@ -17,7 +19,7 @@ namespace Newsletter.Controllers
         private readonly Supabase.Client client;
         private readonly IConfiguration configuration;
         private Dictionary<string, string> categoryCache = new Dictionary<string, string>();
-        public NewsLetterController(Client _client, IConfiguration _configuration)
+        public NewsLetterController(Supabase.Client _client, IConfiguration _configuration)
         {
             client = _client ?? throw new ArgumentNullException(nameof(_client));
             configuration = _configuration ?? throw new ArgumentNullException(nameof(_configuration));
@@ -80,37 +82,60 @@ namespace Newsletter.Controllers
             return null;
         }
 
-        [HttpGet("search/category")]
-        public async Task<IActionResult> SearchByCategory([FromQuery] string categoryname)
+        [HttpGet("search")]
+        public async Task<IActionResult> Search([FromQuery] string category = null, [FromQuery] string writer = null, [FromQuery] string title = null)
         {
             try
             {
-                var categoryId = await GetCategoryIdByName(categoryname);
-                if (string.IsNullOrEmpty(categoryId)) return BadRequest("Invalid Category Name");
-                var response = await client.From<NewsArticle>()
-                    .Where(x => x.CategoryId == categoryId)
-                    .Get();
+                var query = client.From<NewsArticle>() as IPostgrestTable<NewsArticle>;
+
+                if (!string.IsNullOrEmpty(category))
+                {
+                    var categoryId = await GetCategoryIdByName(category);
+                    if (string.IsNullOrEmpty(categoryId)) return BadRequest("Invalid Category Name");
+                    query = query.Filter("category_id", Constants.Operator.Equals, categoryId);
+                }
+
+                if (!string.IsNullOrEmpty(writer))
+                {
+                    var userResponse = await client.From<Users>()
+                        .Select("user_id")
+                        .Where(x => x.Username == writer)
+                        .Single();
+                    if (userResponse == null) return BadRequest("Invalid writer name");
+                    query = query.Filter("user_id", Constants.Operator.Equals, userResponse.Id);
+                }
+
+                if (!string.IsNullOrEmpty(title))
+                {
+                    query = query.Filter("news_title", Constants.Operator.ILike, $"%{title}%");
+                }
+
+                var response = await query.Get();
+
                 if (response?.Models == null || !response.Models.Any())
                 {
-                    return NotFound($"No article was found for {categoryname}");
+                    return NotFound("No articles found matching the search criteria");
                 }
+
                 var articles = response.Models;
-                // Fetch categories
+
+                // Fetch categories and users (similar to your existing code)
                 var categoriesResponse = await client.From<Category>().Get();
                 var categories = categoriesResponse.Models ?? new List<Category>();
 
-                // Fetch users
                 var usersResponse = await client.From<Users>().Get();
                 var users = usersResponse.Models ?? new List<Users>();
 
                 var result = new List<object>();
-                foreach(var article in articles)
+                foreach (var article in articles)
                 {
-                    var category = categories.FirstOrDefault(c => c.CategoryId == article.CategoryId);
+                    var newcategory = categories.FirstOrDefault(c => c.CategoryId == article.CategoryId);
                     var user = users.FirstOrDefault(u => u.Id == article.UserId);
 
-                    var categoryName = category?.CategoryName ?? string.Empty;
+                    var categoryName = newcategory?.CategoryName ?? string.Empty;
                     var userName = user?.Username ?? string.Empty;
+
                     result.Add(new
                     {
                         article.Id,
@@ -127,6 +152,7 @@ namespace Newsletter.Controllers
                         article.IsRejected,
                     });
                 }
+
                 return Ok(result);
             }
             catch (Exception ex)
@@ -137,70 +163,70 @@ namespace Newsletter.Controllers
             }
         }
 
-        [HttpGet("search/writer")]
-        public async Task<IActionResult> SearchByWriter([FromQuery] string writer)
-        {
-            try
-            {
-                var response = await client.From<Users>()
-                    .Select("user_id")
-                    .Where(u => u.Username == writer)
-                    .Single();
-                if (response == null)
-                {
-                    return BadRequest("Invalid writer name");
-                }
+        //[HttpGet("search/writer")]
+        //public async Task<IActionResult> SearchByWriter([FromQuery] string writer)
+        //{
+        //    try
+        //    {
+        //        var response = await client.From<Users>()
+        //            .Select("user_id")
+        //            .Where(u => u.Username == writer)
+        //            .Single();
+        //        if (response == null)
+        //        {
+        //            return BadRequest("Invalid writer name");
+        //        }
 
-                var userId = response.Id;
+        //        var userId = response.Id;
 
-                var articlesResponse = await client.From<NewsArticle>()
-                    .Where(a => a.UserId == userId)
-                    .Get();
+        //        var articlesResponse = await client.From<NewsArticle>()
+        //            .Where(a => a.UserId == userId)
+        //            .Get();
 
-                if (articlesResponse?.Models == null || !articlesResponse.Models.Any())
-                {
-                    return NotFound($"No articles found for writer {writer}");
-                }
-                var articles = articlesResponse.Models;
+        //        if (articlesResponse?.Models == null || !articlesResponse.Models.Any())
+        //        {
+        //            return NotFound($"No articles found for writer {writer}");
+        //        }
+        //        var articles = articlesResponse.Models;
 
                 
-                var categoriesResponse = await client.From<Category>().Get();
-                var categories = categoriesResponse.Models ?? new List<Category>();
+        //        var categoriesResponse = await client.From<Category>().Get();
+        //        var categories = categoriesResponse.Models ?? new List<Category>();
 
-                var result = new List<object>();
-                foreach (var article in articles)
-                {
-                    var category = categories.FirstOrDefault(c => c.CategoryId == article.CategoryId);
-                    var categoryName = category?.CategoryName ?? string.Empty;
+        //        var result = new List<object>();
+        //        foreach (var article in articles)
+        //        {
+        //            var category = categories.FirstOrDefault(c => c.CategoryId == article.CategoryId);
+        //            var categoryName = category?.CategoryName ?? string.Empty;
 
-                    result.Add(new
-                    {
-                        article.Id,
-                        article.UserId,
-                        writer,
-                        article.CategoryId,
-                        categoryName,
-                        article.Title,
-                        article.EditorContent,
-                        article.PostedOn,
-                        article.ModifiedDate,
-                        article.IsVerified,
-                        article.CoverImage,
-                        article.IsRejected,
-                    });
-                }
+        //            result.Add(new
+        //            {
+        //                article.Id,
+        //                article.UserId,
+        //                writer,
+        //                article.CategoryId,
+        //                categoryName,
+        //                article.Title,
+        //                article.EditorContent,
+        //                article.PostedOn,
+        //                article.ModifiedDate,
+        //                article.IsVerified,
+        //                article.CoverImage,
+        //                article.IsRejected,
+        //            });
+        //        }
 
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error fetching articles by writer: {ex}");
-                return StatusCode(500, "An error occurred while fetching articles based on writer");
+        //        return Ok(result);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"Error fetching articles by writer: {ex}");
+        //        return StatusCode(500, "An error occurred while fetching articles based on writer");
 
-            }
+        //    }
            
             
-        }
+        //}
 
 
         [HttpPost]
