@@ -25,36 +25,36 @@ export default withAuth(
     }
 
     if (token?.roles?.includes("EDITOR")) {
-      if (pathname.includes("/admin") || pathname.includes("/writer")) {
+      if (pathname.startsWith("/main/admin") || pathname.startsWith("/main/writer")) {
         return NextResponse.error();
       }
-      if (!pathname.includes("/editor") && !pathname.includes("/user")) {
+      if (!pathname.startsWith("/main/editor") && !pathname.startsWith("/main/user")) {
         console.log("Redirecting EDITOR to editor page");
-        return NextResponse.redirect(new URL("/editor", req.url));
+        return NextResponse.redirect(new URL("/main/editor", req.url));
       }
       console.log("EDITOR accessing editor or user routes");
       return NextResponse.next();
     }
 
     if (token?.roles?.includes("WRITER")) {
-      if (pathname.includes("/admin") || pathname.includes("/editor")) {
+      if (pathname.startsWith("/main/admin") || pathname.startsWith("/main/editor")) {
         return NextResponse.error();
       }
-      if (!pathname.includes("/writer") && !pathname.includes("/user")) {
+      if (!pathname.startsWith("/main/writer") && !pathname.startsWith("/main/user")) {
         console.log("Redirecting WRITER to writer page");
-        return NextResponse.redirect(new URL("/writer/quill_editor", req.url));
+        return NextResponse.redirect(new URL("/main/writer", req.url));
       }
       console.log("WRITER accessing writer or user routes");
       return NextResponse.next();
     }
 
     if (token?.roles?.includes("USER")) {
-      if (pathname.includes("/admin") || pathname.includes("/editor") || pathname.includes("/writer")) {
+      if (pathname.startsWith("/admin") || pathname.startsWith("/editor") || pathname.startsWith("/writer")) {
         return NextResponse.error();
       }
-      if (!pathname.includes("/user")) {
+      if (!pathname.startsWith("/main/user")) {
         console.log("Redirecting USER to user page");
-        return NextResponse.redirect(new URL("/user", req.url));
+        return NextResponse.redirect(new URL("/main/user", req.url));
       }
       console.log("USER accessing user routes");
       return NextResponse.next();
@@ -74,4 +74,4 @@ export default withAuth(
   }
 );
 
-export const config = { matcher: ['/', '/admin', '/editor', '/writer', '/user'] };
+export const config = { matcher: ['/','/main', '/main/admin/:path*', '/main/editor/:path*', '/main/writer/:path*', '/main/user/:path*'] };

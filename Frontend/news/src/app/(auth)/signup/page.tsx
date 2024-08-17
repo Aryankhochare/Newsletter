@@ -1,4 +1,5 @@
 'use client';
+import axios from 'axios';
 //import { Button } from '@/components/button';
 import Head from 'next/head';
 import { useState } from 'react';
@@ -16,10 +17,24 @@ export default function SignUp() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+    try {
+      const response = await axios.post('/api/auth/register', {
+        username: formData.name,
+        password: formData.password,
+        email: formData.email
+      });
+      
+      if (response.status === 200) {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.error('Error during sign up:', error);
+      alert('Failed to sign up. Please try again.');
+    }
   };
+
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4 sm:p-6 md:p-8">

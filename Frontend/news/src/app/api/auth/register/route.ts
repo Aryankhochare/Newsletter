@@ -7,7 +7,7 @@ export async function POST(req : Request){
 
         //STEP 1: validate the data received
         console.log({username,password, email});
-        const response = await axios.post(`${process.env.ASP_NET_URL}/users`,{
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_ASP_NET_URL}/users`,{
             username,
             password,
             email,

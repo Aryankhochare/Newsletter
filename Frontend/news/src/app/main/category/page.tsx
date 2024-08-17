@@ -64,7 +64,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ params }) => {
               <DialogTitle>Login Required</DialogTitle>
             </DialogHeader>
             <p>Please login to continue reading this article.</p>
-          </DialogContent>
+          </DialogContent> add .
         </Dialog>
       );
     }
