@@ -71,7 +71,7 @@
 //     );
 // }
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Image from "next/image";
 import Link from 'next/link';
 import {
@@ -94,112 +94,107 @@ import {
   Bookmark, 
   History, 
   CreditCard, 
-  LogOut 
+  LogOut, 
+  SignpostBig
 } from 'lucide-react';
+import { signOut, useSession } from 'next-auth/react';
 
 export default function ProfileInfo() {
-  const [userRole, setUserRole] = useState('');
-
-  useEffect(() => {
-    const role = localStorage.getItem('userRole');
-    setUserRole(role || '');
-  }, []);
+  const { data: session } = useSession();
+  const userRoles =  (session?.user as any)?.roles || [];
 
   const renderMenuItems = () => {
-    switch (userRole) {
-      case 'admin':
-        return (
-          <>
+    if (userRoles.includes('ADMIN')) {
+      return (
+        <>
+          <DropdownMenuItem>
+            <User className="mr-2 h-4 w-4" />
+            <span>Profile</span>
+          </DropdownMenuItem>
+          <Link href="/main/admin/dashboard">
             <DropdownMenuItem>
-              <User className="mr-2 h-4 w-4" />
-              <span>Profile</span>
+              <LayoutDashboard className="mr-2 h-4 w-4" />
+              <span>Dashboard</span>
             </DropdownMenuItem>
-            <Link href="/admin/dashboard">
-              <DropdownMenuItem>
-                <LayoutDashboard className="mr-2 h-4 w-4" />
-                <span>Dashboard</span>
-              </DropdownMenuItem>
-            </Link>
-            <Link href="/admin/roles">
-              <DropdownMenuItem>
-                <UserCog className="mr-2 h-4 w-4" />
-                <span>Manage Roles</span>
-              </DropdownMenuItem>
-            </Link>
+          </Link>
+          <Link href="/main/admin/roles">
             <DropdownMenuItem>
-              <Inbox className="mr-2 h-4 w-4" />
-              <span>Requests</span>
+              <UserCog className="mr-2 h-4 w-4" />
+              <span>Manage Roles</span>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Settings className="mr-2 h-4 w-4" />
-              <span>System Settings</span>
-            </DropdownMenuItem>
-          </>
-        );
-      case 'editor':
-        return (
-          <>
-            <DropdownMenuItem>
-              <User className="mr-2 h-4 w-4" />
-              <span>Profile</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <FileText className="mr-2 h-4 w-4" />
-              <span>My Articles</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <PenTool className="mr-2 h-4 w-4" />
-              <span>Create New Article</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Calendar className="mr-2 h-4 w-4" />
-              <span>Editorial Calendar</span>
-            </DropdownMenuItem>
-          </>
-        );
-      case 'writer':
-        return (
-          <>
-            <DropdownMenuItem>
-              <User className="mr-2 h-4 w-4" />
-              <span>Profile</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Bookmark className="mr-2 h-4 w-4" />
-              <span>My Bookmarks</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <History className="mr-2 h-4 w-4" />
-              <span>Reading History</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <CreditCard className="mr-2 h-4 w-4" />
-              <span>Subscription Settings</span>
-            </DropdownMenuItem>
-          </>
-        );
-      default:
-        return null;
+          </Link>
+          <DropdownMenuItem>
+            <Inbox className="mr-2 h-4 w-4" />
+            <span>Requests</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Settings className="mr-2 h-4 w-4" />
+            <span>System Settings</span>
+          </DropdownMenuItem>
+        </>
+      );
+    } else if (userRoles.includes('EDITOR')) {
+      return (
+        <>
+          <DropdownMenuItem>
+            <User className="mr-2 h-4 w-4" />
+            <span>Profile</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <FileText className="mr-2 h-4 w-4" />
+            <span>My Articles</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <PenTool className="mr-2 h-4 w-4" />
+            <span>Create New Article</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Calendar className="mr-2 h-4 w-4" />
+            <span>Editorial Calendar</span>
+          </DropdownMenuItem>
+        </>
+      );
+    } else if (userRoles.includes('WRITER')) {
+      return (
+        <>
+          <DropdownMenuItem>
+            <User className="mr-2 h-4 w-4" />
+            <span>Profile</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Bookmark className="mr-2 h-4 w-4" />
+            <span>My Bookmarks</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <History className="mr-2 h-4 w-4" />
+            <span>Reading History</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <CreditCard className="mr-2 h-4 w-4" />
+            <span>Subscription Settings</span>
+          </DropdownMenuItem>
+        </>
+      );
     }
+    return null;
   };
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div className="bg-white h-10 w-10 rounded-full">
-          <img src="https://i.postimg.cc/2jxbrbYd/download.png" alt="profile" width={40} height={40}></img>
+          <img src="https://i.postimg.cc/2jxbrbYd/download.png" alt="profile" width={40} height={40}/>
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-8">
-        <DropdownMenuLabel>My Account ({userRole})</DropdownMenuLabel>
+        <DropdownMenuLabel>My Account ({session?.user?.name})</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {renderMenuItems()}
-        <DropdownMenuItem>
-          <LogOut className="mr-2 h-4 w-4" />
+        <DropdownMenuItem onClick={() => signOut()}>
+          <LogOut className="mr-2 h-4 w-4" onClick={() => signOut()} />
           <span>Log out</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
 }
-

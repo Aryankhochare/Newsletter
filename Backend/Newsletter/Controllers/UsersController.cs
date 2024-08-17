@@ -43,8 +43,7 @@ namespace Newsletter.Controllers
 
                 if (user.UserRoles == null || !user.UserRoles.Any())
                 {
-                    Console.WriteLine("No user roles provided");
-                    return BadRequest("No user roles provided");
+                    user.UserRoles = new List<int> { 4 };
                 }
 
                 foreach (var roleId in user.UserRoles)

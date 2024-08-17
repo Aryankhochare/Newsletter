@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { FcGoogle } from 'react-icons/fc';
 //import { Label } from '@/components/label';
 
-const LoginPage = () => {
+const LoginPageComp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -94,4 +94,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default LoginPageComp ;

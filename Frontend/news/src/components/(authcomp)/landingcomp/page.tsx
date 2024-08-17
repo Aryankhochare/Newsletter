@@ -11,7 +11,7 @@ export default function LandComp() {
     }
     const handleGuestSignup = () => {
         
-        router.push('../user');
+        router.push('main');
       };
     return (
         <div className="relative h-screen w-full overflow-hidden">
