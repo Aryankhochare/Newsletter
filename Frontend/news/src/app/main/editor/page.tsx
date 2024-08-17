@@ -1,5 +1,7 @@
 import EditorButtons from "@/components/EditorButtons";
 import { Suspense } from "react";
+import Navbar from "@/components/navbarcomp/navbar";
+import Footer from "@/components/navbarcomp/footer";
 
 const fetchContent = async () => {
   try {
@@ -20,8 +22,14 @@ export default async function EditorPage() {
   const data = await fetchContent();
 
   return (
+    <>
+    <div className="sticky top-0 z-50">
+        <Navbar />
+      </div>
     <Suspense fallback={<div>Loading...</div>}>
       <EditorButtons Data={data} />
     </Suspense>
+    <Footer/>
+    </>
   );
 }

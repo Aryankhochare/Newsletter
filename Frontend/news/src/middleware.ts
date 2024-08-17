@@ -40,7 +40,7 @@ export default withAuth(
       if (pathname.startsWith("/main/admin") || pathname.startsWith("/main/editor")) {
         return NextResponse.error();
       }
-      if (!pathname.startsWith("/main/writer") && !pathname.startsWith("/main/user")) {
+      if (!pathname.startsWith("/main/writer") && !pathname.startsWith("/main")) {
         console.log("Redirecting WRITER to writer page");
         return NextResponse.redirect(new URL("/main/writer", req.url));
       }
@@ -52,9 +52,9 @@ export default withAuth(
       if (pathname.startsWith("/admin") || pathname.startsWith("/editor") || pathname.startsWith("/writer")) {
         return NextResponse.error();
       }
-      if (!pathname.startsWith("/main/user")) {
+      if (!pathname.startsWith("/main")) {
         console.log("Redirecting USER to user page");
-        return NextResponse.redirect(new URL("/main/user", req.url));
+        return NextResponse.redirect(new URL("/main", req.url));
       }
       console.log("USER accessing user routes");
       return NextResponse.next();
