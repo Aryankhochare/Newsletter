@@ -14,8 +14,13 @@ export default withAuth(
     console.log("Pathname:", pathname);
     console.log("Token Roles:", token?.roles);
 
+    if (pathname === "/main") {
+      console.log("Accessing landing page");
+      return NextResponse.next();
+    }
+
     if (pathname === "/") {
-      console.log("Redirecting to /user page upon login");
+      console.log("Redirecting to /main page upon login");
       return NextResponse.redirect(new URL("/main", req.url));
     }
 
