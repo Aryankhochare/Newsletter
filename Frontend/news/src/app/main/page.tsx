@@ -7,6 +7,7 @@ import Footer from '@/components/navbarcomp/footer';
 import { supabase } from '@/app/api/auth/[...nextauth]/route';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import parse from 'html-react-parser'
 
 // ... (keep all the interfaces and ArticleLink component as they are)
 
@@ -93,7 +94,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 
       <div className="relative w-full h-[500px] overflow-hidden">
         {articles.map((article, index) => (
-          // <Link href={/newspage/${article.news_title}} key={index}>
           <ArticleLink article={article} key={index}>
   
           <div
@@ -118,8 +118,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
               <span className="inline-block bg-white text-black rounded-full px-3 py-1 text-sm font-semibold mb-2">
                 {article.Category.category_name}      {/*   category name   */}
               </span>
-              <h3 className="text-2xl font-semibold mb-2">{article.news_title}</h3>
-              <p className="mb-2">{article.content.substring(0, 150)}...</p>
+              <h3 className="text-2xl font-semibold mb-2">{parse(article.news_title)}</h3>
+              <p className="mb-2">{parse(article.content.substring(0, 150))}...</p>
               <p className="text-sm">Posted on: {article.posted_on}</p>
             </div>
           </div>
@@ -176,8 +176,8 @@ const LatestNewsCarousel: React.FC<{ articles: Article[] }> = ({ articles }) => 
                   <span className="inline-block bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm font-semibold mb-2">
                     {article.Category.category_name}
                   </span>
-                  <h3 className="text-xl font-semibold mb-2">{article.news_title}</h3>
-                  <p className="text-gray-600 mb-4">{article.content.substring(0, 100)}...</p>
+                  <h3 className="text-xl font-semibold mb-2">{parse(article.news_title)}</h3>
+                  <p className="text-gray-600 mb-4">{parse(article.content.substring(0, 100))}...</p>
                   <p className="text-sm text-gray-500 mt-auto">Posted on: {article.posted_on}</p>
                 </div>
               </div>

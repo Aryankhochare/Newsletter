@@ -86,7 +86,7 @@ export default function Navbar() {
               </div>
             </form>
           )}
-          {userRole === 'user' ? (
+          {userRole === '' ? (
             <>
               <Link href="/login" className="bg-gray-950 hover:underline hover:bg-gray-900 text-white font-bold py-1 px-2 sm:py-2 sm:px-4 rounded text-sm sm:text-base">
                 Login
