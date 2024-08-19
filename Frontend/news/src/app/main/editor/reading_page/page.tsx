@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 import Navbar from '@/components/navbarcomp/navbar';
 import Footer from '@/components/navbarcomp/footer';
+import BackButton from '@/components/BackButton';
 
 const ArticleContent = dynamic(() => import('@/components/ArticleContent'), { ssr: false });
 
@@ -10,8 +11,10 @@ export default function ReadingPage() {
       <div className="sticky top-0 z-50 shadow-md">
         <Navbar />
       </div>
-
-      <div className="flex-grow overflow-hidden p-6 md:p-12">
+      <div className="flex-grow p-6 md:p-12">
+      <div className=' relative'>
+        <BackButton  />
+        </div>
         <article className="transition-all duration-300 ease-in-out overflow-y-auto">
           <ArticleContent />
         </article>
