@@ -34,6 +34,16 @@ const UsersAndRolesPage: React.FC = () => {
   const [dynamicRoles, setDynamicRoles] = useState<string[]>([]);
   const [message, setMessage] = useState<string>('');
 
+  const getRoleId = (roleName: string): number => {
+    const roleMapping: { [key: string]: number } = {
+      admin: 1,
+      editor: 2,
+      writer: 3,
+      user: 4,
+    };
+    return roleMapping[roleName.toLowerCase()] || 4; // Default to user role if not found
+  };
+
   const fetchUsers = async () => {
     try {
       const response = await fetch('https://globalbuzz.azurewebsites.net/admin/users');
@@ -74,28 +84,52 @@ const UsersAndRolesPage: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>, userId: string) => {
     event.preventDefault();
-    const selectedRole = selectedRoles[userId] || 'No role selected';
+    const selectedRole = selectedRoles[userId];
+    
+    if (!selectedRole) {
+      alert('Please select a role before submitting.');
+      return;
+    }
+  
     try {
-      const response = await fetch('https://globalbuzz.azurewebsites.net/admin/userroles', {
-        method: 'POST',
+      // Prepare the data to be sent
+      const updateData = {
+        username:"",
+        password:"",
+        email:"",
+        userRoles: [getRoleId(selectedRole)]
+      };
+  
+      // Send PATCH request to update the user's role
+      const response = await fetch(`https://globalbuzz.azurewebsites.net/admin/users/${userId}`, {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userId, role: selectedRole }),
+        body: JSON.stringify(updateData),
       });
-
+  
       if (response.ok) {
-        alert(`Role assigned successfully for user with ID: ${userId}`);
-        fetchUsers();
+        const responseData = await response.text();
+        alert(responseData || `Role "${selectedRole}" assigned successfully for user with ID: ${userId}`);
+        fetchUsers(); // Refresh the user data after assignment
       } else {
-        alert('Failed to assign role');
+        const errorData = await response.text();
+        alert(`Failed to assign role: ${errorData}`);
       }
     } catch (error) {
       console.error('Error assigning role:', error);
       alert('An error occurred while assigning the role');
     }
   };
-
+  
+  const roleMapping = {
+    admin: 1,
+    editor: 2,
+    writer: 3,
+    user: 4,
+  };
+  
   const getUserRoles = (user: User): string[] => {
     return user.userRoleNames || [];
   };
@@ -116,7 +150,7 @@ const UsersAndRolesPage: React.FC = () => {
 
     if (roleName.trim()) {
       try {
-        const response = await fetch('https://globalbuzz.azurewebsites.net/admin/userroles', {
+        const response = await fetch('https://globalbuzz.azurewebsites.net/admin/user', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -240,10 +274,11 @@ const UsersAndRolesPage: React.FC = () => {
                     </SelectContent>
                   </Select>
                   <Button
-                    className="w-40 bg-green-200 text-green-800 hover:bg-green-300 py-2 px-4 text-sm"
-                    variant="mine"
+                    className="w-40 bg-green-500 text-white px-3 py-2 rounded-md"
+                    type="submit"
+                    disabled={!selectedRoles[user.id]}
                   >
-                    ASSIGN
+                    Assign Role
                   </Button>
                 </form>
               </div>
@@ -251,65 +286,42 @@ const UsersAndRolesPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Role Management Section */}
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">Create Roles</h1>
-
-          <form onSubmit={handleRoleSubmit} className="mb-8">
-            <div className="flex items-center space-x-4">
-              <label htmlFor="role" className="inline w-28 text-sm font-medium text-gray-700">
-                Role Name:
-              </label>
-              <input
-                type="text"
-                id="role"
-                name="role"
-                value={roleName}
-                onChange={(e) => setRoleName(e.target.value)}
-                required
-                className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md h-10"
-              />
-              <button
-                type="submit"
-                className="w-32 inline-flex items-center pl-5 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Add Role
-              </button>
-            </div>
+        <div className="mt-12">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Create New Role</h2>
+          <form onSubmit={handleRoleSubmit} className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <Input
+              type="text"
+              placeholder="Role name"
+              value={roleName}
+              onChange={(e) => setRoleName(e.target.value)}
+              className="w-full sm:w-auto"
+            />
+            <Button className="w-full sm:w-auto bg-blue-500 text-white px-4 py-2 rounded-md" type="submit">
+              Add Role
+            </Button>
           </form>
+          {message && <p className="mt-4 text-red-500">{message}</p>}
+        </div>
 
-          {message && (
-            <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-8" role="alert">
-              <p>{message}</p>
-            </div>
-          )}
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Roles List</h2>
-          <ul className="bg-white shadow overflow-hidden sm:rounded-md">
-            {initialRoles.concat(dynamicRoles).map((role, index) => (
-              <li key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
-                <div className="px-4 py-4 sm:px-6 flex items-center justify-between">
-                  <div className="text-sm font-medium text-indigo-600 truncate">{role}</div>
-                  <button
-                    onClick={() => index < initialRoles.length ? alert("You cannot delete hardcoded roles.") : handleDelete(role)}
-                    className={`ml-2 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white ${
-                      index < initialRoles.length
-                        ? 'bg-gray-300 cursor-not-allowed'
-                        : 'bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500'
-                    }`}
-                    disabled={index < initialRoles.length}
-                  >
-                    Delete
-                  </button>
-                </div>
+        <div className="mt-12">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Existing Roles</h2>
+          <ul className="space-y-2">
+            {dynamicRoles.map((role, index) => (
+              <li key={index} className="flex justify-between items-center bg-white p-2 rounded-lg shadow">
+                <span>{role}</span>
+                <Button
+                  variant="outline"
+                  className="w-40 bg-red-500 text-white px-3 py-2 rounded-md"
+                  onClick={() => handleDelete(role)}
+                >
+                  Delete
+                </Button>
               </li>
             ))}
           </ul>
         </div>
       </div>
-      <div className='bottom-0 z-50 mt-2'>
-        <Footer/>
-      </div>
+      <Footer />
     </div>
   );
 };
