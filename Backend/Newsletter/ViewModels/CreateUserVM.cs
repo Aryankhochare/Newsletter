@@ -9,6 +9,8 @@
         public string Email { get; set; }
 
         public ICollection<int>? UserRoles { get; set; }
+
+        public ICollection<string> Categories { get; set; }
        
     }
 }
