@@ -41,9 +41,9 @@ const LoginPageComp = () => {
       <div className="sm:w-full md:w-4/5 max-w-6xl bg-white rounded-lg shadow-md overflow-hidden flex flex-col md:flex-row">
         <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
           <h1 className="text-4xl font-bold text-black text-center mb-4">The Global Buzz</h1>
-          <p className="text-gray-600 text-center text-sm mb-8">"Delivering the World's Hottest Buzz, Packed with Global Insight"</p>
+          <p className="text-gray-600 text-center text-sm mb-8">&quot;Delivering the World&apos;s Hottest Buzz, Packed with Global Insight&quot;</p>
 
-          <p className="text-xs text-gray-500 mb-4">By continuing you indicate that you agree to The Global Buzz's Terms of Service and Privacy Policy.</p>
+          <p className="text-xs text-gray-500 mb-4">By continuing you indicate that you agree to The Global Buzz&apos;s Terms of Service and Privacy Policy.</p>
 
           <button className="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 rounded-md py-2 px-4 hover:bg-gray-50 mb-4">
             <FcGoogle className="text-xl" />
