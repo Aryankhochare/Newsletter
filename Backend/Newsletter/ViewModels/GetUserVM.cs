@@ -13,6 +13,8 @@
         public string Status { get; set; }
 
         public ICollection<string> UserRole {  get; set; }
+
+        public ICollection<string> Category { get; set; }
        
         public DateTime CreatedDate { get; set; }
  
