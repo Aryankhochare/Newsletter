@@ -97,7 +97,7 @@ export const authOptions: NextAuthOptions = {
         token.accessToken = jwt.sign(
           payload,
           process.env.JWT_SECRET!,
-          {expiresIn: 60}
+          {expiresIn: '1h'}
         ); 
         
       }
@@ -121,7 +121,7 @@ export const authOptions: NextAuthOptions = {
 
   },
   session:{
-    maxAge:1*60,
+    maxAge:1*60*60,
     strategy: "jwt",
 
 
@@ -131,7 +131,7 @@ export const authOptions: NextAuthOptions = {
     
   },
   pages:{
-    signIn:"/login"
+    signIn:"/login",
   }
  
 };
