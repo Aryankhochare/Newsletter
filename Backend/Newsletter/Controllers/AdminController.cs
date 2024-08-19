@@ -90,12 +90,15 @@ namespace Newsletter.Controllers
                 var users = response.Models;
 
                 var userRolesResponse = await _client.From<UserUserRoles>().Get();
-
                 var userRoles = userRolesResponse.Models ?? new List<UserUserRoles>();
-
                 var rolesResponse = await _client.From<UserRoles>().Get();
-
                 var roles = rolesResponse.Models ?? new List<UserRoles>();
+
+                var userCategoryResponse = await _client.From<UserCategory>().Get();
+                var userCategories = userCategoryResponse.Models ?? new List<UserCategory>();
+                var categoryResponse = await _client.From<Category>().Get();
+                var categories = categoryResponse.Models ?? new List<Category>();
+                
 
                 var result = new List<object>();
 
@@ -110,6 +113,15 @@ namespace Newsletter.Controllers
                         .Select(r => r.UserRoleName)
                         .ToList();
 
+                    var userCategoryIds = userCategories
+                        .Where(uc => uc.UserId == user.Id)
+                        .Select(uc => uc.CategoryId);
+
+                    var categoryNames = categories
+                        .Where(c => userCategoryIds.Contains(c.CategoryId))
+                        .Select(c => c.CategoryName)
+                        .ToList();
+
                     result.Add(new
                     {
                         user.Id,
@@ -118,6 +130,7 @@ namespace Newsletter.Controllers
                         user.isActive,
                         user.Status,
                         userRoleNames,
+                        categoryNames,
                         user.CreatedDate,
                         user.ModifiedDate,
                     });
@@ -175,6 +188,27 @@ namespace Newsletter.Controllers
                 var roleNames = roleResponse.Models.Select(ur => ur.UserRoleName).ToList();
                 Console.WriteLine($"Role names found: {string.Join(", ", roleNames)}");
 
+                var userCategoryResponse = await _client.From<UserCategory>()
+                    .Where(c => c.UserId == id)
+                    .Get();
+                if (userCategoryResponse?.Models == null)
+                {
+                    Console.WriteLine("UserUserRoles response or its Models is null");
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Error fetching user categories");
+                }
+
+                var userCategoryId = userCategoryResponse.Models.Select(c => c.CategoryId).ToList();
+                var categoryResponse = await _client.From<Category>()
+                    .Filter("category_id", Supabase.Postgrest.Constants.Operator.In, userCategoryId)
+                    .Get();
+
+                if (categoryResponse?.Models == null)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Error fetching category names");
+                }
+
+                var categoryNames = categoryResponse.Models.Select(c => c.CategoryName).ToList();
+
                 var showUser = new GetUserVM
                 {
                     Id = user.Id,
@@ -183,6 +217,7 @@ namespace Newsletter.Controllers
                     isActive = user.isActive,
                     Status = user.Status,
                     UserRole = roleNames,
+                    Category = categoryNames,
                     CreatedDate = user.CreatedDate,
                     ModifiedDate = user.ModifiedDate,
                 };
@@ -207,6 +242,14 @@ namespace Newsletter.Controllers
                 var checkUser = await _client.From<Users>().Where(u => u.Id == id).Get();
 
                 if (checkUser.Models.Count == 0) return NotFound($"user with id = {id} not found");
+
+                await _client.From<UserUserRoles>()
+                    .Where(uur => uur.UserId == id)
+                    .Delete();
+
+                await _client.From<UserCategory>()
+                    .Where(c => c.UserId == id)
+                    .Delete();
 
                 await _client
                     .From<Users>()
