@@ -79,6 +79,7 @@ const LoginPageComp = () => {
             <div className="space-y-2 relative">
               <div className="text-sm">Password:</div>
               <input 
+              
                 className="w-full p-2 border border-gray-300 rounded-md"
                 type={showPassword ? "text" : "password"}
                 placeholder="Your password"
@@ -86,11 +87,11 @@ const LoginPageComp = () => {
                 value={password}
               />
               <div
-                className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                className="absolute inset-y-0 pt-6 right-2  flex  cursor-pointer items-center"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
-                  <AiFillEye className="text-gray-500" />
+                  < AiFillEye className="text-gray-500" />
                 ) : (
                   <AiFillEyeInvisible className="text-gray-500" />
                 )}

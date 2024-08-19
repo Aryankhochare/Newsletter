@@ -39,9 +39,16 @@ interface ReactQuillRef {
   getEditor: () => any;
 }
 
-const QuillEditor: React.FC = memo(() => {
-  const [editorcontent, setEditorContent] = useState<string>("");
-  const [title, setTitle] = useState<string>("");
+interface QuillEditorProps { //Added Interface for Props
+  //initialCoverImage? : string;
+  initialTitle?: string; 
+  initialContent?: string;
+  onSave?: (title: string, content: string) => void;
+}
+
+const QuillEditor: React.FC<QuillEditorProps> = memo(({initialContent = '', initialTitle = '', onSave }) => { //Added initial data as empty 
+  const [editorcontent, setEditorContent] = useState<string>(initialContent);
+  const [title, setTitle] = useState<string>(initialTitle);
   const [coverImage, setCoverImage] = useState<File | null>(null);
   const [resetTrigger, setResetTrigger] = useState(0);
   const [image, setImage] = useState<ImageData[]>([]);

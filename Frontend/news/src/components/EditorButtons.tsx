@@ -22,7 +22,7 @@
 // }
 
 // function EditorButtons({ Data }: { Data: News[] }) {
-//   const [articles, setArticles] = useState<News[]>(Data);
+//   const [articles, setArticles] = useState<News[]>(Data || []);
 //   const [loading, setLoading] = useState(false);
 //   const [selectedStatus, setSelectedStatus] = useState("all");
 //   const [feedback, setFeedback] = useState("");
@@ -31,7 +31,8 @@
 //   const send_article = useArticleStore((state) => state.setArticle);
 //   const router = useRouter();
 
-
+//   console.log("Initial Data:", Data);
+//   console.log("Articles State:", articles);
 
 //   const handleVerify = async (id: string) => {
 //     try {
@@ -63,7 +64,7 @@
 
 //   const handleReject = async (id: string) => {
 //     setCurrentArticleId(id);
-//     setShowFeedbackDialog(true);  
+//     setShowFeedbackDialog(true);
 //   };
 
 //   const handleSendBackConfirm = async () => {
@@ -122,7 +123,7 @@
 //     const article_content = articles.find((e) => e.id == id);
 //     if (article_content) {
 //       send_article(article_content);
-//       router.push("/editor/reading_page");
+//       router.push("/main/editor/reading_page");
 //     } else {
 //       console.log("No content found !");
 //     }
@@ -134,11 +135,14 @@
 //     if (article.isVerified) {
 //       status = article.isRejected ? "Rejected" : "Approved";
 //     }
-//     const matchesSelectedStatus =
+//     console.log("Article Status:", status);
+//     return (
 //       selectedStatus === "all" ||
-//       status.toLowerCase() === selectedStatus.toLowerCase();
-//     return matchesSelectedStatus;
+//       status.toLowerCase() === selectedStatus.toLowerCase()
+//     );
 //   });
+
+//   console.log("Filtered Articles:", filteredArticles);
 
 //   return (
 //     <div className="container grid px-4 py-8 md:px-0 md:py-12">
@@ -285,6 +289,7 @@
 //               <Button
 //                 className="ml-2"
 //                 onClick={handleSendBackConfirm}
+//                 disabled={loading}
 //               >
 //                 Send Back
 //               </Button>
@@ -297,7 +302,6 @@
 // }
 
 // export default EditorButtons;
-
 
 "use client";
 import { useState } from "react";
@@ -332,34 +336,47 @@ function EditorButtons({ Data }: { Data: News[] }) {
   const send_article = useArticleStore((state) => state.setArticle);
   const router = useRouter();
 
+  // New state for approval and delete confirmation dialogs
+  const [showApproveDialog, setShowApproveDialog] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+
   console.log("Initial Data:", Data);
   console.log("Articles State:", articles);
 
   const handleVerify = async (id: string) => {
-    try {
-      setLoading(true);
-      await fetch(
-        `${process.env.NEXT_PUBLIC_ASP_NET_URL}/editor/verify/${id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ id }),
-        }
-      );
+    setCurrentArticleId(id);
+    setShowApproveDialog(true);
+  };
 
-      setArticles((prevArticles) =>
-        prevArticles.map((article) =>
-          article.id === id
-            ? { ...article, isVerified: true, isRejected: false }
-            : article
-        )
-      );
-    } catch (error) {
-      console.error("Error verifying content:", error);
-    } finally {
-      setLoading(false);
+  const handleVerifyConfirm = async () => {
+    if (currentArticleId) {
+      try {
+        setLoading(true);
+        await fetch(
+          `${process.env.NEXT_PUBLIC_ASP_NET_URL}/editor/verify/${currentArticleId}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id: currentArticleId }),
+          }
+        );
+
+        setArticles((prevArticles) =>
+          prevArticles.map((article) =>
+            article.id === currentArticleId
+              ? { ...article, isVerified: true, isRejected: false }
+              : article
+          )
+        );
+      } catch (error) {
+        console.error("Error verifying content:", error);
+      } finally {
+        setLoading(false);
+        setShowApproveDialog(false);
+        setCurrentArticleId(null);
+      }
     }
   };
 
@@ -402,21 +419,30 @@ function EditorButtons({ Data }: { Data: News[] }) {
   };
 
   const handleDelete = async (id: string) => {
-    try {
-      setLoading(true);
-      await fetch(`${process.env.NEXT_PUBLIC_ASP_NET_URL}/editor/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      setArticles((prevArticles) =>
-        prevArticles.filter((article) => article.id !== id)
-      );
-    } catch (error) {
-      console.error("Error deleting content:", error);
-    } finally {
-      setLoading(false);
+    setCurrentArticleId(id);
+    setShowDeleteDialog(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (currentArticleId) {
+      try {
+        setLoading(true);
+        await fetch(`${process.env.NEXT_PUBLIC_ASP_NET_URL}/editor/${currentArticleId}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        setArticles((prevArticles) =>
+          prevArticles.filter((article) => article.id !== currentArticleId)
+        );
+      } catch (error) {
+        console.error("Error deleting content:", error);
+      } finally {
+        setLoading(false);
+        setShowDeleteDialog(false);
+        setCurrentArticleId(null);
+      }
     }
   };
 
@@ -598,8 +624,59 @@ function EditorButtons({ Data }: { Data: News[] }) {
           </div>
         </div>
       )}
+
+      {/* Approve Confirmation Dialog */}
+      {showApproveDialog && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-xl font-semibold mb-4">Confirm Approval</h2>
+            <p>Do you want to approve this article?</p>
+            <div className="flex justify-end mt-4">
+              <Button
+                variant="outline"
+                onClick={() => setShowApproveDialog(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                className="ml-2"
+                onClick={handleVerifyConfirm}
+                disabled={loading}
+              >
+                Approve
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Dialog */}
+      {showDeleteDialog && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-xl font-semibold mb-4">Confirm Deletion</h2>
+            <p>Do you want to delete this article?</p>
+            <div className="flex justify-end mt-4">
+              <Button
+                variant="outline"
+                onClick={() => setShowDeleteDialog(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                className="ml-2 bg-red-500 text-white"
+                onClick={handleDeleteConfirm}
+                disabled={loading}
+              >
+                Delete
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
 export default EditorButtons;
+

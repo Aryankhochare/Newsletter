@@ -25,12 +25,32 @@ import {
   SignpostBig
 } from 'lucide-react';
 import { signOut, useSession } from 'next-auth/react';
+import { Skeleton } from "@/components/ui/skeleton"
 
 export default function ProfileInfo() {
-  const { data: session } = useSession();
-  const userRoles =  (session?.user as any)?.roles || [];
+  const { data: session, status } = useSession();
+  const userRoles = (session?.user as any)?.roles || [];
 
   const renderMenuItems = () => {
+    if (status === 'loading') {
+      return (
+        <>
+          <DropdownMenuItem>
+            <Skeleton className="w-[100px] h-[20px] rounded-full" />
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Skeleton className="w-[100px] h-[20px] rounded-full" />
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Skeleton className="w-[100px] h-[20px] rounded-full" />
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Skeleton className="w-[100px] h-[20px] rounded-full" />
+          </DropdownMenuItem>
+        </>
+      );
+    }
+
     if (userRoles.includes('ADMIN')) {
       return (
         <>
@@ -114,11 +134,17 @@ export default function ProfileInfo() {
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-8">
-        <DropdownMenuLabel>My Account ({session?.user?.name})</DropdownMenuLabel>
+        <DropdownMenuLabel>
+          {status === 'loading' ? (
+            <Skeleton className="w-[100px] h-[20px] rounded-full" />
+          ) : (
+            `My Account (${session?.user?.name})`
+          )}
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         {renderMenuItems()}
         <DropdownMenuItem onClick={() => signOut()}>
-          <LogOut className="mr-2 h-4 w-4" onClick={() => signOut()} />
+          <LogOut className="mr-2 h-4 w-4" />
           <span>Log out</span>
         </DropdownMenuItem>
       </DropdownMenuContent>

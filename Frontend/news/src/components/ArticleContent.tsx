@@ -3,10 +3,12 @@
 import React, { useState } from 'react';
 import { useArticleStore } from "@/components/ArticleStore";
 import parse from "html-react-parser";
+import BackButton from './BackButton';
 
 export default function ArticleContent() {
   const article_content = useArticleStore((state) => state.editorContent);
   const article_title = useArticleStore((state) => state.title);
+  const cover_image = useArticleStore((state) => state.coverImage);
   const [showFeedback, setShowFeedback] = useState(false);
   const [feedback, setFeedback] = useState('');
 
@@ -19,13 +21,21 @@ export default function ArticleContent() {
 
   return (
     <>
+  
       <div className="max-w-4xl mx-auto p-8 bg-white shadow-2xl rounded-lg border border-gray-200">
         <h1 className="text-4xl sm:text-5xl font-bold mb-8 text-gray-900 leading-tight">
           {parse(article_title)}
         </h1>
-        <div className="prose prose-lg lg:prose-xl max-w-none text-gray-700">
-          {parse(article_content)}
-        </div>
+          <div className="prose prose-lg lg:prose-xl max-w-none text-gray-700">
+            {parse(article_content)}
+          </div>
+          <div className="prose prose-lg lg:prose-xl max-w-none text-gray-700 flex items-center justify-center">
+               <img 
+               src={cover_image} 
+               alt="Cover Image" 
+               className="max-w-full h-auto" />
+          </div>
+
       </div>
       <div className="mt-12 flex justify-center space-x-6">
         <button className="bg-green-500 text-white px-4 py-2 rounded-full">Accept</button>
