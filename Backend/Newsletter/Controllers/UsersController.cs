@@ -77,20 +77,20 @@ namespace Newsletter.Controllers
 
                 if(user.Categories != null || user.Categories.Any())
                 {
-                   foreach(var categoryId in user.Categories)
+                   foreach(var categoryName in user.Categories)
                     {
                         var categoryRes = await _client.From<Category>()
-                            .Where(c => c.CategoryId == categoryId)
+                            .Where(c => c.CategoryName == categoryName)
                             .Get();
                         var category = categoryRes.Models.FirstOrDefault();
                         if(category == null)
                         {
-                            return NotFound($"Category with Id {categoryId} was not found");
+                            return NotFound($"Category with Name {categoryName} was not found");
                         }
                         var newUserCategory = new UserCategory
                         {
                             UserId = createdUser.Id,
-                            CategoryId = categoryId,
+                            CategoryId = category.CategoryId,
                         };
                         var userCategoryResponse = await _client.From<UserCategory>().Insert(newUserCategory);
                         if (!userCategoryResponse.Models.Any())
