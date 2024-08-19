@@ -11,16 +11,15 @@ export default function ReadingPage() {
       <div className="sticky top-0 z-50 shadow-md">
         <Navbar />
       </div>
-      <div className="flex-grow p-6 md:p-12">
-      <div className=' relative'>
-        <BackButton  />
+      <div className="flex-grow p-6 md:p-12 relative">
+        <div className="absolute top-0 left-4 md:top-8 md:left-8">
+          <BackButton />
         </div>
         <article className="transition-all duration-300 ease-in-out overflow-y-auto">
           <ArticleContent />
         </article>
       </div>
-
-      <div className='bottom-0 pb-0 mb-0 bg-gray-900'>
+      <div className="bottom-0 pb-0 mb-0 bg-gray-900">
         <Footer />
       </div>
     </div>

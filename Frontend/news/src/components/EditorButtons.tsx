@@ -35,9 +35,6 @@ function EditorButtons({ Data }: { Data: News[] }) {
   const [showApproveDialog, setShowApproveDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
-  console.log("Initial Data:", Data);
-  console.log("Articles State:", articles);
-
   const handleVerify = async (id: string) => {
     setCurrentArticleId(id);
     setShowApproveDialog(true);
@@ -157,19 +154,16 @@ function EditorButtons({ Data }: { Data: News[] }) {
     if (article.isVerified) {
       status = article.isRejected ? "Rejected" : "Approved";
     }
-    console.log("Article Status:", status);
     return (
       selectedStatus === "all" ||
       status.toLowerCase() === selectedStatus.toLowerCase()
     );
   });
 
-  console.log("Filtered Articles:", filteredArticles);
-
   return (
-    <div className="container grid px-4 py-8 md:px-0 md:py-12">
-      <div className="bg-gradient-to-r from-black via-gray-800 to-black p-4 shadow-lg">
-        <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
+    <div className="container mx-auto px-4 py-8">
+      <div className="bg-gradient-to-r from-black via-gray-800 to-black p-4 shadow-lg rounded-lg">
+        <div className="flex flex-col md:flex-row items-center justify-between">
           <h1 className="text-2xl md:text-3xl font-extrabold text-white mb-4 md:mb-0">
             Post Requests
           </h1>
@@ -177,7 +171,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
-              className="pl-1 pr-3 py-2 rounded border-none bg-slate-100 text-gray-900 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-indigo-200"
+              className="pl-2 pr-3 py-2 rounded border-none bg-slate-100 text-gray-900 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-indigo-200"
             >
               <option value="all">Status</option>
               <option value="approved">Approved</option>
@@ -189,7 +183,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
       </div>
 
       <div className="overflow-x-auto mt-4">
-        <table className="w-full min-w-full table-auto">
+        <table className="w-full min-w-full table-auto border-collapse">
           <thead className="hidden md:table-header-group">
             <tr className="bg-muted text-muted-foreground">
               <th className="px-4 py-2 text-left text-sm md:text-base font-medium">
@@ -230,7 +224,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
                 }
 
                 return (
-                  <tr key={article.id} className="border-b md:table-row">
+                  <tr key={article.id} className="border-b">
                     <td
                       className="px-4 py-2 cursor-pointer text-sm md:text-base"
                       onClick={() => handleTitleClick(article.id)}
@@ -252,7 +246,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
                       </Badge>
                     </td>
                     <td className="px-4 py-2 text-right text-sm md:text-base">
-                      <div className="flex justify-end gap-2">
+                      <div className="flex flex-col md:flex-row justify-end gap-2">
                         {!article.isVerified && (
                           <>
                             <Button
@@ -292,7 +286,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
       {/* Feedback Dialog */}
       {showFeedbackDialog && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md mx-4">
             <h2 className="text-xl font-semibold mb-4">Send Back Feedback</h2>
             <textarea
               className="w-full p-2 border rounded"
@@ -323,7 +317,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
       {/* Approve Confirmation Dialog */}
       {showApproveDialog && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md mx-4">
             <h2 className="text-xl font-semibold mb-4">Confirm Approval</h2>
             <p>Do you want to approve this article?</p>
             <div className="flex justify-end mt-4">
@@ -348,7 +342,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
       {/* Delete Confirmation Dialog */}
       {showDeleteDialog && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md mx-4">
             <h2 className="text-xl font-semibold mb-4">Confirm Deletion</h2>
             <p>Do you want to delete this article?</p>
             <div className="flex justify-end mt-4">
@@ -374,4 +368,3 @@ function EditorButtons({ Data }: { Data: News[] }) {
 }
 
 export default EditorButtons;
-
