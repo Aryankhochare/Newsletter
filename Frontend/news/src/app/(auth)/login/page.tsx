@@ -91,11 +91,7 @@ const LoginPageComp = () => {
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
-<<<<<<< HEAD
                   < AiFillEye className="text-gray-500" />
-=======
-                  <AiFillEye className="text-gray-500" />
->>>>>>> c76b47373d17d7c76f928352abcff9fce1b9c2fc
                 ) : (
                   <AiFillEyeInvisible className="text-gray-500" />
                 )}
