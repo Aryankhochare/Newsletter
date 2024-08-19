@@ -11,5 +11,17 @@ export const apiLinks = {
         fetch: `${baseUrl}/newsletter`,
         searchCategory: `${baseUrl}/newsletter/search?category=`,
         searchWriter: `${baseUrl}/newsletter/search?writer=`
+    },
+    category:{
+        fetch: `${baseUrl}/api/category`,
+    },
+    comments:{
+        fetch: `${baseUrl}/comments`,
+    },
+    user:{
+        fetch: `${baseUrl}/users`
+    },
+    admin:{
+        fetchUser: `${baseUrl}/admin/users`
     }
 }
