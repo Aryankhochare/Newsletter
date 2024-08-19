@@ -142,7 +142,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
     const article_content = articles.find((e) => e.id == id);
     if (article_content) {
       send_article(article_content);
-      router.push("/main/editor/reading_page");
+      router.push(`/main/editor/reading_page/${id}`);
     } else {
       console.log("No content found !");
     }
