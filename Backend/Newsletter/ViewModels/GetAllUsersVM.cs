@@ -21,5 +21,6 @@ namespace Newsletter.ViewModels
         public DateTime ModifiedDate { get; set; }
 
         public List<UserUserRoles> UserUserRoles { get; set; }
+
     }
 }

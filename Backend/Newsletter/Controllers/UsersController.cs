@@ -75,6 +75,33 @@ namespace Newsletter.Controllers
                     }
                 }
 
+                if(user.Categories != null || user.Categories.Any())
+                {
+                   foreach(var categoryId in user.Categories)
+                    {
+                        var categoryRes = await _client.From<Category>()
+                            .Where(c => c.CategoryId == categoryId)
+                            .Get();
+                        var category = categoryRes.Models.FirstOrDefault();
+                        if(category == null)
+                        {
+                            return NotFound($"Category with Id {categoryId} was not found");
+                        }
+                        var newUserCategory = new UserCategory
+                        {
+                            UserId = createdUser.Id,
+                            CategoryId = categoryId,
+                        };
+                        var userCategoryResponse = await _client.From<UserCategory>().Insert(newUserCategory);
+                        if (!userCategoryResponse.Models.Any())
+                        {
+                            return BadRequest("Could not Update User Category table");
+                        }
+
+                    }
+                }
+
+
                 return Ok(createdUser.Id);
             }
             catch (Exception ex)
@@ -128,6 +155,27 @@ namespace Newsletter.Controllers
                 var roleNames = roleResponse.Models.Select(ur => ur.UserRoleName).ToList();
                 Console.WriteLine($"Role names found: {string.Join(", ", roleNames)}");
 
+                var userCategoryResponse = await _client.From<UserCategory>()
+                    .Where(c => c.UserId == id)
+                    .Get();
+                if(userCategoryResponse?.Models == null)
+                {
+                    Console.WriteLine("UserUserRoles response or its Models is null");
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Error fetching user categories");
+                }
+
+                var userCategoryId = userCategoryResponse.Models.Select(c => c.CategoryId).ToList();
+                var categoryResponse = await _client.From<Category>()
+                    .Filter("category_id", Supabase.Postgrest.Constants.Operator.In, userCategoryId)
+                    .Get();
+
+                if(categoryResponse?.Models == null)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Error fetching category names");
+                }
+
+                var categoryNames = categoryResponse.Models.Select(c => c.CategoryName).ToList();
+
                 var showUser = new GetUserVM
                 {
                     Id = user.Id,
@@ -136,6 +184,7 @@ namespace Newsletter.Controllers
                     isActive = user.isActive,
                     Status = user.Status,
                     UserRole = roleNames,
+                    Category = categoryNames,
                     CreatedDate = user.CreatedDate,
                     ModifiedDate = user.ModifiedDate,
                 };
@@ -160,6 +209,14 @@ namespace Newsletter.Controllers
                 var checkUser = await _client.From<Users>().Where(u => u.Id == id).Get();
 
                 if (checkUser.Models.Count == 0) return NotFound($"user with id = {id} not found");
+
+                await _client.From<UserUserRoles>()
+                    .Where(uur => uur.UserId == id)
+                    .Delete();
+
+                await _client.From<UserCategory>()
+                    .Where(c => c.UserId == id)
+                    .Delete();
 
                 await _client
                     .From<Users>()
