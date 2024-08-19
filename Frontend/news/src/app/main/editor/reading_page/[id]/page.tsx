@@ -8,18 +8,26 @@ const ArticleContent = dynamic(() => import('@/components/ArticleContent'), { ss
 export default function ReadingPage() {
   return (
     <div className="bg-gradient-to-b from-gray-100 to-gray-200 min-h-screen flex flex-col text-gray-800">
+      {/* Navbar */}
       <div className="sticky top-0 z-50 shadow-md">
         <Navbar />
       </div>
-      <div className="flex-grow p-6 md:p-12 relative">
-        <div className="absolute top-0 left-4 md:top-8 md:left-8">
+      
+      {/* Main Content */}
+      <div className="flex-grow p-4 sm:p-6 md:p-8 lg:p-12 relative">
+        {/* Back Button */}
+        <div className="absolute top-0 left-2 sm:top-0 sm:left-4 md:top-6 md:left-6 lg:top-8 lg:left-8">
           <BackButton />
         </div>
-        <article className="transition-all duration-300 ease-in-out overflow-y-auto">
+        
+        {/* Article Content */}
+        <article className="transition-all duration-300 ease-in-out overflow-y-auto text-sm sm:text-base md:text-lg lg:text-xl">
           <ArticleContent />
         </article>
       </div>
-      <div className="bottom-0 pb-0 mb-0 bg-gray-900">
+      
+      {/* Footer */}
+      <div className="mt-auto bg-gray-900 p-4 sm:p-6 md:p-8 lg:p-12 text-white">
         <Footer />
       </div>
     </div>
