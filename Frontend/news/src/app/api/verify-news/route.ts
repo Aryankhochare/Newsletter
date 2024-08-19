@@ -1,14 +1,17 @@
 import { HfInference } from "@huggingface/inference";
 import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 
 const hf = new HfInference(process.env.HUGGINGFACE_API_KEY);
 
-export default async function handler(req : NextApiRequest, res: NextApiResponse){
+export async function POST(req : NextRequest){
     
     
-    if(req.method == 'POST'){
-        const {article} = req.body as {article : string};
+        const {article} = await req.json() as {article : string};
+        
+        
         try{
+            
             const prompt = generatePrompt(article);
         
         const response = await hf.textGeneration({
@@ -20,17 +23,13 @@ export default async function handler(req : NextApiRequest, res: NextApiResponse
             }
         });
         const generatedText = response.generated_text.replace(prompt, '').trim();
-        res.status(200).json({ verification: generatedText });
+        return NextResponse.json({ verification: generatedText }, { status: 200 });
         }
         catch (error) {    
             console.error('Error:', error);
-      res.status(500).json({ error: 'An error occurred while verifying the article' });   
+            return NextResponse.json({ error: 'An error occurred while verifying the article' });   
         }
-    }
-    else{
-        res.setHeader('Allow', ['POST']);
-        res.status(405).end(`Method ${req.method} Not Allowed`);
-    }
+    
 } 
 
 
@@ -40,6 +39,9 @@ function generatePrompt(article : string) : string {
 
     Article:
     ${article}
+
+     Begin your analysis by stating whether the article is "ACCURATE" or "NOT ACCURATE". Then, proceed with the conclusions.
+
     
     For each of the following parameters, provide a brief conclusion:
 
