@@ -6,21 +6,19 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useMainStore } from '@/components/ArticleStore';
 import parse from 'html-react-parser';
 
-interface Category {
-  category_name: string;
-}
-
 interface Article {
-  news_id: string;
-  category_id: string;
-  news_title: string;
-  content: string;
-  posted_on: string;
-  modified_on: string;
-  cover_image: string;
-  is_verified: boolean;
-  is_rejected: boolean;
-  Category: Category;
+  id: string;
+  userId: string;
+  userName: string;
+  categoryId: string;
+  categoryName: string;
+  title: string;
+  editorContent: string;
+  postedOn: string;
+  modifiedOn: string;
+  isVerified: boolean;
+  coverImage: string;
+  isRejected: boolean;
 }
 
 const ArticleLink: React.FC<{ article: Article, children: React.ReactNode }> = ({ article, children }) => {
@@ -36,7 +34,7 @@ const ArticleLink: React.FC<{ article: Article, children: React.ReactNode }> = (
   }
 
   return (
-    <Link href={`/main/newspage/${article.news_title}`} onClick={handleClick}>
+    <Link href={`/main/newspage/${article.title}`} onClick={handleClick}>
       {children}
     </Link>
   );
@@ -68,19 +66,19 @@ const TrendingCarousel: React.FC<{ articles: Article[] }> = ({ articles }) => {
           >
             <div className="relative w-full h-full">
               <img
-                src={article.cover_image}
-                alt={article.news_title}
+                src={article.coverImage}
+                alt={article.title}
                 className="w-full h-full object-cover"
               />
             </div>
             
             <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-6">
               <span className="inline-block bg-white text-black rounded-full px-3 py-1 text-sm font-semibold mb-2">
-                {article.Category.category_name}
+                {article.categoryName}
               </span>
-              <h3 className="text-2xl font-semibold mb-2">{parse(article.news_title)}</h3>
-               <div className="mb-2">{parse(article.content.substring(0, 150))}...</div>
-              <p className="text-sm">Posted on: {article.posted_on}</p>
+              <h3 className="text-2xl font-semibold mb-2">{parse(article.title)}</h3>
+               <div className="mb-2">{parse(article.editorContent.substring(0, 150))}...</div>
+              <p className="text-sm">Posted on: {article.postedOn}</p>
             </div>
           </div>
         </ArticleLink>

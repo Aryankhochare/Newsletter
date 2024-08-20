@@ -15,10 +15,12 @@ interface NewsPageProps {
 const NewsPage: React.FC<NewsPageProps> = ({ params }) => {
   const { slug } = params;
   const [showComments, setShowComments] = useState(false);
-  const article_id = useMainStore((state) => state.news_id);
-  const article_title = useMainStore((state) => state.news_title);
-  const article_content = useMainStore((state) => state.content);
-  const article_image = useMainStore((state) => state.cover_image);
+  const article_id = useMainStore((state) => state.id);
+  const article_title = useMainStore((state) => state.title);
+  const article_content = useMainStore((state) => state.editorContent);
+  const article_image = useMainStore((state) => state.coverImage);
+  const article_writer = useMainStore((state) => state.userName);
+  const article_date = useMainStore((state) => state.postedOn);
   
   //console.log({article_id});
   
@@ -36,8 +38,8 @@ const NewsPage: React.FC<NewsPageProps> = ({ params }) => {
               {parse(article_title)}
             </h1>
             <div className="flex items-center text-lg text-black mb-8">
-              <span className="mr-4">John doe</span>
-              <span>Published on August 6, 2024</span>
+              <span className="mr-4">Writer : {article_writer}</span>
+              <span>Posted on : {article_date}</span>
             </div>
             <img
               src={article_image}
