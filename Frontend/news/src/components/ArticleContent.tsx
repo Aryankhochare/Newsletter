@@ -10,14 +10,33 @@ export default function ArticleContent() {
   const article_title = useArticleStore((state) => state.title);
   const cover_image = useArticleStore((state) => state.coverImage);
   const [showFeedback, setShowFeedback] = useState(false);
-  const [feedback, setFeedback] = useState('');
+  const [factCheck, setFactCheck] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSendFeedback = () => {
-    // Implement sending feedback logic here
-    console.log("Feedback sent:", feedback);
-    setShowFeedback(false);
-    setFeedback('');
-  };
+  const handleFactCheck = async () => {
+    setIsLoading(true);
+    setShowFeedback(true);
+    try {
+      const response = await fetch('/api/verify-news',{
+        method: 'POST',
+        headers:{
+          'Content-Type' : 'application/json',
+        },
+        body: JSON.stringify({article: article_content}),
+      })
+      if(!response.ok){
+        throw new Error('Failed to fetch fact-check results');
+      }
+      const data = await response.json();
+      setFactCheck(data.verification);
+    } catch (error) {
+      console.log('Error',error);
+      setFactCheck('An error occured while fact-checking the article');
+    }
+    finally{
+      setIsLoading(false);
+    }
+  }
 
   return (
     <>
@@ -40,11 +59,11 @@ export default function ArticleContent() {
       <div className="mt-12 flex justify-center space-x-6">
         <button className="bg-green-500 text-white px-4 py-2 rounded-full">Accept</button>
         <button className="bg-red-500 text-white px-4 py-2 rounded-full">Reject</button>
-        <button className="bg-blue-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-blue-600 transform hover:scale-105 transition-all duration-200" onClick={() => setShowFeedback(true)}>Fact Check</button>
+        <button className="bg-blue-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-blue-600 transform  transition-all duration-200" onClick={handleFactCheck }>Fact Check</button>
       </div>
 
       <div
-        className={`fixed mt-4 inset-y-0 right-0 w-full sm:w-96 bg-gray-900 shadow-2xl z-40 transition-transform duration-300 ease-in-out transform ${
+        className={` fixed mt-4 inset-y-0 right-0 w-full sm:w-96 bg-gray-900 shadow-2xl z-40 transition-transform duration-300 ease-in-out transform ${
           showFeedback ? 'translate-x-0' : 'translate-x-full'
         } flex flex-col`}
         style={{ top: 'var(--navbar-height, 64px)' }}
@@ -71,14 +90,12 @@ export default function ArticleContent() {
             </svg>
           </button>
         </div>
-        <div className="flex-grow overflow-y-auto p-6">
-          <textarea
-            className="w-full h-64 p-4 text-gray-800 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-            placeholder=""
-            value={feedback}
-            onChange={(e) => setFeedback(e.target.value)}
-          ></textarea>
-          
+        <div className="scrollbar-hide flex-grow overflow-y-auto p-6">
+          {isLoading ? (
+            <div className="text-white text-center">Loading fact-check results...</div>
+          ) : (
+            <div className="text-white whitespace-pre-wrap">{factCheck}</div>
+          )}
         </div>
       </div>
     </>

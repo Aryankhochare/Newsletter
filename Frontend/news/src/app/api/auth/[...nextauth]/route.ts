@@ -5,6 +5,7 @@ import NextAuth from "next-auth/next";
 import { NextAuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import jwt from 'jsonwebtoken'
+import GoogleProvider from "next-auth/providers/google";
 
 
 interface CustomUser extends User {
@@ -80,9 +81,20 @@ export const authOptions: NextAuthOptions = {
         return null;
       },
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
   ],
-  callbacks: {
-    async jwt({token,user}){
+  callbacks: { 
+    async redirect({ url, baseUrl }) {
+      // Allows relative callback URLs
+      if (url.startsWith("/")) return `${baseUrl}${url}`
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return url
+      return baseUrl
+    },
+      async jwt({token,user}){
       if(user){
         token.id = user.id;
         token.roles = (user as CustomUser).roles;
@@ -114,7 +126,7 @@ export const authOptions: NextAuthOptions = {
         },
         accessToken: token.accessToken
       };
-      console.log(`this is updated sessin : `)
+      console.log(`this is updated session : `)
       return updatedSession
     
     },
@@ -132,7 +144,7 @@ export const authOptions: NextAuthOptions = {
   },
   pages:{
     signIn:"/login",
-  }
+  },
  
 };
 
