@@ -25,32 +25,12 @@ import {
   SignpostBig
 } from 'lucide-react';
 import { signOut, useSession } from 'next-auth/react';
-import { Skeleton } from "@/components/ui/skeleton"
 
 export default function ProfileInfo() {
-  const { data: session, status } = useSession();
-  const userRoles = (session?.user as any)?.roles || [];
+  const { data: session } = useSession();
+  const userRoles =  (session?.user as any)?.roles || [];
 
   const renderMenuItems = () => {
-    if (status === 'loading') {
-      return (
-        <>
-          <DropdownMenuItem>
-            <Skeleton className="w-[100px] h-[20px] rounded-full" />
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Skeleton className="w-[100px] h-[20px] rounded-full" />
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Skeleton className="w-[100px] h-[20px] rounded-full" />
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Skeleton className="w-[100px] h-[20px] rounded-full" />
-          </DropdownMenuItem>
-        </>
-      );
-    }
-
     if (userRoles.includes('ADMIN')) {
       return (
         <>
@@ -76,10 +56,10 @@ export default function ProfileInfo() {
             <Inbox className="mr-2 h-4 w-4" />
             <span>Requests</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          {/* <DropdownMenuItem>
             <Settings className="mr-2 h-4 w-4" />
             <span>System Settings</span>
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
         </>
       );
     } else if (userRoles.includes('EDITOR')) {
@@ -91,16 +71,16 @@ export default function ProfileInfo() {
           </DropdownMenuItem>
           <DropdownMenuItem>
             <FileText className="mr-2 h-4 w-4" />
-            <span>My Articles</span>
+            <span>Approved Articles</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          {/* <DropdownMenuItem>
             <PenTool className="mr-2 h-4 w-4" />
             <span>Create New Article</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
+          </DropdownMenuItem> */}
+          {/* <DropdownMenuItem>
             <Calendar className="mr-2 h-4 w-4" />
             <span>Editorial Calendar</span>
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
         </>
       );
     } else if (userRoles.includes('WRITER')) {
@@ -110,18 +90,20 @@ export default function ProfileInfo() {
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </DropdownMenuItem>
+          <Link href='/main/writer/quill_editor'>
           <DropdownMenuItem>
-            <Bookmark className="mr-2 h-4 w-4" />
-            <span>My Bookmarks</span>
+           <PenTool className="mr-2 h-4 w-4" />
+            <span>Workspace</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          </Link>
+          {/* <DropdownMenuItem>
             <History className="mr-2 h-4 w-4" />
             <span>Reading History</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
+          </DropdownMenuItem> */}
+          {/* <DropdownMenuItem>
             <CreditCard className="mr-2 h-4 w-4" />
             <span>Subscription Settings</span>
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
         </>
       );
     }
@@ -136,17 +118,11 @@ export default function ProfileInfo() {
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-8">
-        <DropdownMenuLabel>
-          {status === 'loading' ? (
-            <Skeleton className="w-[100px] h-[20px] rounded-full" />
-          ) : (
-            `My Account (${session?.user?.name})`
-          )}
-        </DropdownMenuLabel>
+        <DropdownMenuLabel>My Account ({session?.user?.name})</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {renderMenuItems()}
         <DropdownMenuItem onClick={() => signOut()}>
-          <LogOut className="mr-2 h-4 w-4" />
+          <LogOut className="mr-2 h-4 w-4" onClick={() => signOut()} />
           <span>Log out</span>
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -40,7 +40,7 @@ function generatePrompt(article : string) : string {
     Article:
     ${article}
 
-     Begin your analysis by stating whether the article is "ACCURATE" or "NOT ACCURATE". Then, proceed with the conclusions.
+     Begin your review by stating whether the article is "ACCURATE" or "NOT ACCURATE". Then, proceed with the rest.
 
     
     For each of the following parameters, provide a brief conclusion:

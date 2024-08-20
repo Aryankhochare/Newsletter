@@ -40,8 +40,7 @@ export default function ArticleContent() {
 
   return (
     <>
-  
-      <div className="max-w-4xl mx-auto p-8 bg-white shadow-2xl rounded-lg border border-gray-200">
+      <div className={`max-w-4xl mx-auto p-8 bg-white shadow-2xl rounded-lg border border-gray-200 transition-all duration-300 ${showFeedback ? 'sm:mr-96' : ''}`}>
         <h1 className="text-4xl sm:text-5xl font-bold mb-8 text-gray-900 leading-tight">
           {parse(article_title)}
         </h1>
@@ -54,8 +53,8 @@ export default function ArticleContent() {
                alt="Cover Image" 
                className="max-w-full h-auto" />
           </div>
-
       </div>
+      
       <div className="mt-12 flex justify-center space-x-6">
         <button className="bg-green-500 text-white px-4 py-2 rounded-full">Accept</button>
         <button className="bg-red-500 text-white px-4 py-2 rounded-full">Reject</button>
@@ -63,7 +62,7 @@ export default function ArticleContent() {
       </div>
 
       <div
-        className={` fixed mt-4 inset-y-0 right-0 w-full sm:w-96 bg-gray-900 shadow-2xl z-40 transition-transform duration-300 ease-in-out transform ${
+        className={`fixed mt-4 inset-y-0 right-0 w-full sm:w-96 bg-gray-900 shadow-2xl z-40 transition-transform duration-300 ease-in-out transform ${
           showFeedback ? 'translate-x-0' : 'translate-x-full'
         } flex flex-col`}
         style={{ top: 'var(--navbar-height, 64px)' }}

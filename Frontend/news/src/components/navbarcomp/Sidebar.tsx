@@ -7,11 +7,16 @@ interface SidebarProps {
   onClose: () => void;
 }
 
+interface Category {
+  categoryId: string;
+  categoryName: string;
+}
+
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const categoriesRef = useRef<HTMLDivElement>(null);
-  const categories = ['Politics', 'Sports', 'Technology', 'Food', 'Tourism', 'Health', 'Business', 'Crime', 'Education', 'Finance', 'Lifestyle', 'Entertainment'];
+  const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -35,6 +40,24 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       }
     }
   }, [isDropdownOpen]);
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch('https://globalbuzz.azurewebsites.net/api/category');
+      const data = await response.json();
+      setCategories(data);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  const handleCategoryClick = (categoryName: string) => {
+    onClose(); // Close the sidebar after navigation
+  };
 
   return (
     <div
@@ -82,13 +105,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                 style={{ maxHeight: '0' }}
               >
                 <ul className="space-y-2 border-white border-t-0 border-4 max-h-64 overflow-y-auto scrollbar-hide">
-                  {categories.map((category, index) => (
-                    <li key={index}>
+                  {categories.map((category) => (
+                    <li key={category.categoryId}>
                       <Link
-                        href={`/main/category/${category.toLowerCase()}`}
-                        className="scrollbar-hide block py-2 px-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 rounded transition-colors duration-200"
+                        // href={`/category/${category.categoryName}`}
+                        href = {`/main/category/${category.categoryName}`}
+                        className="scrollbar-hide block py-2 px-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 rounded transition-colors duration-200 w-full text-left"
+                        onClick={() => handleCategoryClick(category.categoryName)}
                       >
-                        {category}
+                        {category.categoryName}
                       </Link>
                     </li>
                   ))}
