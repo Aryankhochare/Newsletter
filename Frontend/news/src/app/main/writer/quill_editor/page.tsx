@@ -23,7 +23,7 @@ export default function Home() {
       const { data, error } = await supabase
         .from('News')
         .select('news_id, news_title, content')
-        .eq('is_verified', false)
+        .eq('is_verified', true)
         .eq('is_rejected', true);
   
       if (error) {
@@ -41,6 +41,7 @@ export default function Home() {
   const handleEdit = (id : string) => {
     const newsItem = rejected.find((item) => item.news_id === id) || null;
     setSelectedNews(newsItem);
+    console.log(selectedNews);
   }
 
   const handleSave = (title: string, content: string) => {
@@ -115,3 +116,5 @@ export default function Home() {
         </main>
       );
     }
+
+

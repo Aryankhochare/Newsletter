@@ -142,6 +142,7 @@ import Navbar from '@/components/navbarcomp/navbar';
 import Link from 'next/link';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
+import parse from 'html-react-parser'
 
 interface Article {
   id: string;
@@ -239,10 +240,10 @@ export default function CategoryPage({ params }: CategoryPageProps) {
           ) : (
             articles.map((article) => (
               <div key={article.id} className='mb-8 pb-4 border-b'>
-              <h2 className='font-bold text-xl mb-2'>{article.title}</h2>
+              <h2 className='font-bold text-xl mb-2'>{parse(article.title)}</h2>
               <div className='flex'>
                 <div className="flex-1 pr-4 text-sm">
-                  {article.editorContent.substring(0, 150)}...
+                  {parse(article.editorContent.substring(0, 150))}...
                   <ViewMoreButton article={article} />
                 </div>
                 <div className='w-1/3 flex items-start'>
@@ -256,7 +257,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                 </div>
               </div>
               <div className="text-sm text-gray-500 mt-2">
-                By: {article.userName} | Created: {new Date(article.postedOn).toLocaleDateString()} | Modified: {new Date(article.modifiedDate).toLocaleDateString()}
+                By: {article.userName} | Posted On: {new Date(article.modifiedDate).toLocaleDateString()}
               </div>
               </div>
             ))

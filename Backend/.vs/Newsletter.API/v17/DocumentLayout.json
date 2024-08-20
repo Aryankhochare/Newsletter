@@ -92,7 +92,11 @@
               "RelativeDocumentMoniker": "Newsletter\\Controllers\\UsersController.cs",
               "ToolTip": "C:\\Users\\DELL\\Newsletter\\Backend\\Newsletter\\Controllers\\UsersController.cs",
               "RelativeToolTip": "Newsletter\\Controllers\\UsersController.cs",
+<<<<<<< HEAD
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAOkAAAAJAAAA",
+=======
+              "ViewState": "AQIAAFcAAAAAAAAAAAAYwGgAAAAgAAAA",
+>>>>>>> 61ba3f7e3b80934342a896ef852fbc17e29a548e
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-18T11:39:21.086Z",
               "EditorCaption": ""
@@ -107,6 +111,7 @@
               "RelativeToolTip": "Newsletter\\ViewModels\\CreateUserVM.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAA7AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+<<<<<<< HEAD
               "WhenOpened": "2024-08-18T11:38:51.814Z"
             },
             {
@@ -157,6 +162,10 @@
               "ViewState": "AQIAAAUAAAAAAAAAAAAxwBcAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-18T12:57:48.248Z"
+=======
+              "WhenOpened": "2024-08-19T16:03:36.981Z",
+              "EditorCaption": ""
+>>>>>>> 61ba3f7e3b80934342a896ef852fbc17e29a548e
             }
           ]
         }
