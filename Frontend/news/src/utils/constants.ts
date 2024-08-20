@@ -7,5 +7,21 @@ export const apiLinks = {
         reject: `${baseUrl}/editor/reject`,
         delete: `${baseUrl}/editor`  
     },
-
+    newsletter:{
+        fetch: `${baseUrl}/newsletter`,
+        searchCategory: `${baseUrl}/newsletter/search?category=`,
+        searchWriter: `${baseUrl}/newsletter/search?writer=`
+    },
+    category:{
+        fetch: `${baseUrl}/api/category`,
+    },
+    comments:{
+        fetch: `${baseUrl}/comments`,
+    },
+    user:{
+        fetch: `${baseUrl}/users`
+    },
+    admin:{
+        fetchUser: `${baseUrl}/admin/users`
+    }
 }

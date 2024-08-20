@@ -6,6 +6,7 @@ import Navbar from '@/components/navbarcomp/navbar';
 import Footer from '@/components/navbarcomp/footer';
 import { supabase } from '@/app/api/auth/[...nextauth]/route';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useMainStore } from '@/components/ArticleStore'; //Added this !
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import parse from 'html-react-parser'
 
@@ -19,6 +20,7 @@ import parse from 'html-react-parser'
   }
   
   interface Article {
+    news_id : string; //Added this !
     category_id: string;
     news_title: string;
     content: string;
@@ -32,38 +34,48 @@ import parse from 'html-react-parser'
   
   const ArticleLink: React.FC<{ article: Article, children: React.ReactNode }> = ({ article, children }) => {
     const [userRole, setUserRole] = useState<string | null>(null);
+    const send_article = useMainStore(state => state.setMainArticle);
   
     useEffect(() => {
       const role = localStorage.getItem('userRole');
       setUserRole(role);
     }, []);
-  
-    if (userRole && userRole !== 'user') {
-      return (
-        <Link href={`/newspage/${article.news_title}`}>
-          {children}
-        </Link>
-      );
-    } else {
-      return (
-        <Dialog>
-          <DialogTrigger asChild>
-            {children}
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Login Required</DialogTitle>
-            </DialogHeader>
-            <p>Please login to continue reading this article.</p>
-          </DialogContent>
-        </Dialog>
-      );
+
+    const handleClick = (e:React.MouseEvent) => {
+      const article_content = article;
+      if (article_content)
+      {
+        send_article(article_content);
+      }
+      else{
+        console.log("No content found !");
+      }
     }
+  
+    // if (userRole && userRole !== 'user') {
+      return (
+        <Link href={`/main/newspage/${article.news_title}`} onClick={handleClick}>
+           {children}
+         </Link>
+      );
+    // } else {
+    //   return (
+    //     <Dialog>
+    //       <DialogTrigger asChild>
+    //         {children}
+    //       </DialogTrigger>
+    //       <DialogContent>
+    //         <DialogHeader>
+    //           <DialogTitle>Login Required</DialogTitle>
+    //         </DialogHeader>
+    //         <p>Please login to continue reading this article.</p>
+    //       </DialogContent>
+    //     </Dialog>
+    //  );
+    //}
   };
   
-  
-  
-  const TrendingCarousel: React.FC<{ articles: Article[] }> = ({ articles }) => {
+    const TrendingCarousel: React.FC<{ articles: Article[] }> = ({ articles }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
   
   
@@ -74,33 +86,24 @@ import parse from 'html-react-parser'
   
       return () => clearInterval(timer);
     }, [articles.length]);
-  
-  
-  
     const handlePrev = (e: React.MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
       setCurrentIndex((prevIndex) => (prevIndex - 1 + articles.length) % articles.length);
     };
-  
     const handleNext = (e: React.MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
       setCurrentIndex((prevIndex) => (prevIndex + 1) % articles.length);
     };
-  
     return (
-      
-
       <div className="relative w-full h-[500px] overflow-hidden">
         {articles.map((article, index) => (
           <ArticleLink article={article} key={index}>
-  
-          <div
-            
+          <div 
             className={`absolute top-0 left-0 w-full h-full transition-opacity duration-500 ${
               index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
-            }cursor-pointer`}
+            } cursor-pointer`}
           >
             <div className="relative w-full h-full">
               <img
