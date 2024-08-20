@@ -1,6 +1,3 @@
-<<<<<<< HEAD:Frontend/news/src/app/main/newspage/page.tsx
- "use client";
-=======
 // "use client";
 
 // import React, { useState } from 'react';
@@ -76,7 +73,6 @@
 // export default NewsPage;"use client";
 
 "use client";
->>>>>>> 11b1da35469c4f39715c503c856adcfa97ebb2c6:Frontend/news/src/app/main/newspage/[slug]/page.tsx
 
 import React, { useState } from 'react';
 import Navbar from '@/components/navbarcomp/navbar';
