@@ -73,6 +73,7 @@ const LoginPageComp = () => {
                 placeholder="Your email"
                 onChange={(e) => setUsername(e.target.value)}
                 value={username}
+                required
               />
             </div>
 
@@ -85,6 +86,7 @@ const LoginPageComp = () => {
                 placeholder="Your password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
+                required
               />
               <div
                 className="absolute inset-y-0 pt-6 right-2  flex  cursor-pointer items-center"

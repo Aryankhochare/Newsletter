@@ -11,7 +11,7 @@ namespace Newsletter.Models
         [Column("username")]
         public string Username { get; set; }
         [Column("password")]
-        public string Password { get; set; }
+        public string? Password { get; set; }
         [Column("user_email")]
         public string Email { get; set; }
         [Column("is_active")]
