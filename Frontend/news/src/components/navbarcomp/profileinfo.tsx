@@ -69,13 +69,15 @@ export default function ProfileInfo() {
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </DropdownMenuItem>
+          <Link href = '/main/editor'>
           <DropdownMenuItem>
             <FileText className="mr-2 h-4 w-4" />
-            <span>Approved Articles</span>
+            <span>Articles</span>
           </DropdownMenuItem>
+          </Link>
           {/* <DropdownMenuItem>
             <PenTool className="mr-2 h-4 w-4" />
-            <span>Create New Article</span>
+            <span>View Articles</span>
           </DropdownMenuItem> */}
           {/* <DropdownMenuItem>
             <Calendar className="mr-2 h-4 w-4" />

@@ -90,10 +90,10 @@ export default function Navbar() {
           )}
           {session.data?.user===undefined? (
             <>
-              <Link href="/login" className="bg-gray-950 hover:underline hover:bg-gray-900 text-white font-bold py-1 px-2 sm:py-2 sm:px-4 rounded text-sm sm:text-base">
+              <Link href="/login" className="bg-gray-950 hover:bg-gray-900 text-white font-bold py-1 px-2 sm:py-2 sm:px-4 rounded text-sm sm:text-base">
                 Login
               </Link>
-              <Link href="/signup" className="bg-gray-950 hover:underline hover:bg-gray-900 text-white font-bold py-1 px-2 sm:py-2 sm:px-4 rounded text-sm sm:text-base">
+              <Link href="/signup" className="bg-gray-950 hover:bg-gray-900 text-white font-bold py-1 px-2 sm:py-2 sm:px-4 rounded text-sm sm:text-base">
                 Sign Up
               </Link>
             </>

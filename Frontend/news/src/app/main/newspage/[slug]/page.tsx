@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import React, { useState } from 'react';
@@ -7,6 +6,7 @@ import Navbar from '@/components/navbarcomp/navbar';
 import Footer from '@/components/navbarcomp/footer';
 import { useMainStore } from '@/components/ArticleStore';
 import Comments from '@/components/Comments';
+import parse from 'html-react-parser'
 
 interface NewsPageProps {
   params: { slug: string };
@@ -33,7 +33,7 @@ const NewsPage: React.FC<NewsPageProps> = ({ params }) => {
       <article className={`m-10 transition-all duration-300 ease-in-out ${showComments ? 'w-full lg:w-3/5 xl:w-3/4' : 'w-full'} overflow-y-auto`}>
           <div className="max-w-5xl mx-auto p-6 sm:p-10 bg-white shadow-xl rounded-lg">
             <h1 className="text-4xl sm:text-5xl font-bold mb-6 text-black leading-tight">
-              {article_title}
+              {parse(article_title)}
             </h1>
             <div className="flex items-center text-lg text-black mb-8">
               <span className="mr-4">John doe</span>
@@ -46,7 +46,7 @@ const NewsPage: React.FC<NewsPageProps> = ({ params }) => {
             />
             <div className="prose prose-xl max-w-none">
               <p className="mb-6 text-xl leading-relaxed">
-              {article_content}
+              {parse(article_content)}
               </p>
             </div>
           </div>

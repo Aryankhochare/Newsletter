@@ -102,7 +102,7 @@ namespace Newsletter.Controllers
                 }
 
 
-                return Ok(createdUser.Id);
+                return Ok(new { createdUser.Id });
             }
             catch (Exception ex)
             {
