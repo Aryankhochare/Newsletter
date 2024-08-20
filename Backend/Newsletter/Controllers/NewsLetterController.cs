@@ -120,7 +120,7 @@ namespace Newsletter.Controllers
 
                 var articles = response.Models;
 
-                // Fetch categories and users (similar to your existing code)
+                
                 var categoriesResponse = await client.From<Category>().Get();
                 var categories = categoriesResponse.Models ?? new List<Category>();
 
@@ -290,6 +290,68 @@ namespace Newsletter.Controllers
                 return StatusCode(500, "An error occurred while fetching data from newsletter");
             }
         }
-    
+        [HttpGet("verified")]
+        public async Task<IActionResult> GetVerifiedArticle()
+        {
+            try
+            {
+                
+                var articlesResponse = await client.From<NewsArticle>()
+                    .Filter("is_verified", Constants.Operator.Equals, "true")
+                    .Filter("is_rejected", Constants.Operator.Equals, "false")
+                    .Order("modified_on", Supabase.Postgrest.Constants.Ordering.Descending)
+                    .Get();
+
+                if (articlesResponse?.Models == null || !articlesResponse.Models.Any())
+                {
+                    return NotFound("Didn't find any verified article");
+                }
+                var articles = articlesResponse.Models;
+
+               
+                var categoriesResponse = await client.From<Category>().Get();
+                var categories = categoriesResponse.Models ?? new List<Category>();
+
+     
+                var usersResponse = await client.From<Users>().Get();
+                var users = usersResponse.Models ?? new List<Users>();
+
+                var result = new List<object>();
+                foreach (var article in articles)
+                {
+                    var category = categories.FirstOrDefault(c => c.CategoryId == article.CategoryId);
+                    var user = users.FirstOrDefault(u => u.Id == article.UserId);
+
+                    var categoryName = category?.CategoryName ?? string.Empty;
+                    var userName = user?.Username ?? string.Empty;
+
+                    result.Add(new
+                    {
+                        article.Id,
+                        article.UserId,
+                        userName,
+                        article.CategoryId,
+                        categoryName,
+                        article.Title,
+                        article.EditorContent,
+                        article.PostedOn,
+                        article.ModifiedDate,
+                        article.IsVerified,
+                        article.CoverImage,
+                        article.IsRejected,
+                    });
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching verified articles: {ex}");
+                return StatusCode(500, "An error occurred while fetching verified articles");
+            }
+        }
+
+
     }
+
 }

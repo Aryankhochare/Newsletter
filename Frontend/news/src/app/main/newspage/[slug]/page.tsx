@@ -124,7 +124,9 @@ const NewsPage: React.FC<NewsPageProps> = ({ params }) => {
   const article_title = useMainStore((state) => state.news_title);
   const article_content = useMainStore((state) => state.content);
   const article_image = useMainStore((state) => state.cover_image);
-
+  
+  //console.log({article_id});
+  
   return (
     <div className="bg-white min-h-screen flex flex-col text-black">
       <div className="sticky top-0 z-50">
@@ -138,8 +140,8 @@ const NewsPage: React.FC<NewsPageProps> = ({ params }) => {
               {article_title}
             </h1>
             <div className="flex items-center text-lg text-black mb-8">
-              <span className="mr-4">John doe</span>
-              <span>Published on August 6, 2024</span>
+              <span className="mr-4">Writer : {article_writer}</span>
+              <span>Posted on : {article_date}</span>
             </div>
             <img
               src={article_image}

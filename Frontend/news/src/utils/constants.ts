@@ -10,13 +10,14 @@ export const apiLinks = {
     newsletter:{
         fetch: `${baseUrl}/newsletter`,
         searchCategory: `${baseUrl}/newsletter/search?category=`,
-        searchWriter: `${baseUrl}/newsletter/search?writer=`
+        searchWriter: `${baseUrl}/newsletter/search?writer=`,
+        verifiedArticles: `${baseUrl}/newsletter/verified`
     },
     category:{
         fetch: `${baseUrl}/api/category`,
     },
     comments:{
-        fetch: `${baseUrl}/comments`,
+        fetch: `${baseUrl}/api/comments`,
     },
     user:{
         fetch: `${baseUrl}/users`

@@ -6,21 +6,19 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useMainStore } from '@/components/ArticleStore';
 import parse from 'html-react-parser';
 
-interface Category {
-  category_name: string;
-}
-
 interface Article {
-  news_id: string;
-  category_id: string;
-  news_title: string;
-  content: string;
-  posted_on: string;
-  modified_on: string;
-  cover_image: string;
-  is_verified: boolean;
-  is_rejected: boolean;
-  Category: Category;
+  id: string;
+  userId: string;
+  userName: string;
+  categoryId: string;
+  categoryName: string;
+  title: string;
+  editorContent: string;
+  postedOn: string;
+  modifiedOn: string;
+  isVerified: boolean;
+  coverImage: string;
+  isRejected: boolean;
 }
 
 const ArticleLink: React.FC<{ article: Article, children: React.ReactNode }> = ({ article, children }) => {
@@ -36,7 +34,7 @@ const ArticleLink: React.FC<{ article: Article, children: React.ReactNode }> = (
   }
 
   return (
-    <Link href={`/main/newspage/${article.news_title}`} onClick={handleClick}>
+    <Link href={`/main/newspage/${article.title}`} onClick={handleClick}>
       {children}
     </Link>
   );
@@ -64,18 +62,18 @@ const LatestNewsCarousel: React.FC<{ articles: Article[] }> = ({ articles }) => 
               <div className="bg-white rounded-lg overflow-hidden shadow-lg h-full flex flex-col cursor-pointer">
                 <div className="relative h-48">
                   <img
-                    src={article.cover_image}
-                    alt={article.news_title}
+                    src={article.coverImage}
+                    alt={article.title}
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="p-4 flex-grow">
                   <span className="inline-block bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm font-semibold mb-2">
-                    {article.Category.category_name}
+                    {article.categoryName}
                   </span>
-                  <h3 className="text-xl font-semibold mb-2">{parse(article.news_title)}</h3>
-                  <p className="text-gray-600 mb-4">{parse(article.content.substring(0, 100))}...</p>
-                  <p className="text-sm text-gray-500 mt-auto">Posted on: {article.posted_on}</p>
+                  <h3 className="text-xl font-semibold mb-2">{parse(article.title)}</h3>
+                  <div className="mb-2">{parse(article.editorContent.substring(0, 150))}...</div>
+                  <p className="text-sm text-gray-500 mt-auto">Posted on: {article.postedOn}</p>
                 </div>
               </div>
             </ArticleLink>
