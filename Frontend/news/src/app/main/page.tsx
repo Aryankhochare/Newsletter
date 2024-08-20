@@ -142,7 +142,7 @@ import parse from 'html-react-parser'
       </div>
     );
   };
-  // ... (keep the TrendingCarousel component as it is)
+ 
 
 
 const LatestNewsCarousel: React.FC<{ articles: Article[] }> = ({ articles }) => {
