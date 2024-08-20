@@ -30,7 +30,7 @@ const LoginPageComp = () => {
       if (result.error) {
         setError("Invalid username or password");
       } else {
-        router.push("/");
+        router.push("/main");
       }
     } catch (error) {
       console.error("Login error:", error);
@@ -58,7 +58,7 @@ const LoginPageComp = () => {
           </button>
 
           <div className="text-center text-sm text-gray-500">
-            <a href="#" className="text-gray-500 hover:underline hover:text-black text-sm">Continue as Guest</a>
+            <Link href="/main" className="text-gray-500 hover:underline hover:text-black text-sm">Continue as Guest</Link>
           </div>
         </div>
 
@@ -101,14 +101,14 @@ const LoginPageComp = () => {
             {error && <p className="text-red-500 text-sm">{error}</p>}
 
             <div className="flex justify-between items-center">
-              <a href="#" className="text-sm text-gray-500 hover:underline hover:text-black">Forgot password?</a>
+              <Link href="#" className="text-sm text-gray-500 hover:underline hover:text-black">Forgot password?</Link>
               <button type="submit" className="bg-black text-white rounded-md py-1 px-4 hover:bg-slate-800">
                 Login
               </button>
             </div>
             <div className="mt-4 text-center">
               <p className="text-gray-400">Don&apos;t have an account?</p>
-              <a href="/signup" className="text-gray-500 hover:underline hover:text-black">Sign up</a>
+              <Link href="/signup" className="text-gray-500 hover:underline hover:text-black">Sign up</Link>
             </div>
           </form>
         </div>

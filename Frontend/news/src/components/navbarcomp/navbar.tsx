@@ -8,11 +8,13 @@ import { DM_Serif_Display } from 'next/font/google';
 import { Anton } from 'next/font/google';
 import { TbUserSearch } from "react-icons/tb";
 import { IoIosSearch } from "react-icons/io";
+import { useSession } from 'next-auth/react';
 
 const Dmse = DM_Serif_Display({ subsets: ["latin"], weight: ["400"] });
 const Mmse = Anton({ subsets: ["latin"], weight: ["400"] });
 
 export default function Navbar() {
+  const session=useSession()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [userRole, setUserRole] = useState<string | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -86,7 +88,7 @@ export default function Navbar() {
               </div>
             </form>
           )}
-          {userRole === '' ? (
+          {session.data?.user===undefined? (
             <>
               <Link href="/login" className="bg-gray-950 hover:underline hover:bg-gray-900 text-white font-bold py-1 px-2 sm:py-2 sm:px-4 rounded text-sm sm:text-base">
                 Login
