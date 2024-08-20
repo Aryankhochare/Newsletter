@@ -264,7 +264,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
           )}
         </div>
 
-        <div className='scrollbar-hide m-10 hidden md:block md:w-4/5 p-0 bg-black shadow-slate-600 shadow-2xl overflow-y-auto sticky top-16 h-[calc(100vh-4rem)]'>
+        <div className='scrollbar-hide m-10 hidden md:block md:w-2/6 p-0 bg-black shadow-slate-600 shadow-2xl overflow-y-auto sticky top-16 h-[calc(100vh-4rem)]'>
           {isLoading ? (
             Array(3).fill(0).map((_, index) => <SidebarSkeleton key={index} />)
           ) : (

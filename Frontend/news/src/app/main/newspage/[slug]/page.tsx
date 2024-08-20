@@ -19,6 +19,7 @@ const NewsPage: React.FC<NewsPageProps> = ({ params }) => {
   const article_title = useMainStore((state) => state.news_title);
   const article_content = useMainStore((state) => state.content);
   const article_image = useMainStore((state) => state.cover_image);
+  
   //console.log({article_id});
   
   return (
@@ -35,7 +36,7 @@ const NewsPage: React.FC<NewsPageProps> = ({ params }) => {
               {parse(article_title)}
             </h1>
             <div className="flex items-center text-lg text-black mb-8">
-              <span className="mr-4">By John Doe</span>
+              <span className="mr-4">John doe</span>
               <span>Published on August 6, 2024</span>
             </div>
             <img
