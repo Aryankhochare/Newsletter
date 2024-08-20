@@ -74,7 +74,7 @@ const LatestNewsCarousel: React.FC<{ articles: Article[] }> = ({ articles }) => 
                     {article.Category.category_name}
                   </span>
                   <h3 className="text-xl font-semibold mb-2">{parse(article.news_title)}</h3>
-                  <p className="text-gray-600 mb-4">{parse(article.content.substring(0, 100))}...</p>
+                  <div className="mb-2">{parse(article.content.substring(0, 150))}...</div>
                   <p className="text-sm text-gray-500 mt-auto">Posted on: {article.posted_on}</p>
                 </div>
               </div>

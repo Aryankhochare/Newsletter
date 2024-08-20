@@ -13,7 +13,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Newsletter.Controllers
 {
-    [Route("comments")]
+    [Route("api/comments")]
     [ApiController]
     public class CommentController : ControllerBase
     {
@@ -61,7 +61,7 @@ namespace Newsletter.Controllers
             }
         }
 
-        [HttpGet("FetchUsers")]
+        [HttpGet]
         public async Task<IActionResult> FetchUsers()
         {
             try
