@@ -79,4 +79,4 @@ export default withAuth(
   }
 );
 
-export const config = { matcher: ['/','/main', '/main/admin/:path*', '/main/editor/:path*', '/main/writer/:path*', '/main/user/:path*'] };
+export const config = { matcher: [ '/main/admin/:path*', '/main/editor/:path*', '/main/writer/:path*', '/main/user/:path*'] };

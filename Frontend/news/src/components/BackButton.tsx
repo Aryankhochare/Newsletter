@@ -6,10 +6,11 @@ import { Button } from './ui/button'
 
 const BackButton = () => {
     const router = useRouter()
+    
     return (
       <Button 
         onClick={() => router.back()} 
-        className="absolute top-4 left-4 p-2 rounded-full bg-gray-800 hover:bg-gray-300 transition-colors duration-200"
+        className="absolute top-4 left-4 p-2 rounded-full bg-gray-800 hover:bg-red-800 transition-colors duration-200"
       >
         <ArrowLeft size={24} />
       </Button>
