@@ -40,6 +40,7 @@ namespace Newsletter.Controllers
             }, out SecurityToken validatedToken);
             var jwtToken = (JwtSecurityToken)validatedToken;
             var user_id = jwtToken.Claims.First(i => i.Type == "sub").Value;
+            //Console.WriteLine($"user_id : {user_id}");
             return user_id;
         }
 
@@ -49,27 +50,31 @@ namespace Newsletter.Controllers
             if (authHeader != null && authHeader.StartsWith("Bearer "))
             {
                 var token = authHeader.Substring(7);
-                return GetUserIdFromToken(token);
+                //Console.WriteLine($"Token: {token}");
+                var decrypted_user_id = GetUserIdFromToken(token);
+                //Console.WriteLine($"user id in validate : { decrypted_user_id}");
+                return decrypted_user_id;
             }
-            return null;
+            else
+            {
+                return null;
+            }
         }
 
-        [HttpPost("fetchComments/{id}")]
-        public async Task<IActionResult> FetchComments(string id)
+        [HttpGet("FetchUsers")]
+        public async Task<IActionResult> FetchUsers()
         {
             try
             {
                 var userId = await ValidateAndGetUserId();
+                Console.WriteLine(userId);
                 if (userId == null) return Unauthorized("User not found");
-                var comments = await client.From<Comments>().Where(c => c.NewsId == id).Get();
-
-                return Ok(new { userId, comments });
+                return Ok(new { userId });
             }
             catch (Exception ex)
             {
-                // Log the exception    
-                Console.WriteLine($"Error creating comment: {ex}");
-                return StatusCode(500, "An error occurred while creating comment");
+                Console.WriteLine($"Error fetching user ID: {ex.Message}");
+                return StatusCode(500, "An internal server error occurred while fetching the user.");
             }
         }
 
