@@ -71,11 +71,13 @@
 // };
 
 // export default NewsPage;"use client";
- "use client";
+
+"use client";
 
 import React, { useState } from 'react';
 import Navbar from '@/components/navbarcomp/navbar';
 import Footer from '@/components/navbarcomp/footer';
+import { useMainStore } from '@/components/ArticleStore';
 import Comments from '@/components/Comments';
 
 interface NewsPageProps {
@@ -85,7 +87,12 @@ interface NewsPageProps {
 const NewsPage: React.FC<NewsPageProps> = ({ params }) => {
   const { slug } = params;
   const [showComments, setShowComments] = useState(false);
-
+  const article_id = useMainStore((state) => state.news_id);
+  const article_title = useMainStore((state) => state.news_title);
+  const article_content = useMainStore((state) => state.content);
+  const article_image = useMainStore((state) => state.cover_image);
+  //console.log({article_id});
+  
   return (
     <div className="bg-white min-h-screen flex flex-col text-black">
       <div className="sticky top-0 z-50">
@@ -97,35 +104,20 @@ const NewsPage: React.FC<NewsPageProps> = ({ params }) => {
       <article className={`m-10 transition-all duration-300 ease-in-out ${showComments ? 'w-full lg:w-3/5 xl:w-3/4' : 'w-full'} overflow-y-auto`}>
           <div className="max-w-5xl mx-auto p-6 sm:p-10 bg-white shadow-xl rounded-lg">
             <h1 className="text-4xl sm:text-5xl font-bold mb-6 text-black leading-tight">
-              Two Centuries Later, a Female Composer Is Rediscovered
+              {article_title}
             </h1>
             <div className="flex items-center text-lg text-black mb-8">
               <span className="mr-4">By John Doe</span>
               <span>Published on August 6, 2024</span>
             </div>
             <img
-              src="https://i.postimg.cc/VkfFzQ2v/image.png"
+              src={article_image}
               alt="Article image"
               className="w-full h-auto mb-8 rounded-lg shadow-md"
             />
             <div className="prose prose-xl max-w-none">
               <p className="mb-6 text-xl leading-relaxed">
-              &quot;A secret appointment exists between past generations and our own,&quot; Walter Benjamin wrote. 
-              &quot;Our arrival on earth was expected.&quot; At pivotal moments, the philosopher argued, voices from 
-                the past reach out to us with prophetic force.
-              </p>
-              <p className="mb-6 text-xl leading-relaxed">
-                To review Biden&apos;s proposals, though, is to be reminded of why reforming the Court is so hard,
-                despite the dissatisfaction and a wealth of ideas. He proposed three measures, 
-                the first of which is not so much a reform as a rebuke: the &quot;No One Is Above the Law Amendment&quot; to the Constitution. 
-                It would effectively overrule the Court&apos;s decision, in Trump v. United States, dangerously asserting that former Presidents 
-                have broad immunity from criminal prosecution for their actions in office. But any amendment requires first a two-thirds majority in each house of Congress, 
-                and then ratification by three-quarters of the states—thirty-eight in all, a big number. Alternatively, two-thirds of the state legislatures could demand a 
-                constitutional convention, which might put the entire document up for grabs. This has never happened, and could be calamitous in a time of Trumpism.
-              </p>
-              <p className="mb-6 text-xl leading-relaxed">
-                The rediscovery of this female composer&apos;s work sheds new light on the musical landscape of 
-                two centuries ago, challenging our understanding of gender roles in classical music composition.
+              {article_content}
               </p>
             </div>
           </div>
@@ -171,7 +163,7 @@ const NewsPage: React.FC<NewsPageProps> = ({ params }) => {
             </button>
           </div>
           <div className="flex-grow overflow-y-auto">
-            <Comments />
+          <Comments article_id={article_id} />
           </div>
         </div>
       </div>
