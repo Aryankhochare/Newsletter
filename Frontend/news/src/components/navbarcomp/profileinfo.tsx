@@ -54,10 +54,12 @@ export default function ProfileInfo() {
     if (userRoles.includes('ADMIN')) {
       return (
         <>
+        <Link href="/main/admin/profile">
           <DropdownMenuItem>
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </DropdownMenuItem>
+          </Link>
           <Link href="/main/admin/dashboard">
             <DropdownMenuItem>
               <LayoutDashboard className="mr-2 h-4 w-4" />
