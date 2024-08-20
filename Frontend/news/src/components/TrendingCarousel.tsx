@@ -79,7 +79,7 @@ const TrendingCarousel: React.FC<{ articles: Article[] }> = ({ articles }) => {
                 {article.Category.category_name}
               </span>
               <h3 className="text-2xl font-semibold mb-2">{parse(article.news_title)}</h3>
-              <p className="mb-2">{parse(article.content.substring(0, 150))}...</p>
+               <div className="mb-2">{parse(article.content.substring(0, 150))}...</div>
               <p className="text-sm">Posted on: {article.posted_on}</p>
             </div>
           </div>
