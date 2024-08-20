@@ -314,21 +314,25 @@ const Comments: React.FC<CommentsProps> = ({ article_id }) => {
   return (
     <div className="p-6 bg-gray-900 min-h-screen text-white">
       <h2 className="text-3xl font-bold mb-6">Comments</h2>
-      <div className="flex items-center mb-8">
-        <input
-          type="text"
-          className="border rounded-l-lg p-3 flex-grow bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Add a comment..."
-          value={commentBody}
-          onChange={(event) => setCommentBody(event.target.value)}
-          required
-        />
-        <button 
-          className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-r-lg transition duration-200 ease-in-out" 
-          onClick={handleComment}
-        >
-        </button>
-      </div>
+    
+    <div className="flex items-center mb-8 space-x-2">
+  <input
+    type="text"
+    className="border rounded-l-lg p-3 flex-grow bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+    placeholder="Add a comment..."
+    value={commentBody}
+    onChange={(event) => setCommentBody(event.target.value)}
+    required
+  />
+  <button
+    className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-r-lg transition duration-200 ease-in-out"
+    onClick={handleComment}
+  >
+    Comment
+  </button>
+</div>
+
+
       <div className="space-y-4">
         {comments.map((comment) => (
           <div key={comment.comment_id} className="bg-gray-800 p-4 rounded-lg">
