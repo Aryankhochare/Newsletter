@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState } from 'react';
@@ -55,11 +56,13 @@ export default function ArticleContent() {
           </div>
       </div>
       
-      <div className="mt-12 flex justify-center space-x-6">
-        <button className="bg-green-500 text-white px-4 py-2 rounded-full">Accept</button>
-        <button className="bg-red-500 text-white px-4 py-2 rounded-full">Reject</button>
-        <button className="bg-blue-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-blue-600 transform  transition-all duration-200" onClick={handleFactCheck }>Fact Check</button>
-      </div>
+      {!showFeedback && (
+        <div className="mt-12 flex justify-center space-x-6">
+          {/* <button className="bg-green-500 text-white px-4 py-2 rounded-full">Accept</button>
+          <button className="bg-red-500 text-white px-4 py-2 rounded-full">Reject</button> */}
+          <button className="bg-blue-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-blue-600 transform  transition-all duration-200" onClick={handleFactCheck}>Fact Check</button>
+        </div>
+      )}
 
       <div
         className={`fixed mt-4 inset-y-0 right-0 w-full sm:w-96 bg-gray-900 shadow-2xl z-40 transition-transform duration-300 ease-in-out transform ${
