@@ -5,6 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebookF } from 'react-icons/fa';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 
 export default function SignUpComp() {
   const [formData, setFormData] = useState({
@@ -47,12 +48,12 @@ export default function SignUpComp() {
 
           <p className="text-xs text-gray-500 mb-4">By continuing you indicate that you agree to The Global Buzz&apos;s Terms of Service and Privacy Policy.</p>
 
-          <button className="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 rounded-md py-2 px-4 hover:bg-gray-50 mb-4">
+          <button onClick={() => signIn("google")} className="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 rounded-md py-2 px-4 hover:bg-gray-50 mb-4">
             <FcGoogle className="text-xl" />
             <span>Continue with Google</span>
           </button>
 
-          <button className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white rounded-md py-2 px-4 hover:bg-blue-700 mb-4">
+          <button onClick = {() => signIn("facebook")}className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white rounded-md py-2 px-4 hover:bg-blue-700 mb-4">
             <FaFacebookF className="text-xl" />
             <span>Continue with Facebook</span>
           </button>
