@@ -327,7 +327,6 @@ const Comments: React.FC<CommentsProps> = ({ article_id }) => {
           className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-r-lg transition duration-200 ease-in-out" 
           onClick={handleComment}
         >
-          Comment
         </button>
       </div>
       <div className="space-y-4">
