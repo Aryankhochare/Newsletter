@@ -683,7 +683,7 @@
 "use client";
 import { useState } from "react";
 import { Button } from "./ui/button";
-import { useArticleStore } from "@/app/ArticleStore";
+import { useArticleStore } from "./ArticleStore";
 import { Badge } from "./ui/badge";
 import { useRouter } from "next/navigation";
 import { FiTrash2 } from "react-icons/fi";
@@ -824,7 +824,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
     const article_content = articles.find((e) => e.id == id);
     if (article_content) {
       send_article(article_content);
-      router.push("/main/editor/reading_page");
+      router.push(`/main/editor/reading_page/${id}`);
     } else {
       console.log("No content found !");
     }

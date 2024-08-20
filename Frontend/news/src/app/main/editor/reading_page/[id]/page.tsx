@@ -26,10 +26,7 @@ export default function ReadingPage() {
         </article>
       </div>
       
-      {/* Footer */}
-      <div className="mt-auto bg-gray-900 p-4 sm:p-6 md:p-8 lg:p-12 text-white">
-        <Footer />
-      </div>
-    </div>
+      <Footer/>
+     </div>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { useArticleStore } from "@/components/ArticleStore";
+import { useArticleStore } from './ArticleStore';
 import parse from "html-react-parser";
 import BackButton from './BackButton';
 
