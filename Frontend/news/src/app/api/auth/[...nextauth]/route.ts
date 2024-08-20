@@ -6,6 +6,7 @@ import { NextAuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import jwt from 'jsonwebtoken'
 import GoogleProvider from "next-auth/providers/google";
+import { apiLinks } from "@/utils/constants";
 
 
 interface CustomUser extends User {
@@ -32,6 +33,14 @@ async function fetchUserRole(userId: string) {
   } catch (error) {
     console.error("Error in fetchUserRole:", error);
     return { roles: [] };
+  }
+}
+
+async function createUser(user: CustomUser){
+  try {
+    const response = await fetch(apiLinks.user.fetch)
+  } catch (error) {
+    
   }
 }
 
@@ -87,13 +96,6 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: { 
-    async redirect({ url, baseUrl }) {
-      // Allows relative callback URLs
-      if (url.startsWith("/")) return `${baseUrl}${url}`
-      // Allows callback URLs on the same origin
-      else if (new URL(url).origin === baseUrl) return url
-      return baseUrl
-    },
       async jwt({token,user}){
       if(user){
         token.id = user.id;
@@ -117,6 +119,7 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({session,token}){
+
       const updatedSession = {
         ...session,
         user: {
