@@ -7,7 +7,23 @@ import Navbar from '@/components/navbarcomp/navbar';
 import Link from 'next/link';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useMainStore } from '@/components/ArticleStore';
 import parse from 'html-react-parser'
+
+// interface Article {
+//   id: string;
+//   userId: string;
+//   userName: string;
+//   categoryId: string;
+//   categoryName: string;
+//   title: string;
+//   editorContent: string;
+//   postedOn: string;
+//   modifiedDate: string;
+//   isVerified: boolean;
+//   coverImage: string;
+//   isRejected: boolean;
+// }
 
 interface Article {
   id: string;
@@ -18,7 +34,7 @@ interface Article {
   title: string;
   editorContent: string;
   postedOn: string;
-  modifiedDate: string;
+  modifiedOn: string;
   isVerified: boolean;
   coverImage: string;
   isRejected: boolean;
@@ -34,6 +50,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   const [articles, setArticles] = useState<Article[]>([]);
   const [userRole, setUserRole] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const send_article = useMainStore(state => state.setMainArticle);
 
   useEffect(() => {
     setIsLoading(true);
@@ -59,8 +76,16 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   };
 
   const ViewMoreButton = ({ article }: { article: Article }) => {
+    const handleClick = (e:React.MouseEvent) => {
+      const article_content = article;
+      if (article_content) {
+        send_article(article_content);
+      } else {
+        console.log("No content found !");
+      }
+    }
     return (
-      <Link href={`/main/newspage/${article.id}`} className="underline text-blue-600 hover:text-blue-800">
+      <Link href={`/main/newspage/${article.title}`} className="underline text-blue-600 hover:text-blue-800" onClick={handleClick}>
         View more...
       </Link>
     );
@@ -122,7 +147,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                 </div>
               </div>
               <div className="text-sm text-gray-500 mt-2">
-                By: {article.userName} | Posted On: {new Date(article.modifiedDate).toLocaleDateString()}
+                By: {article.userName} | Posted On: {new Date(article.modifiedOn).toLocaleDateString()}
               </div>
               </div>
             ))
