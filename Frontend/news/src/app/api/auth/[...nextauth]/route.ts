@@ -6,6 +6,7 @@ import { NextAuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import jwt from 'jsonwebtoken'
 import GoogleProvider from "next-auth/providers/google";
+import { apiLinks } from "@/utils/constants";
 
 
 interface CustomUser extends User {
@@ -32,6 +33,32 @@ async function fetchUserRole(userId: string) {
   } catch (error) {
     console.error("Error in fetchUserRole:", error);
     return { roles: [] };
+  }
+}
+
+async function createUser(user: CustomUser){
+  try {
+    const response = await fetch(apiLinks.user.fetch, {
+      method:'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        Username: user.name,
+        Email: user.email,
+        Password: "", 
+        UserRoles: [], 
+        Categories: ['Sports']
+      }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error creating user in .NET backend:", error);
+    return null;
   }
 }
 
@@ -87,12 +114,36 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: { 
-    async redirect({ url, baseUrl }) {
-      // Allows relative callback URLs
-      if (url.startsWith("/")) return `${baseUrl}${url}`
-      // Allows callback URLs on the same origin
-      else if (new URL(url).origin === baseUrl) return url
-      return baseUrl
+    async signIn({ user, account, profile }) {
+      if (account?.provider === "google") {
+        const { data: existingUser, error } = await supabase
+          .from("Users")
+          .select()
+          .eq("user_email", user.email)
+          .single();
+  
+        if (error || !existingUser) {
+          const newUser: CustomUser = {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+          };
+  
+          const createdUser = await createUser(newUser);
+          if (!createdUser) {
+            return false; 
+          }
+  
+         
+          const userData = await fetchUserRole(createdUser);
+          (user as CustomUser).roles = userData.userRole;
+        } else {
+
+          const userData = await fetchUserRole(existingUser.user_id);
+          (user as CustomUser).roles = userData.userRole;
+        }
+      }
+      return true;
     },
       async jwt({token,user}){
       if(user){
@@ -117,6 +168,7 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({session,token}){
+
       const updatedSession = {
         ...session,
         user: {

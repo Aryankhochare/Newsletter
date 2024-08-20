@@ -47,7 +47,7 @@ const LoginPageComp = () => {
 
           <p className="text-xs text-gray-500 mb-4">By continuing you indicate that you agree to The Global Buzz&apos;s Terms of Service and Privacy Policy.</p>
 
-          <button className="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 rounded-md py-2 px-4 hover:bg-gray-50 mb-4">
+          <button onClick={() => signIn("google")} className="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 rounded-md py-2 px-4 hover:bg-gray-50 mb-4">
             <FcGoogle className="text-xl" />
             <span>Continue with Google</span>
           </button>
@@ -73,6 +73,7 @@ const LoginPageComp = () => {
                 placeholder="Your email"
                 onChange={(e) => setUsername(e.target.value)}
                 value={username}
+                required
               />
             </div>
 
@@ -85,6 +86,7 @@ const LoginPageComp = () => {
                 placeholder="Your password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
+                required
               />
               <div
                 className="absolute inset-y-0 pt-6 right-2  flex  cursor-pointer items-center"
