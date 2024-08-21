@@ -31,7 +31,6 @@ const Notification: React.FC<NotificationProps> = ({ unreadCount, setUnreadNotif
         const response = await fetch(`${apiLinks.notfication.fetch}/${userId}`);
 
         const data = await response.json();
-        console.log(data);
         
         setNotifications(data);
         setUnreadNotificationCount(data.filter((n : any) => !n.IsRead).length);
@@ -44,13 +43,26 @@ const Notification: React.FC<NotificationProps> = ({ unreadCount, setUnreadNotif
     setIsOpen(!isOpen);
   };
 
-//   const markAsRead = async (notificationId: string) => {
-//     await fetch(`/api/notifications/${notificationId}/read`, {
-//       method: 'PUT',
-//     });
-//     setNotifications(notifications.map((n) => (n.NotificationId === notificationId ? { ...n, IsRead: true } : n)));
-//     setUnreadNotificationCount(notifications.filter((n) => !n.IsRead).length);
-//   };
+  const markAsRead = async (notificationId: string) => {
+    try {
+      const response = await fetch(`${apiLinks.notfication.fetch}/${notificationId}`, {
+        method: 'PATCH',
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error marking notification as read: ${response.status} - ${response.statusText}`);
+      }
+  
+      setNotifications(notifications.filter((n) => n.notificationId !== notificationId));
+      setUnreadNotificationCount(notifications.filter((n) => !n.isRead).length);
+    } catch (error) {
+      console.error('Error marking notification as read:', error);
+  
+    }
+  };
 
   return (
     <div className="relative">
@@ -81,7 +93,7 @@ const Notification: React.FC<NotificationProps> = ({ unreadCount, setUnreadNotif
                     {!notification.isRead && (
                       <button
                         className="text-gray-500 hover:text-gray-700"
-                        // onClick={() => markAsRead(notification.NotificationId)}
+                        onClick={() => markAsRead(notification.notificationId)}
                       >
                         Mark as read
                       </button>
