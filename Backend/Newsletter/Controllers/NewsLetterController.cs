@@ -43,7 +43,7 @@ namespace Newsletter.Controllers
 
         private async Task<string> GetCategoryIdByName(string categoryName)
         {
-            if(categoryCache.TryGetValue(categoryName, out string cacheId))
+            if (categoryCache.TryGetValue(categoryName, out string cacheId))
             {
                 return cacheId;
             }
@@ -59,7 +59,7 @@ namespace Newsletter.Controllers
             return null;
         }
 
-        private async Task<string>UploadCoverImage(IFormFile coverImage, string newsletterId)
+        private async Task<string> UploadCoverImage(IFormFile coverImage, string newsletterId)
         {
             if (coverImage == null) return null;
             using var memoryStream = new MemoryStream();
@@ -120,7 +120,7 @@ namespace Newsletter.Controllers
 
                 var articles = response.Models;
 
-                
+
                 var categoriesResponse = await client.From<Category>().Get();
                 var categories = categoriesResponse.Models ?? new List<Category>();
 
@@ -170,60 +170,128 @@ namespace Newsletter.Controllers
             try
             {
 
-                    var userId = await ValidateAndGetUserId();
-                    if (userId == null) return Unauthorized("User not found");
-                    var categoryId = await GetCategoryIdByName(article.CategoryName);
-                    if (string.IsNullOrEmpty(categoryId))
-                    {
-                        return BadRequest("Invalid category name");
-                    }
+                var userId = await ValidateAndGetUserId();
+                if (userId == null) return Unauthorized("User not found");
+                var categoryId = await GetCategoryIdByName(article.CategoryName);
+                if (string.IsNullOrEmpty(categoryId))
+                {
+                    return BadRequest("Invalid category name");
+                }
 
-                    var tempId = Guid.NewGuid().ToString();
+                var tempId = Guid.NewGuid().ToString();
 
-                    string coverImageUrl = null;
-                    if (article.CoverImage != null)
-                    {
-                       coverImageUrl = await UploadCoverImage(article.CoverImage, tempId);
-                    }
+                string coverImageUrl = null;
+                if (article.CoverImage != null)
+                {
+                    coverImageUrl = await UploadCoverImage(article.CoverImage, tempId);
+                }
 
 
                 var newsletter = new NewsArticle
+                {
+                    UserId = userId,
+                    CategoryId = categoryId,
+                    Title = article.Title,
+                    EditorContent = article.EditorContent,
+                    IsVerified = false,
+                    IsRejected = false,
+                    CoverImage = coverImageUrl,
+                    PostedOn = DateTime.UtcNow,
+                    ModifiedDate = DateTime.UtcNow,
+                };
+                var response = await client.From<NewsArticle>().Insert(newsletter);
+                var newNewsletter = response.Models.First();
+                if (newNewsletter == null)
+                {
+                    return BadRequest("Failed To create newsletter");
+                }
+
+                if (article.Images != null && article.ImageNames != null)
+                {
+                    for (int i = 0; i < article.Images.Count; i++)
                     {
-                        UserId = userId,
-                        CategoryId = categoryId, 
-                        Title = article.Title,
-                        EditorContent = article.EditorContent,
-                        IsVerified = false,
-                        IsRejected = false,
-                        CoverImage = coverImageUrl,
-                        PostedOn = DateTime.UtcNow,
-                        ModifiedDate = DateTime.UtcNow,
-                    };
-                    var response = await client.From<NewsArticle>().Insert(newsletter);
-                    var newNewsletter = response.Models.First();
-                    if (newNewsletter == null)
-                    {
-                        return BadRequest("Failed To create newsletter");
+                        using var memoryStream = new MemoryStream();
+                        await article.Images[i].CopyToAsync(memoryStream);
+                        string fileName = article.ImageNames[i];
+                        await client.Storage.From("news_image")
+                            .Upload(memoryStream.ToArray(), fileName);
                     }
-                   
-                    if (article.Images != null && article.ImageNames != null)
-                    {
-                        for (int i = 0; i < article.Images.Count; i++)
-                        {
-                            using var memoryStream = new MemoryStream();
-                            await article.Images[i].CopyToAsync(memoryStream);
-                            string fileName = article.ImageNames[i];
-                            await client.Storage.From("news_image")
-                                .Upload(memoryStream.ToArray(), fileName);
-                        }
-                    }
-                    newsletter.Id = newNewsletter.Id;
-                    await client.From<NewsArticle>()
-                         .Update(newsletter);
+                }
+                newsletter.Id = newNewsletter.Id;
+                await client.From<NewsArticle>()
+                     .Update(newsletter);
 
                 return Ok(new { Id = newNewsletter.Id });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error creating newsletter: {ex}");
+                return StatusCode(500, "An error occurred while creating the newsletter");
+            }
+        }
 
-              
+        [HttpPatch("{news_id}")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> EditArticle(string news_id, [FromForm] CreateNewsArticleVM article)
+        {
+            try
+            {
+                var userId = await ValidateAndGetUserId();
+                if (userId == null) return Unauthorized("User not found");
+                var categoryId = await GetCategoryIdByName(article.CategoryName);
+                if (string.IsNullOrEmpty(categoryId))
+                {
+                    return BadRequest("Invalid category name");
+                }
+
+                var tempId = Guid.NewGuid().ToString();
+
+                //string coverImageUrl = null;
+                
+                var existingArticle = await client.From<NewsArticle>().Where(c => c.Id == news_id).Single();
+                if (existingArticle == null)
+                {
+                    return NotFound("Article not found");
+                }
+                if (article.CoverImage != null && article.CoverImage.Length > 0)
+                {
+                    existingArticle.CoverImage = await UploadCoverImage(article.CoverImage, tempId);
+                }
+
+                existingArticle.CategoryId = categoryId;
+                existingArticle.Title = article.Title;
+                existingArticle.EditorContent = article.EditorContent;
+                //existingArticle.CoverImage = coverImageUrl;
+                existingArticle.ModifiedDate = DateTime.UtcNow;
+                existingArticle.IsVerified = false;
+                existingArticle.IsRejected = false;
+
+                var response = await client.From<NewsArticle>().Where(c => c.Id == news_id).Update(existingArticle);
+                //var newNewsletter = response.Models.First();
+                //if (newNewsletter == null)
+                //{
+                //    return BadRequest("Failed To create newsletter");
+                //}
+
+                if (article.Images != null && article.ImageNames != null)
+                {
+                    for (int i = 0; i < article.Images.Count; i++)
+                    {
+                        using var memoryStream = new MemoryStream();
+                        await article.Images[i].CopyToAsync(memoryStream);
+                        string fileName = article.ImageNames[i];
+                        await client.Storage.From("news_image")
+                            .Upload(memoryStream.ToArray(), fileName);
+                    }
+                }
+                //existingArticle.Id = newNewsletter.Id;
+                //await client.From<NewsArticle>()
+                //    .Update(existingArticle);
+
+                //return Ok(new { Id = newNewsletter.Id });
+                return Ok(new { Id = existingArticle.Id });
+
+
             }
             catch (Exception ex)
             {
