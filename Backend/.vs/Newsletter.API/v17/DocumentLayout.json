@@ -1,54 +1,22 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\DELL\\Newsletter\\Backend\\",
+  "WorkspaceRootPath": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\",
   "Documents": [
-    {
-<<<<<<< HEAD
-      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\controllers\\newslettercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\controllers\\newslettercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
     {
       "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\controllers\\commentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\controllers\\commentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\controllers\\newslettercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\controllers\\newslettercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-=======
-      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\dell\\newsletter\\backend\\newsletter\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
->>>>>>> 5f70a51dc76ebf4e3c2e039bc182311c01576ee2
       "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\dell\\newsletter\\backend\\newsletter\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\dell\\newsletter\\backend\\newsletter\\models\\usercategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\models\\usercategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\dell\\newsletter\\backend\\newsletter\\viewmodels\\getallusersvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\viewmodels\\getallusersvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\dell\\newsletter\\backend\\newsletter\\models\\useruserroles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\models\\useruserroles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\dell\\newsletter\\backend\\newsletter\\viewmodels\\getuservm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\viewmodels\\getuservm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\dell\\newsletter\\backend\\newsletter\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\dell\\newsletter\\backend\\newsletter\\models\\userroles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\models\\userroles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\dell\\newsletter\\backend\\newsletter\\viewmodels\\createuservm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\viewmodels\\createuservm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\models\\users.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\models\\users.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -58,70 +26,42 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:1928210406:0:{bf84ea66-d821-4dba-b1b1-2777d8574775}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1449176975:0:{bf84ea66-d821-4dba-b1b1-2777d8574775}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1337924956:0:{bf84ea66-d821-4dba-b1b1-2777d8574775}"
+            },
+            {
               "$type": "Document",
-<<<<<<< HEAD
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "NewsLetterController.cs",
               "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\NewsLetterController.cs",
               "RelativeDocumentMoniker": "Newsletter\\Controllers\\NewsLetterController.cs",
               "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\NewsLetterController.cs",
               "RelativeToolTip": "Newsletter\\Controllers\\NewsLetterController.cs",
-              "ViewState": "AQIAAB4BAAAAAAAAAADwv3oAAAAQAAAA",
+              "ViewState": "AQIAAO4AAAAAAAAAAADwv3oAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-20T10:06:28.458Z",
               "EditorCaption": ""
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:1928210406:0:{bf84ea66-d821-4dba-b1b1-2777d8574775}"
-=======
-              "DocumentIndex": 5,
-              "Title": "GetUserVM.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\Newsletter\\Backend\\Newsletter\\ViewModels\\GetUserVM.cs",
-              "RelativeDocumentMoniker": "Newsletter\\ViewModels\\GetUserVM.cs",
-              "ToolTip": "C:\\Users\\DELL\\Newsletter\\Backend\\Newsletter\\ViewModels\\GetUserVM.cs",
-              "RelativeToolTip": "Newsletter\\ViewModels\\GetUserVM.cs",
-              "ViewState": "AQIAAAIAAAAAAAAAAAAxwBAAAAA5AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-18T12:06:11.602Z"
->>>>>>> 5f70a51dc76ebf4e3c2e039bc182311c01576ee2
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Category.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\Newsletter\\Backend\\Newsletter\\Models\\Category.cs",
-              "RelativeDocumentMoniker": "Newsletter\\Models\\Category.cs",
-              "ToolTip": "C:\\Users\\DELL\\Newsletter\\Backend\\Newsletter\\Models\\Category.cs",
-              "RelativeToolTip": "Newsletter\\Models\\Category.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-18T12:02:05.642Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "UserRoles.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\Newsletter\\Backend\\Newsletter\\Models\\UserRoles.cs",
-              "RelativeDocumentMoniker": "Newsletter\\Models\\UserRoles.cs",
-              "ToolTip": "C:\\Users\\DELL\\Newsletter\\Backend\\Newsletter\\Models\\UserRoles.cs",
-              "RelativeToolTip": "Newsletter\\Models\\UserRoles.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-18T12:01:57.299Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "CommentController.cs",
               "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\CommentController.cs",
               "RelativeDocumentMoniker": "Newsletter\\Controllers\\CommentController.cs",
               "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\CommentController.cs",
               "RelativeToolTip": "Newsletter\\Controllers\\CommentController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAD8AAAAQAAAA",
+              "ViewState": "AQIAADIAAAAAAAAAAAAgwDwAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-20T09:44:23.32Z",
               "EditorCaption": ""
@@ -130,26 +70,17 @@
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "UsersController.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\Newsletter\\Backend\\Newsletter\\Controllers\\UsersController.cs",
+              "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\UsersController.cs",
               "RelativeDocumentMoniker": "Newsletter\\Controllers\\UsersController.cs",
-              "ToolTip": "C:\\Users\\DELL\\Newsletter\\Backend\\Newsletter\\Controllers\\UsersController.cs",
+              "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\UsersController.cs",
               "RelativeToolTip": "Newsletter\\Controllers\\UsersController.cs",
-<<<<<<< HEAD
               "ViewState": "AQIAAFQAAAAAAAAAAAAYwHEAAAAJAAAA",
-=======
-<<<<<<< HEAD
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAOkAAAAJAAAA",
-=======
-              "ViewState": "AQIAAFcAAAAAAAAAAAAYwGgAAAAgAAAA",
->>>>>>> 61ba3f7e3b80934342a896ef852fbc17e29a548e
->>>>>>> 5f70a51dc76ebf4e3c2e039bc182311c01576ee2
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-18T11:39:21.086Z",
+              "WhenOpened": "2024-08-19T16:05:30.527Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-<<<<<<< HEAD
               "DocumentIndex": 3,
               "Title": "Users.cs",
               "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Models\\Users.cs",
@@ -157,71 +88,9 @@
               "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Models\\Users.cs",
               "RelativeToolTip": "Newsletter\\Models\\Users.cs",
               "ViewState": "AQIAAAYAAAAAAAAAAAAAAAAAAAAAAAAA",
-=======
-              "DocumentIndex": 8,
-              "Title": "CreateUserVM.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\Newsletter\\Backend\\Newsletter\\ViewModels\\CreateUserVM.cs",
-              "RelativeDocumentMoniker": "Newsletter\\ViewModels\\CreateUserVM.cs",
-              "ToolTip": "C:\\Users\\DELL\\Newsletter\\Backend\\Newsletter\\ViewModels\\CreateUserVM.cs",
-              "RelativeToolTip": "Newsletter\\ViewModels\\CreateUserVM.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAA7AAAA",
->>>>>>> 5f70a51dc76ebf4e3c2e039bc182311c01576ee2
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-<<<<<<< HEAD
-              "WhenOpened": "2024-08-18T11:38:51.814Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "UserCategory.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\Newsletter\\Backend\\Newsletter\\Models\\UserCategory.cs",
-              "RelativeDocumentMoniker": "Newsletter\\Models\\UserCategory.cs",
-              "ToolTip": "C:\\Users\\DELL\\Newsletter\\Backend\\Newsletter\\Models\\UserCategory.cs",
-              "RelativeToolTip": "Newsletter\\Models\\UserCategory.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAyAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-18T11:38:43.77Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AdminController.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\Newsletter\\Backend\\Newsletter\\Controllers\\AdminController.cs",
-              "RelativeDocumentMoniker": "Newsletter\\Controllers\\AdminController.cs",
-              "ToolTip": "C:\\Users\\DELL\\Newsletter\\Backend\\Newsletter\\Controllers\\AdminController.cs",
-              "RelativeToolTip": "Newsletter\\Controllers\\AdminController.cs",
-              "ViewState": "AQIAAA4AAAAAAAAAAAAAwB8AAAARAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-18T11:34:51.354Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "UserUserRoles.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\Newsletter\\Backend\\Newsletter\\Models\\UserUserRoles.cs",
-              "RelativeDocumentMoniker": "Newsletter\\Models\\UserUserRoles.cs",
-              "ToolTip": "C:\\Users\\DELL\\Newsletter\\Backend\\Newsletter\\Models\\UserUserRoles.cs",
-              "RelativeToolTip": "Newsletter\\Models\\UserUserRoles.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAA4AAAAdAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-18T12:29:49.287Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "GetAllUsersVM.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\Newsletter\\Backend\\Newsletter\\ViewModels\\GetAllUsersVM.cs",
-              "RelativeDocumentMoniker": "Newsletter\\ViewModels\\GetAllUsersVM.cs",
-              "ToolTip": "C:\\Users\\DELL\\Newsletter\\Backend\\Newsletter\\ViewModels\\GetAllUsersVM.cs",
-              "RelativeToolTip": "Newsletter\\ViewModels\\GetAllUsersVM.cs",
-              "ViewState": "AQIAAAUAAAAAAAAAAAAxwBcAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-18T12:57:48.248Z"
-=======
               "WhenOpened": "2024-08-19T16:03:36.981Z",
               "EditorCaption": ""
->>>>>>> 61ba3f7e3b80934342a896ef852fbc17e29a548e
             }
           ]
         }

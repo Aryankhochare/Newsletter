@@ -1,10 +1,11 @@
+import { apiLinks } from '@/utils/constants';
 import { NextResponse, NextRequest } from 'next/server';
 //import { supabase } from '@/app/api/auth/[...nextauth]/route';
 
 export async function DELETE(req: NextRequest) {
     try {
         const {id} = await req.json();
-        const response = await fetch(`${process.env.NEXT_PUBLIC_ASP_NET_URL}/comments/${id}`, {
+        const response = await fetch(`${apiLinks.comments.fetch}/${id}`, {
             method : 'DELETE',
             headers : {'Content-Type': 'application/json',
             },

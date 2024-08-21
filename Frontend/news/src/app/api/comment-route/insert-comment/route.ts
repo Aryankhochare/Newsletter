@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from 'next/server';
 import { getServerSession } from "next-auth";
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { supabase } from '@/app/api/auth/[...nextauth]/route';
+import { apiLinks } from '@/utils/constants';
 
 interface InsertComment {
     news_id : string;
@@ -24,7 +25,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
         const { NewsId, Comment }: { NewsId: string; Comment: string } = await req.json();
-        const response = await fetch(`${process.env.NEXT_PUBLIC_ASP_NET_URL}/comments`, {
+        const response = await fetch(apiLinks.comments.fetch, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

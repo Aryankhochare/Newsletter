@@ -22,7 +22,10 @@ export default function ArticleContent() {
         headers:{
           'Content-Type' : 'application/json',
         },
-        body: JSON.stringify({article: article_content}),
+        body: JSON.stringify({
+          article: article_content,
+          title: article_title, // Include the article title here
+        }),
       })
       if(!response.ok){
         throw new Error('Failed to fetch fact-check results');
@@ -37,6 +40,7 @@ export default function ArticleContent() {
       setIsLoading(false);
     }
   }
+  
 
   return (
     <>
