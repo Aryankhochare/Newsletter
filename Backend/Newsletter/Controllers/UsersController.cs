@@ -99,6 +99,7 @@ namespace Newsletter.Controllers
                         }
 
                     }
+                    //List<UserCategory> userCategories1 = new List<UserCategory>()
                 }
 
 

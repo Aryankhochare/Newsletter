@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newsletter.Models;
+using Newsletter.ViewModels;
 
 namespace Newsletter.Controllers
 {
@@ -55,7 +56,7 @@ namespace Newsletter.Controllers
         {
             try
             {
-                var response = await client.From<Notifications>().Where(x => x.RecieverId == reciever_id).Get();
+                var response = await client.From<Notifications>().Where(x => x.RecieverId == reciever_id && x.IsRead == false).Get();
                 if (response.Models == null || !response.Models.Any())
                 {
                     return NotFound("No notifications found");
@@ -84,7 +85,31 @@ namespace Newsletter.Controllers
                 Console.WriteLine($"Error creating user: {ex.Message}");
                 Console.WriteLine($"Stack trace: {ex.StackTrace}");
 
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error getting all Notifications");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error getting Notifications");
+            }
+        }
+
+        [HttpPatch("{notif_id}")]
+        public async Task<IActionResult> MarkAsRead(string notif_id)
+        {
+            try
+            {
+                var response = await client.From<Notifications>()
+                    .Where(x => x.NotificationId == notif_id)
+                    .Set(x => x.IsRead, true).Update();
+                
+                if(response.Models == null || !response.Models.Any())
+                {
+                    return BadRequest($"Notif with id = {notif_id} could not be updated");
+                }
+                return Ok("Notification Updated Successfully");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error creating user: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error updating Notification");
             }
         }
     }
