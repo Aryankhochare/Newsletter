@@ -118,7 +118,7 @@ namespace Newsletter.Controllers
                     return NotFound("No articles found matching the search criteria");
                 }
 
-                var articles = response.Models;
+                var articles = response.Models.OrderByDescending(a => a.ModifiedDate);
 
 
                 var categoriesResponse = await client.From<Category>().Get();
@@ -311,7 +311,7 @@ namespace Newsletter.Controllers
                 {
                     return NotFound("Didn't find any article");
                 }
-                var articles = articlesResponse.Models;
+                var articles = articlesResponse.Models.OrderByDescending(a => a.ModifiedDate) ;
 
                 // Fetch categories
                 var categoriesResponse = await client.From<Category>().Get();
@@ -374,7 +374,7 @@ namespace Newsletter.Controllers
                 {
                     return NotFound("Didn't find any verified article");
                 }
-                var articles = articlesResponse.Models;
+                var articles = articlesResponse.Models.OrderByDescending(a => a.ModifiedDate);
 
                
                 var categoriesResponse = await client.From<Category>().Get();
