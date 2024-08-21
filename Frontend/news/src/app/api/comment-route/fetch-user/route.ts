@@ -14,22 +14,20 @@ export async function GET(req: NextRequest) {
             headers['Authorization'] = `Bearer ${session.accessToken}`;
         }
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_ASP_NET_URL}/comments/FetchUsers`, {
+        const response = await fetch(`${apiLinks.comments.fetch}/fetch-users`, {
             method: 'GET',
             headers: headers,
         });
 
-        console.log(response);
         
 
         if (!response.ok) {
             const errorText = await response.text();
-            console.error(`ASP.NET API responded with status ${response.status}: ${errorText}`);
+            console.error(`API responded with status ${response.status}: ${errorText}`);
             return NextResponse.json({ error: `Failed to fetch users: ${errorText}` }, { status: response.status });
         }
 
         const responseData = await response.json();
-        console.log(responseData);
         return NextResponse.json(responseData);
     } catch (error) {
         console.error('Detailed error:', error);

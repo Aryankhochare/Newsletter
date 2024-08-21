@@ -9,6 +9,7 @@ import { Anton } from 'next/font/google';
 import { TbUserSearch } from "react-icons/tb";
 import { IoIosSearch } from "react-icons/io";
 import { useSession } from 'next-auth/react';
+import Notification from './Notification';
 
 const Dmse = DM_Serif_Display({ subsets: ["latin"], weight: ["400"] });
 const Mmse = Anton({ subsets: ["latin"], weight: ["400"] });
@@ -19,6 +20,7 @@ export default function Navbar() {
   const [userRole, setUserRole] = useState<string | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [unreadNotificationCount, setUnreadNotificationCount] = useState(0);
   const router = useRouter();
 
   const toggleSidebar = () => {
@@ -72,6 +74,7 @@ export default function Navbar() {
           <button onClick={toggleSearch} className="text-white p-2 sm:hidden">
             <TbUserSearch className="h-6 w-6" />
           </button>
+          <Notification unreadCount={unreadNotificationCount} setUnreadNotificationCount={setUnreadNotificationCount} />
           {isSearchOpen && (
             <form onSubmit={handleSearch} className="absolute top-full left-0 right-0 bg-black p-2 sm:hidden">
               <div className="flex">
@@ -87,6 +90,7 @@ export default function Navbar() {
                 </button>
               </div>
             </form>
+            
           )}
           {session.data?.user===undefined? (
             <>
