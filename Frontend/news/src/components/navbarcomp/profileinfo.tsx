@@ -40,7 +40,7 @@ export default function ProfileInfo() {
             <span>Profile</span>
           </DropdownMenuItem>
           </Link>
-          <Link href="/main/admin/dashboard">
+          {/* <Link href="/main/admin/dashboard">
             <DropdownMenuItem>
               <LayoutDashboard className="mr-2 h-4 w-4" />
               <span>Dashboard</span>
@@ -55,7 +55,7 @@ export default function ProfileInfo() {
           <DropdownMenuItem>
             <Inbox className="mr-2 h-4 w-4" />
             <span>Requests</span>
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
           {/* <DropdownMenuItem>
             <Settings className="mr-2 h-4 w-4" />
             <span>System Settings</span>
@@ -69,12 +69,12 @@ export default function ProfileInfo() {
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </DropdownMenuItem>
-          <Link href = '/main/editor'>
+          {/* <Link href = '/main/editor'>
           <DropdownMenuItem>
             <FileText className="mr-2 h-4 w-4" />
             <span>Articles</span>
           </DropdownMenuItem>
-          </Link>
+          </Link> */}
           {/* <DropdownMenuItem>
             <PenTool className="mr-2 h-4 w-4" />
             <span>View Articles</span>
@@ -92,12 +92,12 @@ export default function ProfileInfo() {
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </DropdownMenuItem>
-          <Link href='/main/writer/quill_editor'>
+          {/* <Link href='/main/writer/quill_editor'>
           <DropdownMenuItem>
            <PenTool className="mr-2 h-4 w-4" />
             <span>Workspace</span>
           </DropdownMenuItem>
-          </Link>
+          </Link> */}
           {/* <DropdownMenuItem>
             <History className="mr-2 h-4 w-4" />
             <span>Reading History</span>
