@@ -24,5 +24,8 @@ export const apiLinks = {
     },
     admin:{
         fetchUser: `${baseUrl}/admin/users`
+    },
+    notfication:{
+        fetch: `${baseUrl}/api/notification`
     }
 }

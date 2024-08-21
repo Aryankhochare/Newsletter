@@ -61,7 +61,7 @@ namespace Newsletter.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("fetch-users")]
         public async Task<IActionResult> FetchUsers()
         {
             try

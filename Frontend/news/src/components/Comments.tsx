@@ -144,8 +144,6 @@
           },
         });
         const data = await response.json();
-        // getUserId(data);
-        //console.log(data, data.type);
         const userIdFromData = data.userId; 
         getUserId(userIdFromData); 
         console.log(userIdFromData, typeof userIdFromData); 
@@ -172,6 +170,11 @@
     };
 
     const onComment = async (id: string, content: string) => {
+      if (content == null || content == '')
+      {
+        alert("No comment has been entered !");
+        return;
+      }
       try {
         const response = await fetch("../../api/comment-route/insert-comment", {
           method: 'POST',

@@ -5,6 +5,7 @@ import { useArticleStore } from "./ArticleStore";
 import { Badge } from "./ui/badge";
 import { useRouter } from "next/navigation";
 import { FiTrash2 } from "react-icons/fi";
+import { useSession } from "next-auth/react";
 
 interface News {
   id: string;
@@ -34,6 +35,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
   // New state for approval and delete confirmation dialogs
   const [showApproveDialog, setShowApproveDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const session = useSession();
 
   const handleVerify = async (id: string) => {
     setCurrentArticleId(id);
@@ -44,6 +46,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
     if (currentArticleId) {
       try {
         setLoading(true);
+        if(!session.data?.accessToken) return;
         await fetch(
           `${process.env.NEXT_PUBLIC_ASP_NET_URL}/editor/verify/${currentArticleId}`,
           {
@@ -51,7 +54,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ id: currentArticleId }),
+            body: JSON.stringify({ id: currentArticleId,  from: session.data?.accessToken }),
           }
         );
 
@@ -88,7 +91,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ feedback }),
+            body: JSON.stringify({ id: currentArticleId, message:feedback, from: session.data?.accessToken }),
           }
         );
 
