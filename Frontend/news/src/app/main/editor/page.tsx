@@ -23,13 +23,17 @@ export default async function EditorPage() {
 
   return (
     <>
+    
     <div className="sticky top-0 z-50">
         <Navbar />
       </div>
+      <main className="min-h-screen">
     <Suspense fallback={<div>Loading...</div>}>
       <EditorButtons Data={data} />
     </Suspense>
+    </main>
     <Footer/>
+   
     </>
   );
 }
