@@ -2,8 +2,8 @@
 'use client'
 
 import Link from "next/link";
-import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { signIn, useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebookF } from 'react-icons/fa';
@@ -18,6 +18,7 @@ const LoginPageComp = () => {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const { data: session, status } = useSession();
 
   const handleChange = (e : any) => {
     const { name, value } = e.target;
@@ -46,6 +47,12 @@ const LoginPageComp = () => {
     }
   };
 
+  useEffect(() => {
+    if (status === 'authenticated') {
+      router.push("/main");
+    }
+  }, [status, router]);
+
   return (
     <main className="bg-gray-100 min-h-screen flex items-center justify-center p-4">
       <div className="sm:w-full md:w-4/5 max-w-6xl bg-white rounded-lg shadow-md overflow-hidden flex flex-col md:flex-row">
@@ -55,7 +62,7 @@ const LoginPageComp = () => {
 
           <p className="text-xs text-gray-500 mb-4">By continuing you indicate that you agree to The Global Buzz&apos;s Terms of Service and Privacy Policy.</p>
 
-          <button onClick={() => signIn("google")} className="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 rounded-md py-2 px-4 hover:bg-gray-50 mb-4">
+          <button onClick={() => signIn("google", {callbackUrl:'/main'})} className="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 rounded-md py-2 px-4 hover:bg-gray-50 mb-4">
             <FcGoogle className="text-xl" />
             <span>Continue with Google</span>
           </button>
