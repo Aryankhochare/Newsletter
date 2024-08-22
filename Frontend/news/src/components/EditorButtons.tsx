@@ -1,11 +1,12 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { useArticleStore } from "./ArticleStore";
 import { Badge } from "./ui/badge";
 import { useRouter } from "next/navigation";
 import { FiTrash2 } from "react-icons/fi";
 import { useSession } from "next-auth/react";
+import { Skeleton } from "./ui/skeleton";
 
 interface News {
   id: string;
@@ -23,8 +24,8 @@ interface News {
 }
 
 function EditorButtons({ Data }: { Data: News[] }) {
-  const [articles, setArticles] = useState<News[]>(Data || []);
-  const [loading, setLoading] = useState(false);
+  const [articles, setArticles] = useState<News[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [feedback, setFeedback] = useState("");
   const [showFeedbackDialog, setShowFeedbackDialog] = useState(false);
@@ -32,10 +33,18 @@ function EditorButtons({ Data }: { Data: News[] }) {
   const send_article = useArticleStore((state) => state.setArticle);
   const router = useRouter();
 
-  // New state for approval and delete confirmation dialogs
   const [showApproveDialog, setShowApproveDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const session = useSession();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setArticles(Data || []);
+      setLoading(false);
+    }, 2000); // Simulated loading delay
+
+    return () => clearTimeout(timer);
+  }, [Data]);
 
   const handleVerify = async (id: string) => {
     setCurrentArticleId(id);
@@ -54,7 +63,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ id: currentArticleId,  from: session.data?.accessToken }),
+            body: JSON.stringify({ id: currentArticleId, from: session.data?.accessToken }),
           }
         );
 
@@ -91,7 +100,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ id: currentArticleId, message:feedback, from: session.data?.accessToken }),
+            body: JSON.stringify({ id: currentArticleId, message: feedback, from: session.data?.accessToken }),
           }
         );
 
@@ -151,7 +160,6 @@ function EditorButtons({ Data }: { Data: News[] }) {
     }
   };
 
-  // Filtering based on status selection
   const filteredArticles = articles.filter((article) => {
     let status = "Pending";
     if (article.isVerified) {
@@ -202,14 +210,23 @@ function EditorButtons({ Data }: { Data: News[] }) {
           </thead>
           <tbody>
             {loading ? (
-              <tr>
-                <td
-                  colSpan={3}
-                  className="text-center py-4 text-sm md:text-base"
-                >
-                  Loading...
-                </td>
-              </tr>
+              Array.from({ length: 5 }).map((_, index) => (
+                <tr key={index} className="border-b">
+                  <td className="px-4 py-2">
+                    <Skeleton className="h-4 w-3/4" />
+                  </td>
+                  <td className="px-4 py-2">
+                    <Skeleton className="h-6 w-20" />
+                  </td>
+                  <td className="px-4 py-2 text-right">
+                    <div className="flex flex-col md:flex-row justify-end gap-2">
+                      <Skeleton className="h-8 w-20" />
+                      <Skeleton className="h-8 w-20" />
+                      <Skeleton className="h-8 w-8" />
+                    </div>
+                  </td>
+                </tr>
+              ))
             ) : filteredArticles.length === 0 ? (
               <tr>
                 <td
