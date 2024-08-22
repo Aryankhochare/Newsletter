@@ -67,7 +67,7 @@ const LoginPageComp = () => {
             <span>Continue with Google</span>
           </button>
 
-          <button onClick = {() => signIn("facebook")}className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white rounded-md py-2 px-4 hover:bg-blue-700 mb-4">
+          <button onClick = {() => signIn("facebook", {callbackUrl:'/main'})}className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white rounded-md py-2 px-4 hover:bg-blue-700 mb-4">
             <FaFacebookF className="text-xl" />
             <span>Continue with Facebook</span>
           </button>
