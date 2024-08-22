@@ -5,6 +5,7 @@ import Navbar from '@/components/navbarcomp/navbar';
 import Footer from '@/components/navbarcomp/footer';
 import { useMainStore } from '@/components/ArticleStore';
 import Comments from '@/components/Comments';
+import { parseISO, formatDistanceToNow, format  } from 'date-fns';
 
 interface NewsPageProps {
   params: { slug: string };
@@ -34,17 +35,17 @@ const NewsPage: React.FC<NewsPageProps> = ({ params }) => {
             <h1 className="text-4xl sm:text-5xl font-bold mb-6 text-black leading-tight">
               {article_title}
             </h1>
-            <div className="flex items-center text-lg text-black mb-8">
-              <span className="mr-4">Writer : {article_writer}</span>
-              <span>Posted on : {article_date}</span>
+            <div className="flex flex-col items-start text-md text-gray-600 mb-8">
+              <span className="mr-4">Author: {article_writer}</span>
+              <span>Published: {format(parseISO(article_date), 'dd-MMM-yyyy')}</span>
             </div>
             <img
               src={article_image}
               alt="Article image"
-              className="w-full h-auto mb-8 rounded-lg shadow-md"
+              className="object-fit h-auto mb-8 rounded-lg shadow-md"
             />
             <div className="prose prose-xl max-w-none">
-              <p className="mb-6 text-xl leading-relaxed">
+              <p className="mb-6 text-lg leading-relaxed">
                 {article_content}
               </p>
             </div>
