@@ -195,7 +195,7 @@ namespace Newsletter.Controllers
                     EditorContent = article.EditorContent,
                     IsVerified = false,
                     IsRejected = false,
-                    IsDrafted = false,
+                    IsDrafted = article.IsDrafted,
                     CoverImage = coverImageUrl,
                     PostedOn = DateTime.UtcNow,
                     ModifiedDate = DateTime.UtcNow,
@@ -266,7 +266,7 @@ namespace Newsletter.Controllers
                 existingArticle.ModifiedDate = DateTime.UtcNow;
                 existingArticle.IsVerified = false;
                 existingArticle.IsRejected = false;
-                existingArticle.IsDrafted = false;
+                existingArticle.IsDrafted = article.IsDrafted;
 
                 var response = await client.From<NewsArticle>().Where(c => c.Id == news_id).Update(existingArticle);
 

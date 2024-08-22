@@ -26,6 +26,7 @@ export async function POST(req: NextRequest) {
     const title = formData.get("Title");
     const content = formData.get("EditorContent");
     const categoryName = formData.get("CategoryName");
+    const isDrafted = formData.get("IsDrafted") === 'true';
 
     if (typeof title === "string") {
       form.append("Title", title);
@@ -37,6 +38,8 @@ export async function POST(req: NextRequest) {
     if(typeof categoryName === "string"){
       form.append("CategoryName", categoryName);
     }
+
+    form.append("IsDrafted", isDrafted.toString());
 
     const file = formData.get("CoverImage") as File | null;
     if (file) {
@@ -97,7 +100,9 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
-}
+} 
+
+/////////////////////////////PATCH///////////////////////
 
 export async function PATCH(req: NextRequest) {
   try {
@@ -116,6 +121,7 @@ export async function PATCH(req: NextRequest) {
     const title = formData.get("Title");
     const content = formData.get("EditorContent");
     const categoryName = formData.get("CategoryName");
+    const isDrafted = formData.get("IsDrafted") === 'true';
 
     if (typeof title === "string") {
       form.append("Title", title);
@@ -139,6 +145,7 @@ export async function PATCH(req: NextRequest) {
 
     const images = formData.getAll("Images");
     const imageNames = formData.getAll("ImageNames");
+    form.append("IsDrafted", isDrafted.toString());
 
     for (let i = 0; i < images.length; i++) {
       const image = images[i] as File;
@@ -188,7 +195,6 @@ export async function PATCH(req: NextRequest) {
     );
   }
 } 
-
 
 
 
