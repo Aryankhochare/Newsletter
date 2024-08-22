@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Navbar from '@/components/navbarcomp/navbar';
 import Footer from '@/components/navbarcomp/footer';
+import { apiLinks } from '@/utils/constants';
 
 export default async function Page({ params }: { params: { searchQuery: string } }) {
   const { searchQuery } = params;
@@ -8,7 +9,7 @@ export default async function Page({ params }: { params: { searchQuery: string }
   const fetchContent = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_ASP_NET_URL}/newsletter/search?writer=${searchQuery}`,
+        `${apiLinks.newsletter.searchWriter}${searchQuery}`,
         {
           cache: "no-store",
         }

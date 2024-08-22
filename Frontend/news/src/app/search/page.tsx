@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Footer from '@/components/navbarcomp/footer';
 import { apiLinks } from '@/utils/constants';
 import Image from 'next/image';
+import parse from 'html-react-parser'
 
 export default async function SearchResults({ searchParams }: { searchParams: { q: string } }) {
     const query = searchParams.q;
@@ -72,14 +73,14 @@ export default async function SearchResults({ searchParams }: { searchParams: { 
             {results.map((item, index) => (
               <article key={index} className="mb-8 pb-6 border-b border-gray-200 last:border-b-0">
                 <h2 className="font-bold text-2xl mb-2 text-gray-800 hover:text-blue-600 transition-colors">
-                  <Link href={`/article/${item.id}`}>{item.title}</Link>
+                  <Link href={`/article/${item.id}`}>{parse(item.title)}</Link>
                 </h2>
                 <p className="text-sm mb-2 text-gray-600">By: {item.userName}</p>
                 <p className="text-sm mb-3 text-gray-600">Category: {item.categoryName}</p>
                 <div className="flex items-start">
                   <div className="flex-grow pr-4">
                     <p className="text-gray-700 leading-relaxed">
-                      {item.editorContent.substring(0, 150)}...
+                      {parse(item.editorContent.substring(0, 150))}...
                     </p>
                   </div>
                   {item.coverImage && (
