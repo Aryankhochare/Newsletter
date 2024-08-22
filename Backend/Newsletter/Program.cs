@@ -20,9 +20,9 @@ builder.Services.AddAuthentication(auth =>
     options.TokenValidationParameters = new TokenValidationParameters
     { 
         ValidateIssuer = true,
-        ValidIssuer = "https://localhost:3000",
+        ValidIssuer = "https://globalbuzz.vercel.app",
         ValidateAudience = true,
-        ValidAudience = "http://localhost:3000",
+        ValidAudience = "https://globalbuzz.vercel.app",
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT_Token"])),
         RoleClaimType = "roles"
