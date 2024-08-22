@@ -1,3 +1,8 @@
+
+
+
+
+
 // import React, { useState, useEffect } from 'react';
 // import { useSession } from 'next-auth/react';
 // import jwt from 'jsonwebtoken';
@@ -31,7 +36,6 @@
 //         const response = await fetch(`${apiLinks.notfication.fetch}/${userId}`);
 
 //         const data = await response.json();
-//         console.log(data);
         
 //         setNotifications(data);
 //         setUnreadNotificationCount(data.filter((n : any) => !n.IsRead).length);
@@ -44,13 +48,26 @@
 //     setIsOpen(!isOpen);
 //   };
 
-// //   const markAsRead = async (notificationId: string) => {
-// //     await fetch(`/api/notifications/${notificationId}/read`, {
-// //       method: 'PUT',
-// //     });
-// //     setNotifications(notifications.map((n) => (n.NotificationId === notificationId ? { ...n, IsRead: true } : n)));
-// //     setUnreadNotificationCount(notifications.filter((n) => !n.IsRead).length);
-// //   };
+//   const markAsRead = async (notificationId: string) => {
+//     try {
+//       const response = await fetch(`${apiLinks.notfication.fetch}/${notificationId}`, {
+//         method: 'PATCH',
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//       });
+  
+//       if (!response.ok) {
+//         throw new Error(`Error marking notification as read: ${response.status} - ${response.statusText}`);
+//       }
+  
+//       setNotifications(notifications.filter((n) => n.notificationId !== notificationId));
+//       setUnreadNotificationCount(notifications.filter((n) => !n.isRead).length);
+//     } catch (error) {
+//       console.error('Error marking notification as read:', error);
+  
+//     }
+//   };
 
 //   return (
 //     <div className="relative">
@@ -81,7 +98,7 @@
 //                     {!notification.isRead && (
 //                       <button
 //                         className="text-gray-500 hover:text-gray-700"
-//                         // onClick={() => markAsRead(notification.NotificationId)}
+//                         onClick={() => markAsRead(notification.notificationId)}
 //                       >
 //                         Mark as read
 //                       </button>
@@ -98,13 +115,11 @@
 // };
 
 // export default Notification;
-
 import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import jwt from 'jsonwebtoken';
 import { apiLinks } from '@/utils/constants';
-import { Dialog, Transition } from '@headlessui/react';
-import { Fragment } from 'react';
+import Modal from '../Modal';
 
 interface Notification {
   notificationId: string;
@@ -122,7 +137,7 @@ interface NotificationProps {
 }
 
 const Notification: React.FC<NotificationProps> = ({ unreadCount, setUnreadNotificationCount }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null);
   const { data: session } = useSession();
@@ -133,11 +148,11 @@ const Notification: React.FC<NotificationProps> = ({ unreadCount, setUnreadNotif
         const decodedToken = jwt.decode(session.accessToken) as { sub: string };
         const userId = decodedToken.sub;
         const response = await fetch(`${apiLinks.notfication.fetch}/${userId}`);
+
         const data = await response.json();
-        console.log(data);
-        
+
         setNotifications(data);
-        setUnreadNotificationCount(data.filter((n: any) => !n.IsRead).length);
+        setUnreadNotificationCount(data.filter((n: any) => !n.isRead).length);
       }
     };
     fetchNotifications();
@@ -147,18 +162,52 @@ const Notification: React.FC<NotificationProps> = ({ unreadCount, setUnreadNotif
     setIsOpen(!isOpen);
   };
 
-//   const markAsRead = async (notificationId: string) => {
-//     await fetch(`/api/notifications/${notificationId}/read`, {
-//       method: 'PUT',
-//     });
-//     setNotifications(notifications.map((n) => (n.NotificationId === notificationId ? { ...n, IsRead: true } : n)));
-//     setUnreadNotificationCount(notifications.filter((n) => !n.IsRead).length);
-//   };
+  const markAsRead = async (notificationId: string) => {
+    try {
+      const response = await fetch(`${apiLinks.notfication.fetch}/${notificationId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error marking notification as read: ${response.status} - ${response.statusText}`);
+      }
+
+      setNotifications(notifications.filter((n) => n.notificationId !== notificationId));
+      setUnreadNotificationCount(notifications.filter((n) => !n.isRead).length);
+    } catch (error) {
+      console.error('Error marking notification as read:', error);
+    }
+  };
+
+  const truncateText = (text:string, wordLimit:number) => {
+    const words = text.split(' ');
+    if (words.length > wordLimit) {
+      return words.slice(0, wordLimit).join(' ') + '...';
+    }
+    return text;
+  };
+
+  const openModal = (notification:Notification) => {
+    setSelectedNotification(notification);
+  };
+
+  const closeModal = () => {
+    setSelectedNotification(null);
+  };
 
   return (
     <div className="relative">
-      <button className="text-white p-2" onClick={toggleNotifications}>
-        Notifications
+      <button
+        className="text-white p-2"
+        onClick={toggleNotifications}
+        aria-label="Notifications"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+        </svg>
         {unreadCount > 0 && (
           <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full px-2 py-1 text-xs">
             {unreadCount}
@@ -166,23 +215,28 @@ const Notification: React.FC<NotificationProps> = ({ unreadCount, setUnreadNotif
         )}
       </button>
       {isOpen && (
-        <div className="absolute top-full right-0  text-black bg-white shadow-lg  border-4 border-red-900 rounded-lg p-8 mt-5 w-64">
+        <div className="fixed inset-x-0 top-16 sm:top-auto sm:right-0 sm:left-auto sm:absolute sm:top-full text-black bg-white shadow-lg p-4 mt-2 w-full sm:w-80 md:w-96 max-h-[80vh] overflow-y-auto z-50">
           {notifications.length === 0 ? (
-            <p>No new notifications</p>
+            <p className="text-center">No new notifications</p>
           ) : (
-            <ul>
+            <ul className="space-y-2">
               {notifications.map((notification) => (
                 <li
                   key={notification.notificationId}
-                  className={`mb-2 p-2 rounded-md ${!notification.isRead ? 'bg-gray-200' : ''}`}
-                  onClick={() => handleNotificationClick(notification)}
+                  className={`p-3 rounded-md ${!notification.isRead ? 'bg-gray-100' : ''} cursor-pointer hover:bg-gray-50 transition-colors duration-150`}
+                  onClick={() => openModal(notification)}
                 >
                   <div className="flex justify-between items-center">
-                    <p className="text-gray-800">{notification.message || 'No message'}</p>
+                    <p className='text-gray-800 text-sm sm:text-base'>
+                      {truncateText(notification.message || 'No message', 15)}
+                    </p>
                     {!notification.isRead && (
                       <button
-                        className="text-gray-500 hover:text-gray-700"
-                        // onClick={() => markAsRead(notification.NotificationId)}
+                        className="text-blue-500 hover:text-blue-700 text-xs sm:text-sm ml-2"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          markAsRead(notification.notificationId);
+                        }}
                       >
                         Mark as read
                       </button>
@@ -194,58 +248,17 @@ const Notification: React.FC<NotificationProps> = ({ unreadCount, setUnreadNotif
           )}
         </div>
       )}
-      {selectedNotification && (
-        <Transition appear show={isOpen} as={Fragment}>
-          <Dialog as="div" className="relative z-10" onClose={closeModal}>
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <div className="fixed inset-0 bg-black bg-opacity-25" />
-            </Transition.Child>
-
-            <div className="fixed inset-0 overflow-y-auto">
-              <div className="flex min-h-full items-center justify-center p-4 text-center">
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0 scale-95"
-                  enterTo="opacity-100 scale-100"
-                  leave="ease-in duration-200"
-                  leaveFrom="opacity-100 scale-100"
-                  leaveTo="opacity-0 scale-95"
-                >
-                  <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                    <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                      Notification
-                    </Dialog.Title>
-                    <div className="mt-2">
-                      <p className="text-sm text-gray-500">{selectedNotification.message}</p>
-                    </div>
-
-                    <div className="mt-4">
-                      <button
-                        type="button"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                        onClick={closeModal}
-                      >
-                        Close
-                      </button>
-                    </div>
-                  </Dialog.Panel>
-                </Transition.Child>
-              </div>
-            </div>
-          </Dialog>
-        </Transition>
-      )}
+      <Modal
+        isOpen={!!selectedNotification}
+        onClose={closeModal}
+        message={selectedNotification?.message || 'No message'}
+      />
     </div>
   );
 };
 
 export default Notification;
+
+
+
+

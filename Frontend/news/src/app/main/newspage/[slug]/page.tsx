@@ -167,7 +167,7 @@ const NewsPage: React.FC<NewsPageProps> = ({ params }) => {
           <img
             src="https://i.postimg.cc/HkQpPgZZ/icongrey-removebg-preview.png"
             alt="Comments button"
-            className="w-9 h-9"
+            className="w-9 h-9 objext-fit"
           />
         </button>
 

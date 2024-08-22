@@ -56,7 +56,7 @@ export default function ArticleContent() {
                <img 
                src={cover_image} 
                alt="Cover Image" 
-               className="max-w-full h-auto" />
+               className="max-w-full object-fit h-auto" />
           </div>
       </div>
       

@@ -142,12 +142,12 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                     alt={article.title} 
                     width={200} 
                     height={150} 
-                    className='w-full h-auto max-h-24 object-cover' 
+                    className='w-full h-auto max-h-24 object-fit' 
                   />
                 </div>
               </div>
               <div className="text-sm text-gray-500 mt-2">
-                By: {article.userName} | Posted On: {new Date(article.modifiedOn).toLocaleDateString()}
+                Author: {article.userName} | Published: {new Date(article.modifiedOn).toLocaleDateString()}
               </div>
               </div>
             ))
@@ -165,7 +165,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                 alt={article.title} 
                 width={400} 
                 height={300} 
-                className='w-full h-40 object-cover mb-2' 
+                className='w-full h-40 object-fit mb-2' 
               />
               <div className='font-bold text-lg mb-2 text-white'>{article.title}</div>
               <div className='text-sm text-gray-400'>{article.editorContent.substring(0, 100)}...</div>
