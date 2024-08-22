@@ -3,15 +3,15 @@ export const baseUrl = process.env.NEXT_PUBLIC_ASP_NET_URL;
 
 export const apiLinks = {
     editor : {
-        verify: `${baseUrl}/editor/verify`,
-        reject: `${baseUrl}/editor/reject`,
-        delete: `${baseUrl}/editor`  
+        verify: `${baseUrl}/api/editor/verify`,
+        reject: `${baseUrl}/api/editor/reject`,
+        delete: `${baseUrl}/api/editor`  
     },
     newsletter:{
-        fetch: `${baseUrl}/newsletter`,
-        searchCategory: `${baseUrl}/newsletter/search?category=`,
-        searchWriter: `${baseUrl}/newsletter/search?writer=`,
-        verifiedArticles: `${baseUrl}/newsletter/verified`
+        fetch: `${baseUrl}/api/newsletter`,
+        searchCategory: `${baseUrl}/api/newsletter/search?category=`,
+        searchWriter: `${baseUrl}/api/newsletter/search?writer=`,
+        verifiedArticles: `${baseUrl}/api/newsletter/verified`
     },
     category:{
         fetch: `${baseUrl}/api/category`,
@@ -20,10 +20,10 @@ export const apiLinks = {
         fetch: `${baseUrl}/api/comments`,
     },
     user:{
-        fetch: `${baseUrl}/users`
+        fetch: `${baseUrl}/api/users`
     },
     admin:{
-        fetchUser: `${baseUrl}/admin/users`
+        fetchUser: `${baseUrl}/api/admin/users`
     },
     notfication:{
         fetch: `${baseUrl}/api/notification`

@@ -3,10 +3,11 @@ import Navbar from '@/components/navbarcomp/navbar';
 import Footer from '@/components/navbarcomp/footer';
 import TrendingCarousel from '@/components/TrendingCarousel';
 import LatestNewsCarousel from '@/components/LatestNewsCarousel';
+import { apiLinks } from '@/utils/constants';
 
 async function getArticles() {
   try {
-    const response = await fetch(`https://globalbuzz.azurewebsites.net/newsletter/verified`);
+    const response = await fetch(apiLinks.newsletter.verifiedArticles);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
