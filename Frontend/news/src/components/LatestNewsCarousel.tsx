@@ -97,9 +97,12 @@
 // };
 
 // export default LatestNewsCarousel;
+
+
+
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from "next/link";
 import { useMainStore } from '@/components/ArticleStore';
 import parse from 'html-react-parser';
@@ -138,7 +141,23 @@ const ArticleLink: React.FC<{ article: Article, children: React.ReactNode }> = (
   );
 };
 
-const LatestNewsCarousel: React.FC<{ articles: Article[] }> = ({ articles }) => {
+const LatestNewsCarousel: React.FC = () => {
+  const [articles, setArticles] = useState<Article[]>([]);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const response = await fetch('https://globalbuzz.azurewebsites.net/newsletter/verified');
+        const data = await response.json();
+        setArticles(data);
+      } catch (error) {
+        console.error('Error fetching articles:', error);
+      }
+    };
+
+    fetchArticles();
+  }, []);
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {articles.map((article, index) => (

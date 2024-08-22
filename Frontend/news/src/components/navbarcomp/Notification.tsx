@@ -134,6 +134,8 @@ const Notification: React.FC<NotificationProps> = ({ unreadCount, setUnreadNotif
         const userId = decodedToken.sub;
         const response = await fetch(`${apiLinks.notfication.fetch}/${userId}`);
         const data = await response.json();
+        console.log(data);
+        
         setNotifications(data);
         setUnreadNotificationCount(data.filter((n: any) => !n.IsRead).length);
       }
@@ -145,15 +147,13 @@ const Notification: React.FC<NotificationProps> = ({ unreadCount, setUnreadNotif
     setIsOpen(!isOpen);
   };
 
-  const handleNotificationClick = (notification: Notification) => {
-    setSelectedNotification(notification);
-    setIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsOpen(false);
-    setSelectedNotification(null);
-  };
+//   const markAsRead = async (notificationId: string) => {
+//     await fetch(`/api/notifications/${notificationId}/read`, {
+//       method: 'PUT',
+//     });
+//     setNotifications(notifications.map((n) => (n.NotificationId === notificationId ? { ...n, IsRead: true } : n)));
+//     setUnreadNotificationCount(notifications.filter((n) => !n.IsRead).length);
+//   };
 
   return (
     <div className="relative">
@@ -180,7 +180,12 @@ const Notification: React.FC<NotificationProps> = ({ unreadCount, setUnreadNotif
                   <div className="flex justify-between items-center">
                     <p className="text-gray-800">{notification.message || 'No message'}</p>
                     {!notification.isRead && (
-                      <button className="text-gray-500 hover:text-gray-700">Mark as read</button>
+                      <button
+                        className="text-gray-500 hover:text-gray-700"
+                        // onClick={() => markAsRead(notification.NotificationId)}
+                      >
+                        Mark as read
+                      </button>
                     )}
                   </div>
                 </li>
