@@ -229,8 +229,8 @@
     };
 
     return (
-      <div className="p-6 bg-gray-900 min-h-screen text-white">
-        <h2 className="text-3xl font-bold mb-6">Comments</h2>
+      <div className="p-6 bg-gray-900 min-h-screen text-whitez z-0">
+        {/* <h2 className="text-3xl font-bold mb-6">Comments</h2> */}
         {/* <div className="flex items-center mb-8">
           <input
             type="text"
