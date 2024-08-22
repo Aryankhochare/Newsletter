@@ -2,15 +2,17 @@ import { notFound } from 'next/navigation';
 import Navbar from '@/components/navbarcomp/navbar';
 import Link from 'next/link';
 import Footer from '@/components/navbarcomp/footer';
+import { apiLinks } from '@/utils/constants';
+import Image from 'next/image';
 
 export default async function SearchResults({ searchParams }: { searchParams: { q: string } }) {
     const query = searchParams.q;
   
     const fetchResults = async () => {
       try {
-        const writerResponse = await fetch(`${process.env.NEXT_PUBLIC_ASP_NET_URL}/newsletter/search?writer=${query}`);
-        const titleResponse = await fetch(`${process.env.NEXT_PUBLIC_ASP_NET_URL}/newsletter/search?title=${query}`);
-        const categoryResponse = await fetch(`${process.env.NEXT_PUBLIC_ASP_NET_URL}/newsletter/search?category=${query}`);
+        const writerResponse = await fetch(`${apiLinks.newsletter.searchWriter}${query}`);
+        const titleResponse = await fetch(`${apiLinks.newsletter.searchTitle}${query}`);
+        const categoryResponse = await fetch(`${apiLinks.newsletter.searchCategory}${query}`);
   
         let writerData: any[] = [];
         let titleData: any[] = [];
@@ -82,7 +84,7 @@ export default async function SearchResults({ searchParams }: { searchParams: { 
                   </div>
                   {item.coverImage && (
                     <div className="flex-shrink-0 ml-4">
-                      <img
+                      <Image
                         src={item.coverImage}
                         alt={item.title}
                         className="w-32 h-24 object-fit rounded-md"
