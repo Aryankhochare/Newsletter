@@ -160,7 +160,7 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: { 
     async signIn({ user, account, profile }) {
-      if (account?.provider === "google" || account?.provider === "facebook") {
+      if (account?.provider === "google" || account?.provider === "facebook" || account?.provider === "credentials") {
         const { data: existingUser, error } = await supabase
           .from("Users")
           .select()

@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import FormData from "form-data";
 import fetch from "node-fetch";
 import { authOptions } from "../auth/[...nextauth]/options";
+import { apiLinks } from "@/utils/constants";
 
 
 declare module "next-auth" {
@@ -67,7 +68,7 @@ export async function POST(req: NextRequest) {
 
     console.log("FormData to be sent:", form);
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_ASP_NET_URL}/newsletter`, {
+    const response = await fetch(`${apiLinks.newsletter.fetch}`, {
       method: "POST",
       body: form as any,
       headers: {
@@ -161,7 +162,7 @@ export async function PATCH(req: NextRequest) {
 
     console.log("FormData to be sent:", form);
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_ASP_NET_URL}/newsletter/${news_id}`, {
+    const response = await fetch(`${apiLinks.newsletter.fetch}/${news_id}`, {
       method: "PATCH",
       body: form as any,
       headers: {
