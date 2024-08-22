@@ -14,6 +14,7 @@ import Notification from './Notification';
 const Dmse = DM_Serif_Display({ subsets: ["latin"], weight: ["400"] });
 const Mmse = Anton({ subsets: ["latin"], weight: ["400"] });
 
+
 export default function Navbar() {
   const session=useSession()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
