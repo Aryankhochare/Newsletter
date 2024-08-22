@@ -122,7 +122,7 @@ export const authOptions: NextAuthOptions = {
           if (!credentials) return null;
   
           try {
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_ASP_NET_URL}/users`, {
+            const response = await axios.post(`${apiLinks.user}`, {
               Username: credentials.username,
               Password: credentials.password,
               Email: credentials.email,
