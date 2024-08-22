@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Link from "next/link";
 import { useMainStore } from '@/components/ArticleStore';
 import parse from 'html-react-parser';
-import {format, parseISO , formatDistanceToNow} from 'date-fns'
+import { format, parseISO, formatDistanceToNow } from 'date-fns';
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Article {
   id: string;
@@ -40,8 +41,24 @@ const ArticleLink: React.FC<{ article: Article, children: React.ReactNode }> = (
   );
 };
 
+const ArticleSkeleton: React.FC = () => (
+  <div className="flex-none w-full">
+    <div className="bg-white rounded-lg overflow-hidden shadow-lg h-full flex flex-col">
+      <Skeleton className="h-48 w-full" />
+      <div className="p-4 flex-grow">
+        <Skeleton className="h-6 w-24 mb-2" />
+        <Skeleton className="h-6 w-full mb-2" />
+        <Skeleton className="h-4 w-full mb-2" />
+        <Skeleton className="h-4 w-full mb-2" />
+        <Skeleton className="h-4 w-3/4" />
+      </div>
+    </div>
+  </div>
+);
+
 const LatestNewsCarousel: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -49,8 +66,10 @@ const LatestNewsCarousel: React.FC = () => {
         const response = await fetch('https://globalbuzz.azurewebsites.net/newsletter/verified');
         const data = await response.json();
         setArticles(data);
+        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching articles:', error);
+        setIsLoading(false);
       }
     };
 
@@ -59,29 +78,31 @@ const LatestNewsCarousel: React.FC = () => {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {articles.map((article, index) => (
-        <div key={index} className="flex-none  w-full">
-          <ArticleLink article={article}>
-            <div className="bg-white rounded-lg overflow-hidden shadow-lg h-full flex flex-col cursor-pointer hover:shadow-xl hover:transform hover:scale-105 transition-transform duration-300">
-              <div className="relative h-48">
-                <img
-                  src={article.coverImage}
-                  alt={article.title}
-                  className="w-full h-full object-fit"
-                />
+      {isLoading
+        ? Array(8).fill(0).map((_, index) => <ArticleSkeleton key={index} />)
+        : articles.map((article, index) => (
+          <div key={index} className="flex-none w-full">
+            <ArticleLink article={article}>
+              <div className="bg-white rounded-lg overflow-hidden shadow-lg h-full flex flex-col cursor-pointer hover:shadow-xl hover:transform hover:scale-105 transition-transform duration-300">
+                <div className="relative h-48">
+                  <img
+                    src={article.coverImage}
+                    alt={article.title}
+                    className="w-full h-full object-fit"
+                  />
+                </div>
+                <div className="p-4 flex-grow">
+                  <span className="inline-block bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm font-semibold mb-2">
+                    {article.categoryName}
+                  </span>
+                  <h3 className="text-xl font-semibold mb-2">{parse(article.title)}</h3>
+                  <div className="mb-2">{parse(article.editorContent.substring(0, 150))}...</div>
+                  <p className="text-sm text-gray-500 mt-auto">Published: {formatDistanceToNow(parseISO(article.postedOn))} ago</p>
+                </div>
               </div>
-              <div className="p-4 flex-grow">
-                <span className="inline-block bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm font-semibold mb-2">
-                  {article.categoryName}
-                </span>
-                <h3 className="text-xl font-semibold mb-2">{parse(article.title)}</h3>
-                <div className="mb-2">{parse(article.editorContent.substring(0, 150))}...</div>
-                <p className="text-sm text-gray-500 mt-auto">Published: {formatDistanceToNow(parseISO(article.postedOn))} ago</p>
-              </div>
-            </div>
-          </ArticleLink>
-        </div>
-      ))}
+            </ArticleLink>
+          </div>
+        ))}
     </div>
   );
 };

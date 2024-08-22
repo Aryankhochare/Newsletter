@@ -102,7 +102,6 @@
 // export default TrendingCarousel;
 
 
-
 "use client";
 
 import React, { useState, useEffect } from 'react';
@@ -110,7 +109,8 @@ import Link from "next/link";
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useMainStore } from '@/components/ArticleStore';
 import parse from 'html-react-parser';
-import {format, parseISO , formatDistanceToNow} from 'date-fns'
+import {format, parseISO , formatDistanceToNow} from 'date-fns';
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Article {
   id: string;
@@ -149,6 +149,7 @@ const ArticleLink: React.FC<{ article: Article, children: React.ReactNode }> = (
 const TrendingCarousel: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -156,8 +157,10 @@ const TrendingCarousel: React.FC = () => {
         const response = await fetch('https://globalbuzz.azurewebsites.net/newsletter/verified');
         const data = await response.json();
         setArticles(data);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching articles:', error);
+        setLoading(false);
       }
     };
 
@@ -183,6 +186,20 @@ const TrendingCarousel: React.FC = () => {
     e.stopPropagation();
     setCurrentIndex((prevIndex) => (prevIndex + 1) % articles.length);
   };
+
+  if (loading) {
+    return (
+      <div className="relative w-full h-[500px] overflow-hidden">
+        <Skeleton className="w-full h-full" />
+        <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-6">
+          <Skeleton className="h-6 w-24 mb-2" />
+          <Skeleton className="h-8 w-3/4 mb-2" />
+          <Skeleton className="h-4 w-full mb-2" />
+          <Skeleton className="h-4 w-1/2" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative w-full h-[500px] overflow-hidden">
