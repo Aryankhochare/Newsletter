@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Skeleton } from "@/components/ui/skeleton";
 import { useMainStore } from '@/components/ArticleStore';
 import parse from 'html-react-parser'
+import Footer from '@/components/navbarcomp/footer';
 
 // interface Article {
 //   id: string;
@@ -117,12 +118,12 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   );
 
   return (
-    <div className='flex flex-col h-screen'>
+    <div className='flex flex-col min-h-screen'>
       <div className="sticky top-0 z-50">
         <Navbar />
       </div>
 
-      <div className='flex flex-grow overflow-hidden'>
+      <main className='flex flex-grow overflow-hidden'>
         <div className='flex-grow scrollbar-hide md:w-7/10 overflow-y-auto p-4 md:mx-16 md:m-4'>
           <h1 className="text-3xl font-bold mb-6">{category} Articles</h1>
           {isLoading ? (
@@ -153,29 +154,41 @@ export default function CategoryPage({ params }: CategoryPageProps) {
             ))
           )}
         </div>
+        
 
         <div className='scrollbar-hide m-10 hidden md:block md:w-2/6 p-0 bg-black shadow-slate-600 shadow-2xl overflow-y-auto sticky top-16 h-[calc(100vh-4rem)]'>
+        <div className='text-2xl font-bold p-3 text-white bg-black  w-full text-center'>Latest News</div>
+
           {isLoading ? (
             Array(3).fill(0).map((_, index) => <SidebarSkeleton key={index} />)
           ) : (
+            
             articles.map((article) => (
-              <div key={article.id} className='p-4 border-b border-gray-700'>
+             
+              <div key={article.id} className='p-4 border-b border-gray-700 '>
               <img 
                 src={article.coverImage} 
                 alt={article.title} 
                 width={400} 
                 height={300} 
-                className='w-full h-40 object-cover mb-2' 
+                className='w-full h-40 object-fit mb-2' 
               />
+              
               <div className='font-bold text-lg mb-2 text-white'>{article.title}</div>
               <div className='text-sm text-gray-400'>{article.editorContent.substring(0, 100)}...</div>
               </div>
             ))
           )}
         </div>
-      </div>
+      </main>
 
       <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
+     
+        <Footer/>
+     
+      
     </div>
+   
+  
   );
 }
