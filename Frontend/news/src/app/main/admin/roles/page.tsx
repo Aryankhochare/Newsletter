@@ -2,16 +2,17 @@
   import Navbar from "@/components/navbarcomp/navbar";
   import Footer from "@/components/navbarcomp/footer";
   import UserManagement from '@/components/UserManagement';
+import { apiLinks } from '@/utils/constants';
 
 
   async function fetchUsers() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_ASP_NET_URL}/admin/users`, { cache: 'no-store' });
+    const res = await fetch(`${apiLinks.admin.fetchUser}`, { cache: 'no-store' });
     if (!res.ok) throw new Error('Failed to fetch users');
     return res.json();
   }
 
   async function fetchRoles() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_ASP_NET_URL}/admin/users`, { cache: 'no-store' });
+    const res = await fetch(`${apiLinks.admin.fetchUser}`, { cache: 'no-store' });
     if (!res.ok) throw new Error('Failed to fetch roles');
     return res.json();
   }

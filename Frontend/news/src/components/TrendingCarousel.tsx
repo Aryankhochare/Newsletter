@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Skeleton } from './ui/skeleton';
 import { useMainStore } from './ArticleStore';
 import Link from 'next/link';
@@ -7,6 +7,7 @@ import parse from 'html-react-parser';
 import { parseISO, format } from 'date-fns';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
+import { apiLinks } from '@/utils/constants';
 
 interface Article {
   id: string;
@@ -50,8 +51,23 @@ const ArticleLink: React.FC<{ article: Article, children: React.ReactNode }> = (
 const TrendingCarousel: React.FC<TrendingCarouselProps> = ({ articles_ }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [articles, setArticles] = useState<Article[]>([]);
 
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const response = await fetch(apiLinks.newsletter.verifiedArticles);
+        const data = await response.json();
+        setArticles(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching articles:', error);
+        setLoading(false);
+      }
+    };
 
+    fetchArticles();
+  }, []);
   
 
   const handlePrev = (e: React.MouseEvent) => {
@@ -83,7 +99,7 @@ const TrendingCarousel: React.FC<TrendingCarouselProps> = ({ articles_ }) => {
 
   return (
     <div className="relative w-full h-[500px] overflow-hidden">
-      {articles_.map((article, index) => (
+      {articles.map((article, index) => (
         <ArticleLink article={article} key={index}>
           <div
             className={`absolute top-0 left-0 w-full h-full transition-opacity duration-500 ${
