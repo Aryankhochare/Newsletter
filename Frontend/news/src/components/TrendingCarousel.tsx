@@ -107,6 +107,7 @@ import Link from "next/link";
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useMainStore } from '@/components/ArticleStore';
 import parse from 'html-react-parser';
+import {format, parseISO , formatDistanceToNow} from 'date-fns'
 
 interface Article {
   id: string;
@@ -188,7 +189,7 @@ const TrendingCarousel: React.FC<{ articles: Article[] }> = ({ articles }) => {
               </span>
               <h3 className="text-2xl font-semibold mb-2">{parse(article.title)}</h3>
                <div className="mb-2">{parse(article.editorContent.substring(0, 150))}...</div>
-              <p className="text-sm">Posted on: {article.postedOn}</p>
+              <p className="text-sm">Published: {format(parseISO(article.postedOn),'dd-MMM-yyyy')}</p>
             </div>
           </div>
         </ArticleLink>

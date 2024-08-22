@@ -6,6 +6,7 @@ import { FaFacebookF } from 'react-icons/fa';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function SignUpComp() {
   const [formData, setFormData] = useState({
@@ -16,6 +17,8 @@ export default function SignUpComp() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+
+  const router = useRouter();
 
   const handleChange = (e: { target: { name: any; value: any; }; }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -32,6 +35,7 @@ export default function SignUpComp() {
       
       if (response.status === 200) {
         alert(response.data.message);
+        router.push("/main");
       }
     } catch (error) {
       console.error('Error during sign up:', error);

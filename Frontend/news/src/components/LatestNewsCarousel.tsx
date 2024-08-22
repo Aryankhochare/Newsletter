@@ -103,6 +103,7 @@ import React from 'react';
 import Link from "next/link";
 import { useMainStore } from '@/components/ArticleStore';
 import parse from 'html-react-parser';
+import {format, parseISO , formatDistanceToNow} from 'date-fns'
 
 interface Article {
   id: string;
@@ -158,7 +159,7 @@ const LatestNewsCarousel: React.FC<{ articles: Article[] }> = ({ articles }) => 
                 </span>
                 <h3 className="text-xl font-semibold mb-2">{parse(article.title)}</h3>
                 <div className="mb-2">{parse(article.editorContent.substring(0, 150))}...</div>
-                <p className="text-sm text-gray-500 mt-auto">Posted on: {article.postedOn}</p>
+                <p className="text-sm text-gray-500 mt-auto">Published: {formatDistanceToNow(parseISO(article.postedOn))} ago</p>
               </div>
             </div>
           </ArticleLink>
