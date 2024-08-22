@@ -21,7 +21,7 @@ interface CustomUser extends User {
 
 async function fetchUserRole(userId: string) {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_ASP_NET_URL}/users/${userId}`);
+    const response = await fetch(`${apiLinks.user.fetch}/${userId}`);
     if (!response.ok) {
       throw new Error(`Failed to fetch data: ${response.status} ${response.statusText}`);
     }
