@@ -216,11 +216,13 @@ export default function Home() {
                   initialId={selectedNews.news_id}
                   initialTitle={selectedNews.news_title}
                   initialContent={selectedNews.content}
+                  onSuccess={fetchUserArticles}
                 />
               ) : (
                 <QuillEditor
                   initialContent=""
                   initialTitle=""
+                  onSuccess={fetchUserArticles}
                 />
               )}
             </div>

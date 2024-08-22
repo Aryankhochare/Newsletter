@@ -44,9 +44,10 @@ interface QuillEditorProps { //Added Interface for Props
   initialId? : string;
   initialTitle?: string; 
   initialContent?: string;
+  onSuccess: () => void;
 }
 
-const QuillEditor: React.FC<QuillEditorProps> = memo(({initialId = '', initialTitle = '', initialContent = ''}) => { //Added initial data as empty 
+const QuillEditor: React.FC<QuillEditorProps> = memo(({initialId = '', initialTitle = '', initialContent = '', onSuccess}) => { //Added initial data as empty 
   const [title, setTitle] = useState<string>(initialTitle); //News Title
   const [selectedCategory, setSelectedCategory] = useState<string | null>(''); //Category
   const [coverImage, setCoverImage] = useState<File | null>(null); //Cover Image
@@ -250,6 +251,7 @@ const QuillEditor: React.FC<QuillEditorProps> = memo(({initialId = '', initialTi
         }
         const data = await response.json();
         console.log("Newsletter created with id: ", data);
+        onSuccess();
        
       } catch (error) {
         console.error("Error creating newsletter", error);
@@ -269,7 +271,7 @@ const QuillEditor: React.FC<QuillEditorProps> = memo(({initialId = '', initialTi
         }
         const data = await response.json();
         console.log("Newsletter edited with id: ", data);
-       
+        onSuccess();
       } catch (error) {
         console.error("Error editing newsletter", error);
       }
