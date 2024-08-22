@@ -16,6 +16,11 @@ const LoginPageComp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
+  const handleChange = (e : any) => {
+    const { name, value } = e.target;
+    setUsername(name === 'username' ? value.trim() : value);
+  };
+
   const onSubmit = async (e : any) => {
     e.preventDefault();
     setError("");
@@ -69,9 +74,10 @@ const LoginPageComp = () => {
               <div className="text-sm">Username/Email:</div>
               <input 
                 className="w-full p-2 border border-gray-300 rounded-md"
+                name="username"
                 type="text"
                 placeholder="Your email"
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={handleChange}
                 value={username}
                 required
               />
