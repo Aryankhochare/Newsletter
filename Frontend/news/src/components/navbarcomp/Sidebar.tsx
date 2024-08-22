@@ -212,12 +212,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     if (userRoles.includes('ADMIN')) {
       return (
         <>
-        {/* <Link href="/main/admin/profile" onClick={onClose}>
-          <div className="flex items-center py-4 px-2 hover:bg-gray-800 transition-colors duration-200 scrollbar-hide">
-            <User className="mr-2 h-4 w-4" />
-            <span>Profile</span>
-          </div>
-        </Link> */}
+        
         <Link href="/main/admin/dashboard" onClick={onClose}>
           <div className="flex items-center py-4 px-2 hover:bg-gray-800 transition-colors duration-200 scrollbar-hide">
             <LayoutDashboard className="mr-2 h-4 w-4" />
@@ -236,12 +231,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               <span>Editor's Articles Page</span>
             </div>
           </Link>
-          <Link href="/main/writer/quill_editor" onClick={onClose}>
-            <div className="flex items-center py-4 px-4 hover:bg-gray-800 transition-colors duration-200 scrollbar-hide">
+           <Link href="/main/writer/quill_editor" onClick={onClose}>
+            <div className="flex items-center py-4 px-2 hover:bg-gray-800 transition-colors duration-200 scrollbar-hide">
               <PenTool className="mr-2 h-4 w-4" />
-              <span>Writer's Workspace</span>
+              <span>Writer Workspace</span>
             </div>
           </Link>
+
         <Link href="/main/admin/requests" onClick={onClose}>
           <div className="flex items-center py-4 px-2 hover:bg-gray-800 transition-colors duration-200 scrollbar-hide">
             <Inbox className="mr-2 h-4 w-4" />
@@ -266,6 +262,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               <span>Articles</span>
             </div>
           </Link>
+          <Link href="/main/writer/quill_editor" onClick={onClose}>
+            <div className="flex items-center py-4 px-2 hover:bg-gray-800 transition-colors duration-200 scrollbar-hide">
+              <PenTool className="mr-2 h-4 w-4" />
+              <span>Writer Workspace</span>
+            </div>
+          </Link>
           
         </>
       );
@@ -279,9 +281,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             </div>
           </Link>
           <Link href="/main/writer/quill_editor" onClick={onClose}>
-            <div className="flex items-center py-4 px-4 hover:bg-gray-800 transition-colors duration-200 scrollbar-hide">
+            <div className="flex items-center py-4 px-2 hover:bg-gray-800 transition-colors duration-200 scrollbar-hide">
               <PenTool className="mr-2 h-4 w-4" />
-              <span>Workspace</span>
+              <span>Writer Workspace</span>
             </div>
           </Link>
          
@@ -318,7 +320,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             <li>
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="flex border-white border-4 items-center justify-between w-full py-2 px-4 rounded hover:bg-gray-800 transition-colors duration-200 scrollbar-hide"
+                className="flex items-center justify-between w-full py-2 px-4 rounded hover:bg-gray-800 transition-colors duration-200 scrollbar-hide"
               >
                 <span>Categories</span>
                 <svg
@@ -336,7 +338,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                 className="mt-1 transition-all duration-300 ease-in-out overflow-hidden"
                 style={{ maxHeight: '0' }}
               >
-                <ul className="space-y-2 border-white border-t-0 border-4 max-h-64 overflow-y-auto scrollbar-hide">
+                <ul className="space-y-2 max-h-64 overflow-y-auto scrollbar-hide">
                   {categories.map((category) => (
                     <li key={category.categoryId}>
                       <Link

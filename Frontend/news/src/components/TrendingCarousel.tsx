@@ -100,6 +100,9 @@
 // };
 
 // export default TrendingCarousel;
+
+
+
 "use client";
 
 import React, { useState, useEffect } from 'react';
@@ -142,8 +145,23 @@ const ArticleLink: React.FC<{ article: Article, children: React.ReactNode }> = (
   );
 };
 
-const TrendingCarousel: React.FC<{ articles: Article[] }> = ({ articles }) => {
+const TrendingCarousel: React.FC = () => {
+  const [articles, setArticles] = useState<Article[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const response = await fetch('https://globalbuzz.azurewebsites.net/newsletter/verified');
+        const data = await response.json();
+        setArticles(data);
+      } catch (error) {
+        console.error('Error fetching articles:', error);
+      }
+    };
+
+    fetchArticles();
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -178,7 +196,7 @@ const TrendingCarousel: React.FC<{ articles: Article[] }> = ({ articles }) => {
               <img
                 src={article.coverImage}
                 alt={article.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-fit"
               />
             </div>
 
@@ -187,7 +205,7 @@ const TrendingCarousel: React.FC<{ articles: Article[] }> = ({ articles }) => {
                 {article.categoryName}
               </span>
               <h3 className="text-2xl font-semibold mb-2">{parse(article.title)}</h3>
-               <div className="mb-2">{parse(article.editorContent.substring(0, 150))}...</div>
+              <div className="mb-2">{parse(article.editorContent.substring(0, 150))}...</div>
               <p className="text-sm">Posted on: {article.postedOn}</p>
             </div>
           </div>
@@ -210,4 +228,3 @@ const TrendingCarousel: React.FC<{ articles: Article[] }> = ({ articles }) => {
 };
 
 export default TrendingCarousel;
-
