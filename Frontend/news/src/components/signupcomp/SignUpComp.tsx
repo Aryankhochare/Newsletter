@@ -142,13 +142,13 @@
 // }
 'use client';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebookF } from 'react-icons/fa';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import Link from 'next/link';
-import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { signIn, useSession } from 'next-auth/react';
+import { redirect, useRouter } from 'next/navigation';
 import { DM_Serif_Display } from 'next/font/google';
 const Dmse = DM_Serif_Display({ subsets: ["latin"], weight: ["400"] });
 
@@ -161,32 +161,73 @@ export default function SignUpComp() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-
+  const session=useSession()
   const router = useRouter();
 
   const handleChange = (e: { target: { name: any; value: any; }; }) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: name === 'name' ? value.trim() : value
+    });
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const passwordError = validatePassword(formData.password);
+    if (passwordError) {
+       alert(passwordError);
+    }
+    
     try {
-      const response = await axios.post('/api/auth/register', {
+      const result = await signIn("register", {
         username: formData.name,
         password: formData.password,
-        email: formData.email
+        email: formData.email,
+        redirect: false,
       });
-
-      if (response.status === 200) {
-        alert(response.data.message);
+  
+      if (result?.error) {
+        console.log("Error while registering user:", result.error);
+      
+      } else {
+     
+        console.log("User registered successfully");
         router.push("/main");
       }
     } catch (error) {
-      console.error('Error during sign up:', error);
-      alert('Failed to sign up. Please try again.');
+      console.error("Error during registration:", error);
+  
     }
   };
 
+  const validatePassword = (password : any) => {
+    if (password.length < 8) {
+      return 'Password must be at least 8 characters long';
+    }
+    if (!/[A-Z]/.test(password)) {
+      return 'Password must contain at least one uppercase letter';
+    }
+    if (!/[a-z]/.test(password)) {
+      return 'Password must contain at least one lowercase letter';
+    }
+    if (!/[0-9]/.test(password)) {
+      return 'Password must contain at least one digit';
+    }
+    if (!/[@$!%*?&]/.test(password)) {
+      return 'Password must contain at least one special character';
+    }
+    return null;
+  };
+
+  useEffect(()=>{
+    if(session.data?.user){
+      console.log(session)
+      redirect('/')
+    }
+
+  },[session])
   return (
     <main className="bg-gray-100 min-h-screen flex items-center justify-center p-4">
       <div className="sm:w-full md:w-4/5 max-w-6xl bg-white rounded-lg shadow-md overflow-hidden flex flex-col md:flex-row">
@@ -259,6 +300,7 @@ export default function SignUpComp() {
                 placeholder="Enter Password"
                 className="w-full p-2 border border-gray-300 rounded-md text-xs"
                 onChange={handleChange}
+                minLength={6}
                 required
               />
               <div

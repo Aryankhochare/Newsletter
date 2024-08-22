@@ -15,7 +15,7 @@ export async function POST(req : Request){
         })
         if (response.status===200){
             alert("User Created Successfully");
-            return new Response(JSON.stringify({message:"User created successfully", userId: response.data, redirect:'/login'}),{
+            return new Response(JSON.stringify({message:"User created successfully", userId: response.data, redirect:'/main'}),{
                 status:200,
                 headers:{'Content-Type':'application/json'},
             });

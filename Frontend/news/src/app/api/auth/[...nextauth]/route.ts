@@ -8,6 +8,8 @@ import jwt from 'jsonwebtoken'
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import { apiLinks } from "@/utils/constants";
+import axios from "axios";
+import Categories from "@/app/(auth)/categorychoice/page";
 
 
 interface CustomUser extends User {
@@ -109,6 +111,46 @@ export const authOptions: NextAuthOptions = {
         return null;
       },
     }),
+
+      CredentialsProvider({
+        id: "register",
+        name: "Register",
+        credentials: {
+          username: { label: "Username", type: "text" },
+          password: { label: "Password", type: "password" },
+          email: { label: "Email", type: "email" },
+        },
+        async authorize(credentials) {
+          if (!credentials) return null;
+  
+          try {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_ASP_NET_URL}/users`, {
+              Username: credentials.username,
+              Password: credentials.password,
+              Email: credentials.email,
+              UserRoles: [],
+              Categories: ['Sports']
+            });
+  
+            if (response.status === 200) {
+              const userId = response.data.id;
+              const userData = await fetchUserRole(userId);
+              const user: CustomUser = {
+                id: response.data.toString(),
+                name: credentials.username,
+                email: credentials.email,
+                roles: userData.userRole,
+              };
+              return user;
+            }
+          } catch (error) {
+            console.error("Registration error:", error);
+          }
+  
+          return null;
+        },
+      }),
+
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
