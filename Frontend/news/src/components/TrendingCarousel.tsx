@@ -178,7 +178,7 @@ const TrendingCarousel: React.FC<{ articles: Article[] }> = ({ articles }) => {
               <img
                 src={article.coverImage}
                 alt={article.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-fit"
               />
             </div>
 
