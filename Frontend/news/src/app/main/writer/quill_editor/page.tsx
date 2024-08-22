@@ -6,6 +6,7 @@ import Navbar from '@/components/navbarcomp/navbar';
 import { supabase } from '@/app/api/auth/[...nextauth]/route';
 import { PenTool } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Footer from '@/components/navbarcomp/footer';
 
 interface userNews {
   news_id: string;
@@ -119,10 +120,11 @@ export default function Home() {
   };
 
   return (
-    <main className="flex flex-col min-h-screen bg-gray-100">
+    <div className="flex flex-col min-h-screen bg-gray-100">
       <div className="sticky top-0 z-50">
         <Navbar />
       </div>
+      <main className='min-h-screen'>
       <div className="flex justify-center text-center mt-4">
         <PenTool className="mr-2 h-8 w-8" />
         <span className="text-2xl text-center font-bold">Writer Workspace</span>
@@ -225,7 +227,9 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </main>
+      </main>
+      <Footer/>
+    </div>
   );
 }
 
