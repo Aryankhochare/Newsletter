@@ -2,13 +2,14 @@ import EditorButtons from "@/components/EditorButtons";
 import { Suspense } from "react";
 import Navbar from "@/components/navbarcomp/navbar";
 import Footer from "@/components/navbarcomp/footer";
+import { apiLinks } from "@/utils/constants";
 
 export const dynamic = 'force-dynamic'
 
 const fetchContent = async () => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_ASP_NET_URL}/newsletter`,
+      `${apiLinks.newsletter.fetch}`,
       {
         cache: "no-store",
       }

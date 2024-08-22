@@ -6,6 +6,7 @@ import Link from 'next/link';
 import parse from 'html-react-parser';
 import { parseISO, format } from 'date-fns';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Image from 'next/image';
 
 interface Article {
   id: string;
@@ -90,7 +91,7 @@ const TrendingCarousel: React.FC<TrendingCarouselProps> = ({ articles_ }) => {
             } cursor-pointer`}
           >
             <div className="relative w-full h-full">
-              <img
+              <Image
                 src={article.coverImage}
                 alt={article.title}
                 className="w-full h-full object-fit"
