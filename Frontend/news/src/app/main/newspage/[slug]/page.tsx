@@ -121,6 +121,7 @@ import { parseISO, format } from 'date-fns';
 import parse from 'html-react-parser'
 import { useParams } from 'next/navigation';
 import { apiLinks } from '@/utils/constants';
+import Image from 'next/image';
 
 
 interface NewsPageProps {
@@ -173,14 +174,7 @@ const fetchContent = async () => {
   }
 };
 
-const id = getTextAfterAtSymbol(url);
-console.log(id);
 
-
-// if(article_id === null || article_id === ''){
-//  data
-// };
-// }
 
 
 
@@ -203,7 +197,7 @@ console.log(id);
               <span className="mr-4">Author: {article_writer}</span>
               <span>Published: {article_date}</span>
             </div>
-            <img
+            <Image
               src={article_image}
               alt="Article image"
               className="object-fit h-auto mb-8 rounded-lg shadow-md"
@@ -218,10 +212,10 @@ console.log(id);
           className="fixed bottom-14 right-4 p-2 z-50 transition-colors duration-200"
           onClick={() => setShowComments(!showComments)}
         >
-          <img
+          <Image
             src="https://i.postimg.cc/HkQpPgZZ/icongrey-removebg-preview.png"
             alt="Comments button"
-            className="w-9 h-9"
+            className="w-9 h-9 object-fit"
           />
         </button>
 

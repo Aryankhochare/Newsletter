@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { apiLinks } from '@/utils/constants';
 
 interface User {
   id: string;
@@ -55,7 +56,7 @@ export default function UserManagement({ initialUserData }: Props) {
         userRoles: [getRoleId(selectedRole)]
       };
   
-      const response = await fetch(`${process.env.NEXT_PUBLIC_ASP_NET_URL}/admin/users/${userId}`, {
+      const response = await fetch(`${apiLinks.admin.fetchUser}/${userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -68,7 +69,7 @@ export default function UserManagement({ initialUserData }: Props) {
         alert(responseData || `Role "${selectedRole}" assigned successfully for user with ID: ${userId}`);
         window.location.reload(); // Refresh the page
         // Refresh user data
-        const updatedUserData = await fetch(`${process.env.NEXT_PUBLIC_ASP_NET_URL}/admin/users`).then(res => res.json());
+        const updatedUserData = await fetch(`${apiLinks.admin.fetchUser}`).then(res => res.json());
         setUserData(updatedUserData);
       } else {
         const errorData = await response.text();

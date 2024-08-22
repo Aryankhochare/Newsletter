@@ -179,6 +179,11 @@ export default function SignUpComp() {
     if (passwordError) {
        alert(passwordError);
     }
+
+    const emailError = validateEmail(formData.email);
+    if(emailError){
+      alert(emailError);
+    }
     
     try {
       const result = await signIn("register", {
@@ -220,6 +225,12 @@ export default function SignUpComp() {
     }
     return null;
   };
+
+  const validateEmail = (email : string) => {
+    if (!/^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,6}$/.test(email)){
+      return 'Incorrect email format';
+    }
+  }
 
   useEffect(()=>{
     if(session.data?.user){
