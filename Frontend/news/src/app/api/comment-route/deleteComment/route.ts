@@ -1,6 +1,6 @@
 import { apiLinks } from '@/utils/constants';
 import { NextResponse, NextRequest } from 'next/server';
-//import { supabase } from '@/app/api/auth/[...nextauth]/route';
+
 
 export async function DELETE(req: NextRequest) {
     try {

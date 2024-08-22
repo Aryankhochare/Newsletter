@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { FiTrash2 } from "react-icons/fi";
 import { useSession } from "next-auth/react";
 import { Skeleton } from "./ui/skeleton";
+import { apiLinks } from "@/utils/constants";
 
 interface News {
   id: string;
@@ -57,7 +58,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
         setLoading(true);
         if(!session.data?.accessToken) return;
         await fetch(
-          `${process.env.NEXT_PUBLIC_ASP_NET_URL}/editor/verify/${currentArticleId}`,
+          `${apiLinks.editor.verify}/${currentArticleId}`,
           {
             method: "PATCH",
             headers: {
@@ -94,7 +95,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
       try {
         setLoading(true);
         await fetch(
-          `${process.env.NEXT_PUBLIC_ASP_NET_URL}/editor/reject/${currentArticleId}`,
+          `${apiLinks.editor.reject}/${currentArticleId}`,
           {
             method: "PATCH",
             headers: {
@@ -131,7 +132,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
     if (currentArticleId) {
       try {
         setLoading(true);
-        await fetch(`${process.env.NEXT_PUBLIC_ASP_NET_URL}/editor/${currentArticleId}`, {
+        await fetch(`${apiLinks.editor.delete}/${currentArticleId}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

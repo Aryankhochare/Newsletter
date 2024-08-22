@@ -5,6 +5,7 @@ import { useArticleStore } from './ArticleStore';
 import parse from "html-react-parser";
 import BackButton from './BackButton';
 import { Skeleton } from "./ui/skeleton";
+import Image from 'next/image';
 
 export default function ArticleContent() {
   const article_content = useArticleStore((state) => state.editorContent);
@@ -71,10 +72,12 @@ export default function ArticleContent() {
               {parse(article_content)}
             </div>
             <div className="prose prose-lg lg:prose-xl max-w-none text-gray-700 flex items-center justify-center">
-              <img 
+              <Image
                 src={cover_image} 
                 alt="Cover Image" 
                 className="max-w-full h-auto" 
+                width = {100}
+                height = {250}
               />
             </div>
           </>
