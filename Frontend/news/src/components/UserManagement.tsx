@@ -1,12 +1,12 @@
-
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from '@/components/ui/button';
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface User {
   id: string;
@@ -23,6 +23,16 @@ export default function UserManagement({ initialUserData }: Props) {
   const [selectedRoles, setSelectedRoles] = useState<{ [key: string]: string }>({});
   const [searchUsername, setSearchUsername] = useState('');
   const [searchRole, setSearchRole] = useState('all');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading delay
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleRoleChange = (userId: string, value: string) => {
     setSelectedRoles((prev) => ({ ...prev, [userId]: value }));
@@ -127,56 +137,76 @@ export default function UserManagement({ initialUserData }: Props) {
       </div>
 
       <div className="grid grid-cols-1 gap-4">
-        {filteredData.map((user: User) => (
-          <div key={user.id} className="bg-white p-4 rounded-lg shadow flex flex-col sm:flex-row items-center justify-between">
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 mb-4 sm:mb-0">
-              <div className="text-center sm:text-left">
-                <div className="font-semibold text-sm">User ID: {user.id}</div>
-                <div className='text-md'>Username: {user.username}</div>
+        {loading ? (
+          // Skeleton loading
+          Array.from({ length: 5 }).map((_, index) => (
+            <div key={index} className="bg-white p-4 rounded-lg shadow flex flex-col sm:flex-row items-center justify-between">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 mb-4 sm:mb-0">
+                <div className="text-center sm:text-left">
+                  <Skeleton className="h-4 w-24 mb-2" />
+                  <Skeleton className="h-4 w-32" />
+                </div>
+                <div className="flex flex-wrap justify-center sm:justify-start gap-2">
+                  <Skeleton className="h-6 w-16" />
+                  <Skeleton className="h-6 w-16" />
+                </div>
               </div>
-              <div className="flex flex-wrap justify-center sm:justify-start gap-2">
-                {user.userRoleNames && user.userRoleNames.length > 0 ? (
-                  user.userRoleNames.map((role: string, index: number) => (
-                    <Badge key={index} variant="secondary" className="text-xs">
-                      {role}
-                    </Badge>
-                  ))
-                ) : (
-                  <Badge variant="secondary" className="text-xs">
-                    No Roles Assigned
-                  </Badge>
-                )}
+              <div className="flex flex-col sm:flex-row items-center gap-2">
+                <Skeleton className="h-10 w-40" />
+                <Skeleton className="h-10 w-40" />
               </div>
             </div>
-            <form onSubmit={(event) => handleSubmit(event, user.id)} className="flex flex-col sm:flex-row items-center gap-2">
-              <Select
-                value={selectedRoles[user.id] || ''}
-                onValueChange={(value) => handleRoleChange(user.id, value)}
-              >
-                <SelectTrigger className="w-40 bg-gray-200 border border-gray-300 rounded-md">
-                  <SelectValue placeholder="Select Role" />
-                </SelectTrigger>
-                <SelectContent>
-                  {availableRoles(user).map(role => (
-                    <SelectItem key={role} value={role}>
-                      {role.charAt(0).toUpperCase() + role.slice(1)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Button
-                className="w-40 bg-green-500 text-white px-3 py-2 rounded-md"
-                type="submit"
-                disabled={!selectedRoles[user.id]}
-              >
-                Assign Role
-              </Button>
-            </form>
-          </div>
-        ))}
+          ))
+        ) : (
+          filteredData.map((user: User) => (
+            <div key={user.id} className="bg-white p-4 rounded-lg shadow flex flex-col sm:flex-row items-center justify-between">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 mb-4 sm:mb-0">
+                <div className="text-center sm:text-left">
+                  <div className="font-semibold text-sm">User ID: {user.id}</div>
+                  <div className='text-md'>Username: {user.username}</div>
+                </div>
+                <div className="flex flex-wrap justify-center sm:justify-start gap-2">
+                  {user.userRoleNames && user.userRoleNames.length > 0 ? (
+                    user.userRoleNames.map((role: string, index: number) => (
+                      <Badge key={index} variant="secondary" className="text-xs">
+                        {role}
+                      </Badge>
+                    ))
+                  ) : (
+                    <Badge variant="secondary" className="text-xs">
+                      No Roles Assigned
+                    </Badge>
+                  )}
+                </div>
+              </div>
+              <form onSubmit={(event) => handleSubmit(event, user.id)} className="flex flex-col sm:flex-row items-center gap-2">
+                <Select
+                  value={selectedRoles[user.id] || ''}
+                  onValueChange={(value) => handleRoleChange(user.id, value)}
+                >
+                  <SelectTrigger className="w-40 bg-gray-200 border border-gray-300 rounded-md">
+                    <SelectValue placeholder="Select Role" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {availableRoles(user).map(role => (
+                      <SelectItem key={role} value={role}>
+                        {role.charAt(0).toUpperCase() + role.slice(1)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Button
+                  className="w-40 bg-green-500 text-white px-3 py-2 rounded-md"
+                  type="submit"
+                  disabled={!selectedRoles[user.id]}
+                >
+                  Assign Role
+                </Button>
+              </form>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
 }
-
-
