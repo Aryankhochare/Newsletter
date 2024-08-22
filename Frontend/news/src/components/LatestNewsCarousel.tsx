@@ -6,6 +6,7 @@ import { useMainStore } from '@/components/ArticleStore';
 import parse from 'html-react-parser';
 import { format, parseISO, formatDistanceToNow } from 'date-fns';
 import { Skeleton } from "@/components/ui/skeleton";
+import { apiLinks } from '@/utils/constants';
 
 interface Article {
   id: string;
@@ -67,7 +68,7 @@ const LatestNewsCarousel: React.FC<latestnewsProps> = ({articles_}) => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await fetch('https://globalbuzz.azurewebsites.net/newsletter/verified');
+        const response = await fetch(apiLinks.newsletter.verifiedArticles);
         const data = await response.json();
         setArticles(data);
         setIsLoading(false);
