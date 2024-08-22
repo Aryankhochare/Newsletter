@@ -3,6 +3,8 @@ import { Suspense } from "react";
 import Navbar from "@/components/navbarcomp/navbar";
 import Footer from "@/components/navbarcomp/footer";
 
+export const dynamic = 'force-dynamic'
+
 const fetchContent = async () => {
   try {
     const response = await fetch(
