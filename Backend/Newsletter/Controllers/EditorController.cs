@@ -6,7 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace Newsletter.Controllers
 {
-    [Route("editor")]
+    [Route("api/editor")]
     [ApiController]
     public class EditorController : ControllerBase
     {
