@@ -22,6 +22,10 @@ interface Article {
   isRejected: boolean;
 }
 
+interface latestnewsProps {
+  articles_: Article[];
+}
+
 const ArticleLink: React.FC<{ article: Article, children: React.ReactNode }> = ({ article, children }) => {
   const send_article = useMainStore(state => state.setMainArticle);
 
@@ -56,7 +60,7 @@ const ArticleSkeleton: React.FC = () => (
   </div>
 );
 
-const LatestNewsCarousel: React.FC = () => {
+const LatestNewsCarousel: React.FC<latestnewsProps> = ({articles_}) => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 

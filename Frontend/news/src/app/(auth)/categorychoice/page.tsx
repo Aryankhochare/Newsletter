@@ -53,7 +53,7 @@ export default function Categories() {
               Choose Your Interests
             </h1>
             <p className="max-w-[700px] text-slate-200 text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Select the categories you're most interested in to personalize your newsletter experience.
+              Select the categories you&apos;re most interested in to personalize your newsletter experience.
             </p>
           </div>
         </div>

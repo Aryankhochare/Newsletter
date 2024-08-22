@@ -1,8 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { getServerSession } from "next-auth";
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import { supabase } from '@/app/api/auth/[...nextauth]/route';
 import { apiLinks } from '@/utils/constants';
+import { authOptions } from '../../auth/[...nextauth]/options';
 
 interface InsertComment {
     news_id : string;

@@ -110,7 +110,7 @@
 
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '@/components/navbarcomp/navbar';
 import Footer from '@/components/navbarcomp/footer';
 import { useMainStore } from '@/components/ArticleStore';
@@ -119,10 +119,15 @@ import { BsChatText } from "react-icons/bs";
 
 import { parseISO, format } from 'date-fns';
 import parse from 'html-react-parser'
+import { useParams } from 'next/navigation';
+import { apiLinks } from '@/utils/constants';
+
 
 interface NewsPageProps {
   params: { slug: string };
 }
+
+
 
 const NewsPage: React.FC<NewsPageProps> = ({ params }) => {
   const { slug } = params;
@@ -138,6 +143,49 @@ const NewsPage: React.FC<NewsPageProps> = ({ params }) => {
   
   //console.log({article_id});
   
+  const urlParams = useParams();
+  const url = urlParams.slug as string;
+  
+  
+
+  function getTextAfterAtSymbol(url:string) {
+    const atIndex = url.indexOf('%40');
+    if (atIndex === -1) {
+        return ''; 
+    }
+    console.log(url.substring(atIndex + 3));
+    
+    return url.substring(atIndex + 3);
+}
+
+const fetchContent = async () => {
+  try {
+    const response = await fetch(
+     `${apiLinks.newsletter.fetch}`,
+      {
+        cache: "no-store",
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching content:", error);
+  }
+};
+
+const id = getTextAfterAtSymbol(url);
+console.log(id);
+
+
+// if(article_id === null || article_id === ''){
+//  data
+// };
+// }
+
+
+
+  
+
   return (
     <>
     <div className="bg-white min-h-screen flex flex-col text-black">
@@ -153,7 +201,7 @@ const NewsPage: React.FC<NewsPageProps> = ({ params }) => {
             </h1>
             <div className="flex flex-col items-start text-md text-gray-600 mb-8">
               <span className="mr-4">Author: {article_writer}</span>
-              <span>Published: {format(parseISO(article_date), 'dd-MMM-yyyy')}</span>
+              <span>Published: {article_date}</span>
             </div>
             <img
               src={article_image}

@@ -3,10 +3,10 @@ import React, { useState, useEffect } from 'react';
 import QuillEditor from '@/components/quilleditor/QuillEditor';
 import ImageUploader from "@/components/quilleditor/ImageUploader";
 import Navbar from '@/components/navbarcomp/navbar';
-import { supabase } from '@/app/api/auth/[...nextauth]/route';
 import { PenTool } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Footer from '@/components/navbarcomp/footer';
+import { supabase } from '@/lib/supabaseClient';
 
 interface userNews {
   news_id: string;
@@ -25,7 +25,7 @@ export default function Home() {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [userArticles, setUserArticles] = useState<userNews[]>([]);
-  const [selectedNews, setSelectedNews] = useState<userNews | null>(null); //Checking if any rejected article is being edited
+  const [selectedNews, setSelectedNews] = useState<userNews | null>(null); 
 
   const handleSave = (title: string, content: string) => {
     console.log('Updated news:', { title, content });

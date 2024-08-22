@@ -61,11 +61,11 @@ export default async function SearchResults({ searchParams }: { searchParams: { 
      
         <main className="flex-grow container mx-auto px-4 py-8">
           <div className="bg-white shadow-lg rounded-lg p-6">
-            <h1 className="text-3xl font-bold mb-6 text-gray-800">Search Results for "{query}"</h1>
+            <h1 className="text-3xl font-bold mb-6 text-gray-800">Search Results for &quot;{query}&quot;</h1>
             {loading && <p className="text-gray-600">Loading...</p>}
             {error && <p className="text-red-500">{error}</p>}
             {!loading && !error && results.length === 0 && (
-              <p className="text-gray-600">No results found for "{query}".</p>
+              <p className="text-gray-600">No results found for &quot;{query}&quot;.</p>
             )}
             {results.map((item, index) => (
               <article key={index} className="mb-8 pb-6 border-b border-gray-200 last:border-b-0">

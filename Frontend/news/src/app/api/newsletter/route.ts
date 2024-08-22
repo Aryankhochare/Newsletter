@@ -2,7 +2,8 @@ import { NextRequest, NextResponse} from "next/server";
 import { getServerSession } from "next-auth";
 import FormData from "form-data";
 import fetch from "node-fetch";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "../auth/[...nextauth]/options";
+
 
 declare module "next-auth" {
   interface Session {

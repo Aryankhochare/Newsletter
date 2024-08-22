@@ -1,245 +1,61 @@
-// "use client";
-
-// import React, { useState } from 'react';
-// import Link from "next/link";
-// import { ChevronLeft, ChevronRight } from 'lucide-react';
-// import { useMainStore } from '@/components/ArticleStore';
-// import parse from 'html-react-parser';
-
-// interface Article {
-//   id: string;
-//   userId: string;
-//   userName: string;
-//   categoryId: string;
-//   categoryName: string;
-//   title: string;
-//   editorContent: string;
-//   postedOn: string;
-//   modifiedOn: string;
-//   isVerified: boolean;
-//   coverImage: string;
-//   isRejected: boolean;
-// }
-
-// const ArticleLink: React.FC<{ article: Article, children: React.ReactNode }> = ({ article, children }) => {
-//   const send_article = useMainStore(state => state.setMainArticle);
-
-//   const handleClick = (e:React.MouseEvent) => {
-//     const article_content = article;
-//     if (article_content) {
-//       send_article(article_content);
-//     } else {
-//       console.log("No content found !");
-//     }
-//   }
-
-//   return (
-//     <Link href={`/main/newspage/${article.title}`} onClick={handleClick}>
-//       {children}
-//     </Link>
-//   );
-// };
-
-// const TrendingCarousel: React.FC<{ articles: Article[] }> = ({ articles }) => {
-//   const [currentIndex, setCurrentIndex] = useState(0);
-
-//   const handlePrev = (e: React.MouseEvent) => {
-//     e.preventDefault();
-//     e.stopPropagation();
-//     setCurrentIndex((prevIndex) => (prevIndex - 1 + articles.length) % articles.length);
-//   };
-
-//   const handleNext = (e: React.MouseEvent) => {
-//     e.preventDefault();
-//     e.stopPropagation();
-//     setCurrentIndex((prevIndex) => (prevIndex + 1) % articles.length);
-//   };
-
-//   return (
-//     <div className="relative w-full h-[500px] overflow-hidden">
-//       {articles.map((article, index) => (
-//         <ArticleLink article={article} key={index}>
-//           <div 
-//             className={`absolute top-0 left-0 w-full h-full transition-opacity duration-500 ${
-//               index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
-//             } cursor-pointer`}
-//           >
-//             <div className="relative w-full h-full">
-//               <img
-//                 src={article.coverImage}
-//                 alt={article.title}
-//                 className="w-full h-full object-cover"
-//               />
-//             </div>
-            
-//             <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-6">
-//               <span className="inline-block bg-white text-black rounded-full px-3 py-1 text-sm font-semibold mb-2">
-//                 {article.categoryName}
-//               </span>
-//               <h3 className="text-2xl font-semibold mb-2">{parse(article.title)}</h3>
-//                <div className="mb-2">{parse(article.editorContent.substring(0, 150))}...</div>
-//               <p className="text-sm">Posted on: {article.postedOn}</p>
-//             </div>
-//           </div>
-//         </ArticleLink>
-//       ))}
-//       <button
-//         onClick={handlePrev}
-//         className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition-all z-20"
-//       >
-//         <ChevronLeft className="w-6 h-6" />
-//       </button>
-//       <button
-//         onClick={handleNext}
-//         className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition-all z-20"
-//       >
-//         <ChevronRight className="w-6 h-6" />
-//       </button>
-//     </div>
-//   );
-// };
-
-// export default TrendingCarousel;
-
-
-"use client";
-
-import React, { useState, useEffect } from 'react';
-import Link from "next/link";
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useMainStore } from '@/components/ArticleStore';
-import parse from 'html-react-parser';
-import {format, parseISO , formatDistanceToNow} from 'date-fns';
-import { Skeleton } from "@/components/ui/skeleton";
+'use client'
+import React, { useState } from 'react';
 
 interface Article {
-  id: string;
-  userId: string;
-  userName: string;
-  categoryId: string;
-  categoryName: string;
   title: string;
-  editorContent: string;
-  postedOn: string;
-  modifiedOn: string;
-  isVerified: boolean;
-  coverImage: string;
-  isRejected: boolean;
+  content: string;
+  // Other fields as needed
 }
 
-const ArticleLink: React.FC<{ article: Article, children: React.ReactNode }> = ({ article, children }) => {
-  const send_article = useMainStore(state => state.setMainArticle);
+interface TrendingCarouselProps {
+  articles_: Article[];
+}
 
-  const handleClick = (e: React.MouseEvent) => {
-    const article_content = article;
-    if (article_content) {
-      send_article(article_content);
-    } else {
-      console.log("No content found !");
-    }
-  }
-
-  return (
-    <Link href={`/main/newspage/${article.title}`} onClick={handleClick}>
-      {children}
-    </Link>
-  );
-};
-
-const TrendingCarousel: React.FC = () => {
-  const [articles, setArticles] = useState<Article[]>([]);
+const TrendingCarousel: React.FC<TrendingCarouselProps> = ({ articles_ }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        const response = await fetch('https://globalbuzz.azurewebsites.net/newsletter/verified');
-        const data = await response.json();
-        setArticles(data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching articles:', error);
-        setLoading(false);
-      }
-    };
-
-    fetchArticles();
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % articles.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [articles.length]);
-
-  const handlePrev = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + articles.length) % articles.length);
-  };
-
-  const handleNext = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % articles.length);
-  };
-
-  if (loading) {
-    return (
-      <div className="relative w-full h-[500px] overflow-hidden">
-        <Skeleton className="w-full h-full" />
-        <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-6">
-          <Skeleton className="h-6 w-24 mb-2" />
-          <Skeleton className="h-8 w-3/4 mb-2" />
-          <Skeleton className="h-4 w-full mb-2" />
-          <Skeleton className="h-4 w-1/2" />
-        </div>
-      </div>
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? articles_.length - 1 : prevIndex - 1
     );
-  }
+  };
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === articles_.length - 1 ? 0 : prevIndex + 1
+    );
+  };
 
   return (
-    <div className="relative w-full h-[500px] overflow-hidden">
-      {articles.map((article, index) => (
-        <ArticleLink article={article} key={index}>
+    <div className="relative w-full max-w-2xl mx-auto">
+      <div className="overflow-hidden rounded-lg shadow-lg">
+        {articles_.map((article, index) => (
           <div
-            className={`absolute top-0 left-0 w-full h-full transition-opacity duration-500 ${
-              index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
-            } cursor-pointer`}
+            key={index}
+            className={`absolute inset-0 transition-transform duration-700 ${
+              index === currentIndex ? 'translate-x-0' : 'translate-x-full'
+            }`}
+            style={{ transform: `translateX(${100 * (index - currentIndex)}%)` }}
           >
-            <div className="relative w-full h-full">
-              <img
-                src={article.coverImage}
-                alt={article.title}
-                className="w-full h-full object-fit"
-              />
-            </div>
-
-            <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-6">
-              <span className="inline-block bg-white text-black rounded-full px-3 py-1 text-sm font-semibold mb-2">
-                {article.categoryName}
-              </span>
-              <h3 className="text-2xl font-semibold mb-2">{parse(article.title)}</h3>
-               <div className="mb-2">{parse(article.editorContent.substring(0, 150))}...</div>
-              <p className="text-sm">Published: {format(parseISO(article.postedOn),'dd-MMM-yyyy')}</p>
+            <div className="p-4">
+              <h3 className="text-2xl font-bold mb-2">{article.title}</h3>
+              <p>{article.content}</p>
             </div>
           </div>
-        </ArticleLink>
-      ))}
+        ))}
+      </div>
+
       <button
-        onClick={handlePrev}
-        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition-all z-20"
+        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+        onClick={prevSlide}
       >
-        <ChevronLeft className="w-6 h-6" />
+        ❮
       </button>
       <button
-        onClick={handleNext}
-        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition-all z-20"
+        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+        onClick={nextSlide}
       >
-        <ChevronRight className="w-6 h-6" />
+        ❯
       </button>
     </div>
   );
