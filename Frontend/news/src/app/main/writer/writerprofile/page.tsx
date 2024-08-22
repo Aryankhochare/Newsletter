@@ -1,3 +1,5 @@
+import Footer from '@/components/navbarcomp/footer';
+import Navbar from '@/components/navbarcomp/navbar';
 import React from 'react';
 import { FaEnvelope, FaPhone, FaCalendar } from 'react-icons/fa';
 
@@ -16,9 +18,12 @@ const WriterProfile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-100 to-indigo-200 p-4">
-      <div className="max-w-full min-h-full mx-auto bg-white rounded-3xl shadow-lg overflow-hidden">
-        <div className="relative h-48 bg-gradient-to-r from-purple-500 to-indigo-600">
+    <div className="min-h-screen bg-gradient-to-b from-purple-100 to-indigo-200 ">
+      <div className="sticky top-0 z-50">
+        <Navbar/>
+      </div>
+      <main className="min-h-screen mx-auto bg-white shadow-lg p-4 overflow-hidden">
+        <div className="relative h-48 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-lg">
           <div className="absolute inset-0 flex items-center justify-center">
             <h1 className="text-3xl font-bold text-white tracking-wider">Profile</h1>
           </div>
@@ -79,7 +84,8 @@ const WriterProfile = () => {
             </div>
           </div>
         </div>
-      </div>
+      </main>
+      <Footer/>
     </div>
   );
 };
