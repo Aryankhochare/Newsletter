@@ -137,17 +137,17 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                   <ViewMoreButton article={article} />
                 </div>
                 <div className='w-1/3 flex items-start'>
-                  <img 
+                  <Image 
                     src={article.coverImage} 
                     alt={article.title} 
-                    width={200} 
-                    height={150} 
-                    className='w-full h-auto max-h-24 object-cover' 
+                    width={180} 
+                    height={100} 
+                    className='w-full h-40 object-fit' 
                   />
                 </div>
               </div>
               <div className="text-sm text-gray-500 mt-2">
-                By: {article.userName} | Posted On: {new Date(article.modifiedOn).toLocaleDateString()}
+                By: {article.userName} | published: {new Date(article.postedOn).toLocaleDateString()}
               </div>
               </div>
             ))
@@ -160,12 +160,12 @@ export default function CategoryPage({ params }: CategoryPageProps) {
           ) : (
             articles.map((article) => (
               <div key={article.id} className='p-4 border-b border-gray-700'>
-              <img 
+              <Image 
                 src={article.coverImage} 
                 alt={article.title} 
                 width={400} 
                 height={300} 
-                className='w-full h-40 object-cover mb-2' 
+                className='w-full h-40 object-fit mb-2' 
               />
               <div className='font-bold text-lg mb-2 text-white'>{article.title}</div>
               <div className='text-sm text-gray-400'>{article.editorContent.substring(0, 100)}...</div>
