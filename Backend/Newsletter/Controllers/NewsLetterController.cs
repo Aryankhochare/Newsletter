@@ -350,6 +350,67 @@ namespace Newsletter.Controllers
                 return StatusCode(500, "An error occurred while fetching data from newsletter");
             }
         }
+
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetArticleById(string id)
+        {
+            try
+            {
+                // Fetch articles
+                var articleResponse = await client.From<NewsArticle>().Where(x => x.Id == id).Get();
+                if (articleResponse?.Models == null || !articleResponse.Models.Any())
+                {
+                    return NotFound("Didn't find any article");
+                }
+                var article = articleResponse.Models.FirstOrDefault();
+
+                // Fetch categories
+                var categoriesResponse = await client.From<Category>().Get();
+                var categories = categoriesResponse.Models ?? new List<Category>();
+
+                // Fetch users
+                var usersResponse = await client.From<Users>().Get();
+                var users = usersResponse.Models ?? new List<Users>();
+
+                var result = new List<ArticleVM>();
+
+                if (article != null)
+                {
+                    var category = categories.FirstOrDefault(c => c.CategoryId == article.CategoryId);
+                    var user = users.FirstOrDefault(u => u.Id == article.UserId);
+
+                    var categoryName = category?.CategoryName ?? string.Empty;
+                    var userName = user?.Username ?? string.Empty;
+
+                    result.Add(new ArticleVM
+                    {
+                        Id = article.Id,
+                        UserId = article.UserId,
+                        UserName = userName,
+                        CategoryId = article.CategoryId,
+                        CategoryName = categoryName,
+                        Title = article.Title,
+                        EditorContent = article.EditorContent,
+                        PostedOn = article.PostedOn,
+                        ModifiedDate = article.ModifiedDate,
+                        IsVerified = article.IsVerified,
+                        CoverImage = article.CoverImage,
+                        IsRejected = article.IsRejected,
+                    });
+                }
+
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching newsletter: {ex}");
+                return StatusCode(500, "An error occurred while fetching data from newsletter");
+            }
+        }
+
+
         [HttpGet("verified")]
         public async Task<IActionResult> GetVerifiedArticle()
         {
@@ -410,6 +471,31 @@ namespace Newsletter.Controllers
                 return StatusCode(500, "An error occurred while fetching verified articles");
             }
         }
+
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteArticleById(string id)
+        {
+            try
+            {
+                var articleResponse = await client.From<NewsArticle>().Where(x => x.Id == id).Get();
+                if (articleResponse?.Models == null || !articleResponse.Models.Any())
+                {
+                    return NotFound("Article not found");
+                }
+
+                await client.From<NewsArticle>().Where(x => x.Id == id).Delete();
+
+
+                return Ok("Article deleted successfully");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting article: {ex}");
+                return StatusCode(500, "An error occurred while deleting the article");
+            }
+        }
+
 
 
     }

@@ -17,8 +17,9 @@
 //     }
 // }
 
+import { supabase } from '@/lib/supabaseClient';
 import { NextResponse, NextRequest } from 'next/server';
-import { supabase } from '@/app/api/auth/[...nextauth]/route';
+
 
 export async function GET(req: NextRequest) {
     try {

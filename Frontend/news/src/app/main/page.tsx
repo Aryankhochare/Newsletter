@@ -1,7 +1,6 @@
 import React from 'react';
 import Navbar from '@/components/navbarcomp/navbar';
 import Footer from '@/components/navbarcomp/footer';
-import { supabase } from '@/app/api/auth/[...nextauth]/route';
 import TrendingCarousel from '@/components/TrendingCarousel';
 import LatestNewsCarousel from '@/components/LatestNewsCarousel';
 
@@ -29,15 +28,15 @@ export default async function Home() {
       </div>
       <main className="flex-grow">
         <section className="mb-12">
-          <TrendingCarousel articles={articles} />
+          <TrendingCarousel articles_={articles} />
         </section>
 
         <section className="container mx-auto px-4 mb-12">
           <h2 className="text-3xl font-bold mb-4">Latest News</h2>
-          <LatestNewsCarousel articles={articles} />
+          <LatestNewsCarousel articles_={articles} />
         </section>
       </main>
-      <Footer/>
-    </div>
-  );
+      <Footer />
+    </div>
+  );
 }
