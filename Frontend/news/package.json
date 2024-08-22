@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@auth/supabase-adapter": "^1.4.1",
+    "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.5",
     "@huggingface/inference": "^2.8.0",
     "@next-auth/supabase-adapter": "^0.2.1",

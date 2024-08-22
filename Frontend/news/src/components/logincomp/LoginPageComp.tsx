@@ -8,6 +8,9 @@ import { redirect, useRouter } from "next/navigation";
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebookF } from 'react-icons/fa';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import { DM_Serif_Display } from 'next/font/google';
+const Dmse = DM_Serif_Display({ subsets: ["latin"], weight: ["400"] });
+
 
 const LoginPageComp = () => {
   const [username, setUsername] = useState("");
@@ -47,7 +50,7 @@ const LoginPageComp = () => {
     <main className="bg-gray-100 min-h-screen flex items-center justify-center p-4">
       <div className="sm:w-full md:w-4/5 max-w-6xl bg-white rounded-lg shadow-md overflow-hidden flex flex-col md:flex-row">
         <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
-          <h1 className="text-4xl font-bold text-black text-center mb-4">The Global Buzz</h1>
+          <h1 className={`${Dmse.className} text-4xl text-black text-center mb-4 md:mb-8`}>The Global Buzz</h1>
           <p className="text-gray-600 text-center text-sm mb-8">&quot;Delivering the World&apos;s Hottest Buzz, Packed with Global Insight&quot;</p>
 
           <p className="text-xs text-gray-500 mb-4">By continuing you indicate that you agree to The Global Buzz&apos;s Terms of Service and Privacy Policy.</p>
@@ -68,9 +71,9 @@ const LoginPageComp = () => {
         </div>
 
         <div className="w-full md:w-1/2 bg-gray-50 flex flex-col justify-center">
-          <div className="text-black text-2xl font-semibold text-center p-2 mt-0">Login</div>
-          <form onSubmit={onSubmit} className="space-y-4 p-8">
-            <div className="space-y-2">
+          <div className="text-black text-2xl font-semibold text-center p-2 md:mb-0 mt-8 py-9">Login</div>
+          <form onSubmit={onSubmit} className="space-y-4 p-8 -mt-6">
+            <div className="space-y-2 mb-6">
               <div className="text-sm">Username/Email:</div>
               <input 
                 className="w-full p-2 border border-gray-300 rounded-md"

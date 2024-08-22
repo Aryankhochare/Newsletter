@@ -66,10 +66,12 @@ export default function ProfileInfo() {
     } else if (userRoles.includes('EDITOR')) {
       return (
         <>
+        <Link href="/main/editor/profile">
           <DropdownMenuItem>
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </DropdownMenuItem>
+          </Link>
           {/* <Link href = '/main/editor'>
           <DropdownMenuItem>
             <FileText className="mr-2 h-4 w-4" />
