@@ -148,7 +148,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                 </div>
               </div>
               <div className="text-sm text-gray-500 mt-2">
-                By: {article.userName} | published: {new Date(article.postedOn).toLocaleDateString()}
+                By: {article.userName} | published: {new Date(article.modifiedOn).toLocaleDateString()}
               </div>
               </div>
             ))

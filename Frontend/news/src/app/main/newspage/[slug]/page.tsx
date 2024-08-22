@@ -115,7 +115,9 @@ import Navbar from '@/components/navbarcomp/navbar';
 import Footer from '@/components/navbarcomp/footer';
 import { useMainStore } from '@/components/ArticleStore';
 import Comments from '@/components/Comments';
-import { parseISO, formatDistanceToNow, format  } from 'date-fns';
+import { BsChatText } from "react-icons/bs";
+
+import { parseISO, format } from 'date-fns';
 import parse from 'html-react-parser'
 import { useParams } from 'next/navigation';
 import { apiLinks } from '@/utils/constants';
@@ -130,12 +132,16 @@ interface NewsPageProps {
 const NewsPage: React.FC<NewsPageProps> = ({ params }) => {
   const { slug } = params;
   const [showComments, setShowComments] = useState(false);
+  const [navbarHeight, setNavbarHeight] = useState(0);
+  const [footerHeight, setFooterHeight] = useState(0);
   const article_id = useMainStore((state) => state.id);
   const article_title = useMainStore((state) => state.title);
   const article_content = useMainStore((state) => state.editorContent);
   const article_image = useMainStore((state) => state.coverImage);
-  const article_writer = useMainStore((state) => state.userName);
-  const article_date = useMainStore((state) => state.postedOn);
+  const article_writer = useMainStore((state) => state.userName)
+  const article_date = useMainStore((state) => state.postedOn)
+  
+  //console.log({article_id});
   
   const urlParams = useParams();
   const url = urlParams.slug as string;
@@ -181,12 +187,13 @@ console.log(id);
   
 
   return (
+    <>
     <div className="bg-white min-h-screen flex flex-col text-black">
-      <div className="sticky top-0 z-50">
+      <div id="navbar" className="sticky top-0 z-50">
         <Navbar />
       </div>
 
-      <div className="flex-grow overflow-hidden">
+      <main className=" min-h-screen flex-grow overflow-hidden relative">
         <article className={`m-10 transition-all duration-300 ease-in-out ${showComments ? 'w-full lg:w-3/5 xl:w-3/4' : 'w-full'} overflow-y-auto`}>
           <div className="max-w-5xl mx-auto p-6 sm:p-10 bg-white shadow-xl rounded-lg">
             <h1 className="text-4xl sm:text-5xl font-bold mb-6 text-black leading-tight">
@@ -214,15 +221,19 @@ console.log(id);
           <img
             src="https://i.postimg.cc/HkQpPgZZ/icongrey-removebg-preview.png"
             alt="Comments button"
-            className="w-9 h-9 objext-fit"
+            className="w-9 h-9"
           />
         </button>
 
         <div
-          className={`fixed mt-4 inset-y-0 right-0 w-full sm:w-80 md:w-96 bg-gray-900 shadow-lg z-40 transition-transform duration-300 ease-in-out transform ${
+          className={`fixed mt-4 inset-y-0 right-0 w-full sm:w-96 bg-gray-900 shadow-lg z-40 transition-transform duration-300 ease-in-out transform ${
             showComments ? 'translate-x-0' : 'translate-x-full'
           } flex flex-col`}
-          style={{ top: 'var(--navbar-height, 64px)', bottom: 'var(--footer-height, 64px)' }}
+          style={{
+            top: `${navbarHeight}px`,
+            bottom: `${footerHeight}px`,
+            height: `calc(100vh - ${navbarHeight}px)`
+          }}
         >
           <div className="flex justify-between items-center p-4 border-b border-gray-700">
             <h2 className="text-lg sm:text-2xl font-bold text-white">Comments</h2>
@@ -246,16 +257,19 @@ console.log(id);
               </svg>
             </button>
           </div>
-          <div className="flex-grow overflow-y-auto">
+
+          <div className="flex-grow overflow-y-auto scrollbar-hide ">
             <Comments article_id={article_id} />
           </div>
         </div>
-      </div>
+      </main>
+      <div className="relative z-50">
 
-      <div className="bottom-0 pb-0 mb-0 bg-black">
-        <Footer />
-      </div>
+<Footer/>
+</div>
     </div>
+   
+    </>
   );
 };
 
