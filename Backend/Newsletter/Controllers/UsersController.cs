@@ -22,6 +22,9 @@ namespace Newsletter.Controllers
         {
             try
             {
+                List<UserCategory> userCategories = new List<UserCategory>();
+                List<UserUserRoles> userUserRoles= new List<UserUserRoles>();
+
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
@@ -67,15 +70,19 @@ namespace Newsletter.Controllers
                         UserId = createdUser.Id,
                         UserRoleId = roleId,
                     };
-                    var userRoleResponse = await _client.From<UserUserRoles>().Insert(newUur);
-                    Console.WriteLine($"UserUserRole insert response model count: {userRoleResponse.Models.Count()}");
-                    if (!userRoleResponse.Models.Any())
-                    {
-                        return BadRequest("Could not update UUR table");
-                    }
+
+                    userUserRoles.Add(newUur);
                 }
 
-                if(user.Categories != null || user.Categories.Any())
+                var userRoleResponse = await _client.From<UserUserRoles>().Insert(userUserRoles);
+
+                Console.WriteLine($"UserUserRole insert response model count: {userRoleResponse.Models.Count()}");
+                if (!userRoleResponse.Models.Any())
+                {
+                    return BadRequest("Could not update UUR table");
+                }
+
+                if (user.Categories != null || user.Categories.Any())
                 {
                    foreach(var categoryName in user.Categories)
                     {
@@ -92,14 +99,16 @@ namespace Newsletter.Controllers
                             UserId = createdUser.Id,
                             CategoryId = category.CategoryId,
                         };
-                        var userCategoryResponse = await _client.From<UserCategory>().Insert(newUserCategory);
-                        if (!userCategoryResponse.Models.Any())
-                        {
-                            return BadRequest("Could not Update User Category table");
-                        }
 
+                        userCategories.Add(newUserCategory);
+                      
                     }
-                    //List<UserCategory> userCategories1 = new List<UserCategory>()
+                    var userCategoryResponse = await _client.From<UserCategory>().Insert(userCategories);
+                    if (!userCategoryResponse.Models.Any())
+                    {
+                        return BadRequest("Could not Update User Category table");
+                    }
+
                 }
 
 

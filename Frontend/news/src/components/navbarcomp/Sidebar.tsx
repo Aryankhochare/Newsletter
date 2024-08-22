@@ -234,7 +234,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
            <Link href="/main/writer/quill_editor" onClick={onClose}>
             <div className="flex items-center py-4 px-2 hover:bg-gray-800 transition-colors duration-200 scrollbar-hide">
               <PenTool className="mr-2 h-4 w-4" />
-              <span>Writer Workspace</span>
+              <span>Writer's Workspace</span>
             </div>
           </Link>
 
@@ -265,7 +265,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           <Link href="/main/writer/quill_editor" onClick={onClose}>
             <div className="flex items-center py-4 px-2 hover:bg-gray-800 transition-colors duration-200 scrollbar-hide">
               <PenTool className="mr-2 h-4 w-4" />
-              <span>Writer Workspace</span>
+              <span>Writer's Workspace</span>
             </div>
           </Link>
           
@@ -283,7 +283,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           <Link href="/main/writer/quill_editor" onClick={onClose}>
             <div className="flex items-center py-4 px-2 hover:bg-gray-800 transition-colors duration-200 scrollbar-hide">
               <PenTool className="mr-2 h-4 w-4" />
-              <span>Writer Workspace</span>
+              <span>Writer's Workspace</span>
             </div>
           </Link>
          

@@ -44,9 +44,10 @@ interface QuillEditorProps { //Added Interface for Props
   initialId? : string;
   initialTitle?: string; 
   initialContent?: string;
+  onSuccess: () => void;
 }
 
-const QuillEditor: React.FC<QuillEditorProps> = memo(({initialId = '', initialTitle = '', initialContent = ''}) => { //Added initial data as empty 
+const QuillEditor: React.FC<QuillEditorProps> = memo(({initialId = '', initialTitle = '', initialContent = '', onSuccess}) => { //Added initial data as empty 
   const [title, setTitle] = useState<string>(initialTitle); //News Title
   const [selectedCategory, setSelectedCategory] = useState<string | null>(''); //Category
   const [coverImage, setCoverImage] = useState<File | null>(null); //Cover Image
@@ -170,88 +171,11 @@ const QuillEditor: React.FC<QuillEditorProps> = memo(({initialId = '', initialTi
 
   //////////////////////DRAFTING AND SAVING////////////////////
 
-  const handleDraft = async (e: React.FormEvent) => {
-    console.log("Drafted !");
-    // e.preventDefault();
-    // if (!title || !editorcontent) {
-    //   alert("Please fill all details !");
-    //   return;
-    // }
+  // const handleDraft = async (e: React.FormEvent, isDraft: boolean) => {
+  //   console.log("Drafted !");
+  // }
 
-    // const quill = quillRef.current?.getEditor();
-    // if (quill) {
-    //   let content = quill.root.innerHTML;
-
-    //   image.forEach((imgData) => {
-    //     const url = imgData.url;
-      
-    //   // Use a more general regex to match img tags with base64 content
-    //   const regex = /<img[^>]*src="data:image\/[^"]+;base64,[^"]+"[^>]*>/g;
-    //   content = content.replace(regex, (match: any) => {
-    //     // Replace only if the base64 content matches
-    //     if (match.includes(normalizeBase64(imgData.base64Content))) {
-    //       return `<img src="${url}" alt="newsletter image">`;
-    //     }
-    //     return match;
-    //   });
-    // });
-
-    // quill.root.innerHTML = content;
-    // }
-
-    // const formData = new FormData();
-    // formData.append("Title", title);
-    // formData.append("EditorContent", quillRef.current?.getEditor().root.innerHTML || '');
-    // //formData.append("isDraft", true);
-    // if (coverImage) {
-    //   formData.append("CoverImage", coverImage);
-    // }
-    // else 
-    // {
-    //   // alert("Please enter a cover image !");
-    //   setAlertMessage("Please enter a cover image!");
-    //   return;
-    // } 
-
-    // if (selectedCategory) {
-    //   formData.append("CategoryName", selectedCategory);
-    // }
-    // else{
-    //   // alert("Please enter a category !");
-    //   setAlertMessage("Please enter a category !");
-    //   return;
-    // }
-
-    // image.forEach((img, index) => {
-    //   formData.append(`Images`, img.file);
-    //   formData.append(`ImageNames`, img.imageName);
-    // });
-    // setTitle("");
-    // setCoverImage(null);
-    // setImage([]);
-    // setEditorContent("");
-    // setSelectedCategory(null);
-    // if (quillRef.current) {
-    //   quillRef.current.getEditor().setText('');
-    // }
-    // setResetTrigger(prev => prev + 1);
-    // try {
-    //   const response = await fetch("/api/newsletter", {
-    //     method: "POST",
-    //     body: formData,
-    //     });
-    //   if (!response.ok) {
-    //     throw new Error("Network response was not okay");
-    //   }
-    //   const data = await response.json();
-    //   console.log("Newsletter created with id: ", data);
-       
-    // } catch (error) {
-    //   console.error("Error creating newsletter", error);
-    // }
-}
-
-  const saveNews = async (e: React.FormEvent) => {
+  const saveNews = async (e: React.FormEvent, isDraft : boolean) => {
     e.preventDefault();
     if (!title || !editorcontent) {
       alert("Please fill all details !");
@@ -282,6 +206,7 @@ const QuillEditor: React.FC<QuillEditorProps> = memo(({initialId = '', initialTi
     const formData = new FormData();
     formData.append("Title", title);
     formData.append("EditorContent", quillRef.current?.getEditor().root.innerHTML || '');
+    formData.append("IsDrafted", isDraft.toString());
     if (coverImage) {
       formData.append("CoverImage", coverImage);
     }
@@ -326,6 +251,7 @@ const QuillEditor: React.FC<QuillEditorProps> = memo(({initialId = '', initialTi
         }
         const data = await response.json();
         console.log("Newsletter created with id: ", data);
+        onSuccess();
        
       } catch (error) {
         console.error("Error creating newsletter", error);
@@ -345,7 +271,7 @@ const QuillEditor: React.FC<QuillEditorProps> = memo(({initialId = '', initialTi
         }
         const data = await response.json();
         console.log("Newsletter edited with id: ", data);
-       
+        onSuccess();
       } catch (error) {
         console.error("Error editing newsletter", error);
       }
@@ -402,12 +328,12 @@ const QuillEditor: React.FC<QuillEditorProps> = memo(({initialId = '', initialTi
         <br/>
         <div className=" py-0 justify-center mt-1 flex flex-grow sm:z-5">
           <div className="hover:bg-gray-800 rounded-md px-4 py-2 m-2 text-center bg-black ">
-            <button onClick={handleDraft} className="text-white transition duration-300 ease-in-out text-center">
+            <button onClick={(e) => saveNews(e, true)} className="text-white transition duration-300 ease-in-out text-center">
               Save as Draft
             </button>
           </div>
           <div className=" hover:bg-gray-800 rounded-md px-4 py-2 bg-black m-2">
-            <button onClick={saveNews} className="text-white transition duration-300 ease-in-out text-center">
+            <button onClick={(e) => saveNews(e, false)} className="text-white transition duration-300 ease-in-out text-center">
               Send for Review
             </button>
           </div>

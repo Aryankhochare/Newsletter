@@ -85,7 +85,7 @@ export default async function SearchResults({ searchParams }: { searchParams: { 
                       <img
                         src={item.coverImage}
                         alt={item.title}
-                        className="w-32 h-24 object-cover rounded-md"
+                        className="w-32 h-24 object-fit rounded-md"
                       />
                     </div>
                   )}

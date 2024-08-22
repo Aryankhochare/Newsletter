@@ -91,12 +91,10 @@ export default function ProfileInfo() {
     } else if (userRoles.includes('WRITER')) {
       return (
         <>
-        <Link href="/main/writer/writerprofile">
           <DropdownMenuItem>
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </DropdownMenuItem>
-          </Link>
           {/* <Link href='/main/writer/quill_editor'>
           <DropdownMenuItem>
            <PenTool className="mr-2 h-4 w-4" />
