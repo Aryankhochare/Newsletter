@@ -12,7 +12,7 @@ using System.Text;
 
 namespace Newsletter.Controllers
 {
-    [Route("newsletter")]
+    [Route("api/newsletter")]
     [ApiController]
     public class NewsLetterController : ControllerBase
     {

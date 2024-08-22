@@ -5,7 +5,7 @@ using Newsletter.ViewModels;
 
 namespace Newsletter.Controllers
 {
-    [Route("admin")]
+    [Route("api/admin")]
     [ApiController]
     public class AdminController : ControllerBase
     {
