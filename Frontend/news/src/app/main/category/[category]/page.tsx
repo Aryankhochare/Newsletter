@@ -10,6 +10,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useMainStore } from '@/components/ArticleStore';
 import parse from 'html-react-parser'
 import Footer from '@/components/navbarcomp/footer';
+import { apiLinks } from '@/utils/constants';
+import { parseISO, format } from 'date-fns';
 
 // interface Article {
 //   id: string;
@@ -56,7 +58,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   useEffect(() => {
     setIsLoading(true);
     // Fetch articles
-    fetch(`https://globalbuzz.azurewebsites.net/newsletter/search?category=${category}`)
+    fetch(`${apiLinks.newsletter.searchCategory}${category}`)
       .then(response => response.json())
       .then(data => {
         setArticles(data);
@@ -148,7 +150,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                 </div>
               </div>
               <div className="text-sm text-gray-500 mt-2">
-                By: {article.userName} | published: {new Date(article.modifiedOn).toLocaleDateString()}
+                By: {article.userName} | published: {format(parseISO(article.postedOn), 'dd-MMM-yyyy')}
               </div>
               </div>
             ))
