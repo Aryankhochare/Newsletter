@@ -25,6 +25,7 @@ import {
   SignpostBig
 } from 'lucide-react';
 import { signOut, useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
 
 export default function ProfileInfo() {
   const { data: session } = useSession();
@@ -65,7 +66,7 @@ export default function ProfileInfo() {
     } else if (userRoles.includes('EDITOR')) {
       return (
         <>
-        <Link href='/main/editor/profile'>
+        <Link href="/main/editor/profile">
           <DropdownMenuItem>
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
@@ -90,12 +91,10 @@ export default function ProfileInfo() {
     } else if (userRoles.includes('WRITER')) {
       return (
         <>
-        <Link href='/main/writer/writerprofile'>
           <DropdownMenuItem>
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </DropdownMenuItem>
-          </Link>
           {/* <Link href='/main/writer/quill_editor'>
           <DropdownMenuItem>
            <PenTool className="mr-2 h-4 w-4" />

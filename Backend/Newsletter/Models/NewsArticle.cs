@@ -32,5 +32,7 @@ namespace Newsletter.Models
         public string CoverImage { get; set; }
         [Column("is_rejected")]
         public bool IsRejected { get; set; }
+        [Column("is_draft")]
+        public bool IsDrafted { get; set; }
     }
 }

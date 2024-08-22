@@ -1,10 +1,10 @@
-
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useArticleStore } from './ArticleStore';
 import parse from "html-react-parser";
 import BackButton from './BackButton';
+import { Skeleton } from "./ui/skeleton";
 
 export default function ArticleContent() {
   const article_content = useArticleStore((state) => state.editorContent);
@@ -13,58 +13,82 @@ export default function ArticleContent() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [factCheck, setFactCheck] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [contentLoading, setContentLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading delay for article content
+    const timer = setTimeout(() => {
+      setContentLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleFactCheck = async () => {
     setIsLoading(true);
     setShowFeedback(true);
     try {
-      const response = await fetch('/api/verify-news',{
+      const response = await fetch('/api/verify-news', {
         method: 'POST',
-        headers:{
-          'Content-Type' : 'application/json',
+        headers: {
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           article: article_content,
-          title: article_title, // Include the article title here
+          title: article_title,
         }),
-      })
-      if(!response.ok){
+      });
+      if (!response.ok) {
         throw new Error('Failed to fetch fact-check results');
       }
       const data = await response.json();
       setFactCheck(data.verification);
     } catch (error) {
-      console.log('Error',error);
-      setFactCheck('An error occured while fact-checking the article');
-    }
-    finally{
+      console.log('Error', error);
+      setFactCheck('An error occurred while fact-checking the article');
+    } finally {
       setIsLoading(false);
     }
   }
-  
 
   return (
     <>
       <div className={`max-w-4xl mx-auto p-8 bg-white shadow-2xl rounded-lg border border-gray-200 transition-all duration-300 ${showFeedback ? 'sm:mr-96' : ''}`}>
-        <h1 className="text-4xl sm:text-5xl font-bold mb-8 text-gray-900 leading-tight">
-          {parse(article_title)}
-        </h1>
-          <div className="prose prose-lg lg:prose-xl max-w-none text-gray-700">
-            {parse(article_content)}
-          </div>
-          <div className="prose prose-lg lg:prose-xl max-w-none text-gray-700 flex items-center justify-center">
-               <img 
-               src={cover_image} 
-               alt="Cover Image" 
-               className="max-w-full object-fit h-auto" />
-          </div>
+        {contentLoading ? (
+          <>
+            <Skeleton className="h-12 w-3/4 mb-8" />
+            <Skeleton className="h-4 w-full mb-2" />
+            <Skeleton className="h-4 w-full mb-2" />
+            <Skeleton className="h-4 w-3/4 mb-8" />
+            <Skeleton className="h-64 w-full mb-8" />
+          </>
+        ) : (
+          <>
+            <h1 className="text-4xl sm:text-5xl font-bold mb-8 text-gray-900 leading-tight">
+              {parse(article_title)}
+            </h1>
+            <div className="prose prose-lg lg:prose-xl max-w-none text-gray-700">
+              {parse(article_content)}
+            </div>
+            <div className="prose prose-lg lg:prose-xl max-w-none text-gray-700 flex items-center justify-center">
+              <img 
+                src={cover_image} 
+                alt="Cover Image" 
+                className="max-w-full h-auto" 
+              />
+            </div>
+          </>
+        )}
       </div>
       
-      {!showFeedback && (
+      {!showFeedback && !contentLoading && (
         <div className="mt-12 flex justify-center space-x-6">
-          {/* <button className="bg-green-500 text-white px-4 py-2 rounded-full">Accept</button>
-          <button className="bg-red-500 text-white px-4 py-2 rounded-full">Reject</button> */}
-          <button className="bg-blue-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-blue-600 transform  transition-all duration-200" onClick={handleFactCheck}>Fact Check</button>
+          <button 
+            className="bg-blue-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-blue-600 transform transition-all duration-200" 
+            onClick={handleFactCheck}
+          >
+            Fact Check
+          </button>
         </div>
       )}
 
@@ -98,7 +122,13 @@ export default function ArticleContent() {
         </div>
         <div className="scrollbar-hide flex-grow overflow-y-auto p-6">
           {isLoading ? (
-            <div className="text-white text-center">Loading fact-check results...</div>
+            <div className="space-y-4">
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-5/6" />
+              <Skeleton className="h-4 w-4/6" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-3/4" />
+            </div>
           ) : (
             <div className="text-white whitespace-pre-wrap">{factCheck}</div>
           )}

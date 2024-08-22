@@ -195,6 +195,7 @@ namespace Newsletter.Controllers
                     EditorContent = article.EditorContent,
                     IsVerified = false,
                     IsRejected = false,
+                    IsDrafted = article.IsDrafted,
                     CoverImage = coverImageUrl,
                     PostedOn = DateTime.UtcNow,
                     ModifiedDate = DateTime.UtcNow,
@@ -247,7 +248,7 @@ namespace Newsletter.Controllers
                 var tempId = Guid.NewGuid().ToString();
 
                 //string coverImageUrl = null;
-                
+
                 var existingArticle = await client.From<NewsArticle>().Where(c => c.Id == news_id).Single();
                 if (existingArticle == null)
                 {
@@ -265,13 +266,9 @@ namespace Newsletter.Controllers
                 existingArticle.ModifiedDate = DateTime.UtcNow;
                 existingArticle.IsVerified = false;
                 existingArticle.IsRejected = false;
+                existingArticle.IsDrafted = article.IsDrafted;
 
                 var response = await client.From<NewsArticle>().Where(c => c.Id == news_id).Update(existingArticle);
-                //var newNewsletter = response.Models.First();
-                //if (newNewsletter == null)
-                //{
-                //    return BadRequest("Failed To create newsletter");
-                //}
 
                 if (article.Images != null && article.ImageNames != null)
                 {
@@ -284,11 +281,6 @@ namespace Newsletter.Controllers
                             .Upload(memoryStream.ToArray(), fileName);
                     }
                 }
-                //existingArticle.Id = newNewsletter.Id;
-                //await client.From<NewsArticle>()
-                //    .Update(existingArticle);
-
-                //return Ok(new { Id = newNewsletter.Id });
                 return Ok(new { Id = existingArticle.Id });
 
 

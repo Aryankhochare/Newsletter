@@ -116,6 +116,7 @@ import Footer from '@/components/navbarcomp/footer';
 import { useMainStore } from '@/components/ArticleStore';
 import Comments from '@/components/Comments';
 import { parseISO, formatDistanceToNow, format  } from 'date-fns';
+import parse from 'html-react-parser'
 
 interface NewsPageProps {
   params: { slug: string };
@@ -138,10 +139,10 @@ const NewsPage: React.FC<NewsPageProps> = ({ params }) => {
       </div>
 
       <div className="flex-grow overflow-hidden">
-        <article className={`mx-4 sm:mx-10 my-4 transition-all duration-300 ease-in-out ${showComments ? 'w-full lg:w-3/5 xl:w-3/4' : 'w-full'} overflow-y-auto`}>
-          <div className="max-w-full sm:max-w-5xl mx-auto p-4 sm:p-6 bg-white shadow-xl rounded-lg">
-            <h1 className="text-2xl sm:text-4xl font-bold mb-4 sm:mb-6 text-black leading-tight">
-              {article_title}
+        <article className={`m-10 transition-all duration-300 ease-in-out ${showComments ? 'w-full lg:w-3/5 xl:w-3/4' : 'w-full'} overflow-y-auto`}>
+          <div className="max-w-5xl mx-auto p-6 sm:p-10 bg-white shadow-xl rounded-lg">
+            <h1 className="text-4xl sm:text-5xl font-bold mb-6 text-black leading-tight">
+              {parse(article_title)}
             </h1>
             <div className="flex flex-col items-start text-md text-gray-600 mb-8">
               <span className="mr-4">Author: {article_writer}</span>
@@ -153,9 +154,7 @@ const NewsPage: React.FC<NewsPageProps> = ({ params }) => {
               className="object-fit h-auto mb-8 rounded-lg shadow-md"
             />
             <div className="prose prose-xl max-w-none">
-              <p className="mb-6 text-lg leading-relaxed">
-                {article_content}
-              </p>
+              <div className="mb-6 text-lg leading-relaxed">{parse(article_content)}</div>
             </div>
           </div>
         </article>
