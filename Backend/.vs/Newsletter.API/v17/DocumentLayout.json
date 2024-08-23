@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\controllers\\newslettercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\controllers\\newslettercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -13,10 +17,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\controllers\\editorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\controllers\\editorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|solutionrelative:newsletter\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{96F58056-7A6F-48B7-A16B-644A76077124}|Newsletter\\Newsletter.csproj|c:\\users\\sayhan\\desktop\\c\\.net\\newsletter.api2\\backend\\newsletter\\viewmodels\\articlevm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -50,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 12,
           "Children": [
             {
               "$type": "Bookmark",
@@ -66,7 +66,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Program.cs",
               "RelativeDocumentMoniker": "Newsletter\\Program.cs",
@@ -141,7 +141,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "EditorController.cs",
               "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\EditorController.cs",
               "RelativeDocumentMoniker": "Newsletter\\Controllers\\EditorController.cs",
@@ -154,7 +154,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "NewsLetterController.cs",
               "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\NewsLetterController.cs",
               "RelativeDocumentMoniker": "Newsletter\\Controllers\\NewsLetterController.cs",
@@ -180,13 +180,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "UsersController.cs",
               "DocumentMoniker": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\UsersController.cs",
               "RelativeDocumentMoniker": "Newsletter\\Controllers\\UsersController.cs",
               "ToolTip": "C:\\Users\\Sayhan\\Desktop\\C\\.Net\\Newsletter.API2\\Backend\\Newsletter\\Controllers\\UsersController.cs",
               "RelativeToolTip": "Newsletter\\Controllers\\UsersController.cs",
-              "ViewState": "AQIAAMYAAAAAAAAAAAAqwOAAAAAeAAAA",
+              "ViewState": "AQIAAPkAAAAAAAAAAAAwwDQBAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-19T16:05:30.527Z",
               "EditorCaption": ""

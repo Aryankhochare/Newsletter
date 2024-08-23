@@ -30,7 +30,10 @@ import { redirect, useRouter } from 'next/navigation';
 import jwt from 'jsonwebtoken'
 import { apiLinks } from '@/utils/constants';
 
-
+interface decodedToken {
+  sub : string;
+  email: string;
+}
 
 export default function ProfileInfo() {
   const { data: session } = useSession();
@@ -38,28 +41,49 @@ export default function ProfileInfo() {
 
   const router = useRouter()
 
-const handleDeleteAccount = async () => {
-  if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
-    try {
-      if (session?.accessToken) {
-        const decodedToken = jwt.decode(session.accessToken) as { sub: string };
-        const userId = decodedToken.sub.toString();
-      const response = await fetch(`${apiLinks.user.fetch}/${userId}`, {
-        method: 'DELETE',
-      });
-      if (response.ok) {
-        await signOut();
-        router.push('/');
-      } else {
-        alert('Failed to delete account. Please try again.');
+  const handleDeleteAccount = async () => {
+    if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+      try {
+        if (session?.accessToken) {
+          const decodedToken = jwt.decode(session.accessToken) as decodedToken;
+          const thisId = decodedToken.sub;
+          const email = decodedToken.email.toString();
+
+          const isUUID = (str: string) => {
+            const uuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\$/;
+            return uuidRegex.test(str);
+          };
+
+          let endpoint;
+          if (isUUID(thisId)) {
+            endpoint = `${apiLinks.user.fetch}/${thisId}`;
+          } else {
+            const userId = decodedToken.sub as string;
+            endpoint = `${apiLinks.user.fetch}/${email}`;
+          }
+
+          const response = await fetch(endpoint, {
+            method: 'DELETE',
+          });
+
+          if (response.ok) {
+            await signOut();
+            router.push('/');
+          } else {
+            const errorText = await response.text();
+            console.error('Error deleting account:', response.status, errorText);
+            alert(`Failed to delete account. Status: ${response.status}. Please try again or contact support.`);
+          }
+        } else {
+          alert('User email not found in session. Please try logging in again.');
+        }
+      } catch (error) {
+        console.error('Error deleting account:', error);
+        alert('An error occurred while deleting your account.');
       }
     }
-    } catch (error) {
-      console.error('Error deleting account:', error);
-      alert('An error occurred while deleting your account.');
-    }
-  }
-};
+  };
+
 
 
   const renderMenuItems = () => {

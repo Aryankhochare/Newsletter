@@ -30,6 +30,17 @@ namespace Newsletter.Controllers
                     return BadRequest(ModelState);
                 }
                 if(user == null) return BadRequest("user data is null");
+
+                var existingUserResponse = await _client
+                     .From<Users>()
+                     .Where(u => u.Email == user.Email)
+                     .Get();
+
+                if (existingUserResponse.Models.Any())
+                {
+                    return Conflict("A user with this email already exists.");
+                }
+
                 var newUser = new Users
                 {
                     Username = user.Username,
@@ -209,9 +220,95 @@ namespace Newsletter.Controllers
             }
         }
 
-        
+        [HttpGet("{email}")]
+        public async Task<IActionResult> GetUserByEmail(string email)
+        {
+            try
+            {
+                var response = await _client
+                    .From<Users>()
+                    .Where(u => u.Email == email)
+                    .Get();
+                var user = response.Models.FirstOrDefault();
+                if (user == null) return NotFound($"User with id = {email} not found.");
 
-        [HttpDelete("{id}")]
+                Console.WriteLine($"User found: Id = {user.Id}, Username = {user.Username}");
+
+                var userRolesResponse = await _client
+                    .From<UserUserRoles>()
+                    .Where(uur => uur.UserId == user.Id)
+                    .Get();
+
+                if (userRolesResponse?.Models == null)
+                {
+                    Console.WriteLine("UserUserRoles response or its Models is null");
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Error fetching user roles");
+                }
+
+                var userRoleIds = userRolesResponse.Models.Select(uur => uur.UserRoleId).ToList();
+                Console.WriteLine($"User role IDs found: {string.Join(", ", userRoleIds)}");
+
+                var roleResponse = await _client
+                    .From<UserRoles>()
+                    .Filter("user_role_id", Supabase.Postgrest.Constants.Operator.In, userRoleIds)
+                    .Get();
+
+                if (roleResponse?.Models == null)
+                {
+                    Console.WriteLine("UserRoles response or its Models is null");
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Error fetching role names");
+                }
+
+                var roleNames = roleResponse.Models.Select(ur => ur.UserRoleName).ToList();
+                Console.WriteLine($"Role names found: {string.Join(", ", roleNames)}");
+
+                var userCategoryResponse = await _client.From<UserCategory>()
+                    .Where(c => c.UserId == user.Id)
+                    .Get();
+                if (userCategoryResponse?.Models == null)
+                {
+                    Console.WriteLine("UserUserRoles response or its Models is null");
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Error fetching user categories");
+                }
+
+                var userCategoryId = userCategoryResponse.Models.Select(c => c.CategoryId).ToList();
+                var categoryResponse = await _client.From<Category>()
+                    .Filter("category_id", Supabase.Postgrest.Constants.Operator.In, userCategoryId)
+                    .Get();
+
+                if (categoryResponse?.Models == null)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Error fetching category names");
+                }
+
+                var categoryNames = categoryResponse.Models.Select(c => c.CategoryName).ToList();
+
+                var showUser = new GetUserVM
+                {
+                    Id = user.Id,
+                    Username = user.Username,
+                    Email = user.Email,
+                    isActive = user.isActive,
+                    Status = user.Status,
+                    UserRole = roleNames,
+                    Category = categoryNames,
+                    CreatedDate = user.CreatedDate,
+                    ModifiedDate = user.ModifiedDate,
+                };
+
+                return Ok(showUser);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetUser: {ex.Message}");
+                Console.WriteLine($"Stack Trace: {ex.StackTrace}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Could not retrieve data from database");
+            }
+        }
+
+
+            [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(string id)
         {
             try

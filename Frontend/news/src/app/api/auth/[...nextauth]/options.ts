@@ -141,10 +141,17 @@ export const authOptions: NextAuthOptions = {
               };
               return user;
             }
-          } catch (error) {
+          }catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+              if (error.response.status === 409) {
+                // Email already exists
+                throw new Error("A user with this email already exists.");
+              }
+            }
             console.error("Registration error:", error);
+            throw new Error("Registration failed. Please try again.");
           }
-  
+      
           return null;
         },
       }),
