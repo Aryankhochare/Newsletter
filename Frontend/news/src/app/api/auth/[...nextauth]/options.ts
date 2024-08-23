@@ -1,3 +1,5 @@
+
+
 import { randomBytes, randomUUID } from "crypto";
 import NextAuth from "next-auth/next";
 import { NextAuthOptions, User } from "next-auth";
@@ -10,9 +12,12 @@ import axios from "axios";
 import Categories from "@/app/(auth)/categorychoice/page";
 import { supabase } from '@/lib/supabaseClient';
 
+
 interface CustomUser extends User {
   roles?: string[];
 }
+
+
 
 async function fetchUserRole(userId: string) {
   try {
@@ -20,7 +25,7 @@ async function fetchUserRole(userId: string) {
     if (!response.ok) {
       throw new Error(`Failed to fetch data: ${response.status} ${response.statusText}`);
     }
-    const userData = await response.json();
+    const userData = await response.json();   
     if (!userData.userRole || !Array.isArray(userData.userRole)) {
       console.warn("Roles are not properly defined in the API response, setting to empty array");
       userData.userRole = [];
@@ -42,8 +47,8 @@ async function createUser(user: CustomUser){
       body: JSON.stringify({
         Username: user.name,
         Email: user.email,
-        Password: "",
-        UserRoles: [],
+        Password: "", 
+        UserRoles: [], 
         Categories: ['Sports']
       }),
     });
@@ -97,7 +102,7 @@ export const authOptions: NextAuthOptions = {
             email: data.user_email,
             roles: userData.userRole,
           };
-
+    
           console.log("Authorize function - Returning user:", customUser);
           return customUser;
         }
@@ -105,51 +110,51 @@ export const authOptions: NextAuthOptions = {
       },
     }),
 
-    CredentialsProvider({
-      id: "register",
-      name: "Register",
-      credentials: {
-        username: { label: "Username", type: "text" },
-        password: { label: "Password", type: "password" },
-        email: { label: "Email", type: "email" },
-      },
-      async authorize(credentials) {
-        if (!credentials) return null;
-
-        try {
-          const response = await axios.post(`${apiLinks.user.fetch}`, {
-            Username: credentials.username,
-            Password: credentials.password,
-            Email: credentials.email,
-            UserRoles: [],
-            Categories: ['Sports']
-          });
-
-          if (response.status === 200) {
-            const userId = response.data.id;
-            const userData = await fetchUserRole(userId);
-            const user: CustomUser = {
-              id: response.data.toString(),
-              name: credentials.username,
-              email: credentials.email,
-              roles: userData.userRole,
-            };
-            return user;
-          }
-        } catch (error) {
-          if (axios.isAxiosError(error) && error.response) {
-            if (error.response.status === 409) {
-              // Email already exists
-              throw new Error("A user with this email already exists.");
+      CredentialsProvider({
+        id: "register",
+        name: "Register",
+        credentials: {
+          username: { label: "Username", type: "text" },
+          password: { label: "Password", type: "password" },
+          email: { label: "Email", type: "email" },
+        },
+        async authorize(credentials) {
+          if (!credentials) return null;
+  
+          try {
+            const response = await axios.post(`${apiLinks.user.fetch}`, {
+              Username: credentials.username,
+              Password: credentials.password,
+              Email: credentials.email,
+              UserRoles: [],
+              Categories: ['Sports']
+            });
+  
+            if (response.status === 200) {
+              const userId = response.data.id;
+              const userData = await fetchUserRole(userId);
+              const user: CustomUser = {
+                id: response.data.toString(),
+                name: credentials.username,
+                email: credentials.email,
+                roles: userData.userRole,
+              };
+              return user;
             }
+          }catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+              if (error.response.status === 409) {
+                // Email already exists
+                throw new Error("A user with this email already exists.");
+              }
+            }
+            console.error("Registration error:", error);
+            throw new Error("Registration failed. Please try again.");
           }
-          console.error("Registration error:", error);
-          throw new Error("Registration failed. Please try again.");
-        }
-
-        return null;
-      },
-    }),
+      
+          return null;
+        },
+      }),
 
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -160,7 +165,7 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET!
     }),
   ],
-  callbacks: {
+  callbacks: { 
     async signIn({ user, account, profile }) {
       if (account?.provider === "google" || account?.provider === "facebook" || account?.provider === "credentials") {
         const { data: existingUser, error } = await supabase
@@ -168,29 +173,31 @@ export const authOptions: NextAuthOptions = {
           .select()
           .eq("user_email", user.email)
           .single();
-
+  
         if (error || !existingUser) {
           const newUser: CustomUser = {
             id: user.id,
             name: user.name,
-            email: user.email,
+            email: user.email,  
           };
-
+  
           const createdUser = await createUser(newUser);
           if (!createdUser) {
-            return false;
+            return false; 
           }
-
+  
+         
           const userData = await fetchUserRole(createdUser);
           (user as CustomUser).roles = userData.userRole;
         } else {
+
           const userData = await fetchUserRole(existingUser.user_id);
           (user as CustomUser).roles = userData.userRole;
         }
       }
       return true;
     },
-    async jwt({token,user}){
+      async jwt({token,user}){
       if(user){
         token.id = user.id;
         token.roles = (user as CustomUser).roles;
@@ -201,17 +208,19 @@ export const authOptions: NextAuthOptions = {
           email: user.email,
           roles: (user as CustomUser).roles
         };
-
+        
         token.accessToken = jwt.sign(
           payload,
           process.env.JWT_SECRET!,
           {expiresIn: '1h'}
-        );
+        ); 
+        
       }
 
       return token;
     },
     async session({session,token}){
+
       const updatedSession = {
         ...session,
         user: {
@@ -223,21 +232,29 @@ export const authOptions: NextAuthOptions = {
       };
       console.log(`this is updated session : `)
       return updatedSession
+    
     },
     async redirect({ url, baseUrl }){
       if (url.startsWith("/")) return `${baseUrl}${url}`
       else if (new URL(url).origin === baseUrl) return url
-      return baseUrl
+    return baseUrl
     }
+
   },
   session:{
     maxAge:1*60*60,
     strategy: "jwt",
+
+
     generateSessionToken: () => {
       return randomUUID?.() ?? randomBytes(32).toString("hex");
     }
+    
   },
   pages:{
     signIn:"/login",
   },
+ 
 };
+
+

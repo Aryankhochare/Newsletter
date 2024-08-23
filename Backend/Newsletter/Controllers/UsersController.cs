@@ -220,7 +220,7 @@ namespace Newsletter.Controllers
             }
         }
 
-        [HttpGet("{email}")]
+        [HttpGet("email/{email}")]
         public async Task<IActionResult> GetUserByEmail(string email)
         {
             try
