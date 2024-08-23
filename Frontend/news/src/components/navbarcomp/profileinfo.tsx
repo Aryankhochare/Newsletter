@@ -59,7 +59,7 @@ export default function ProfileInfo() {
             endpoint = `${apiLinks.user.fetch}/${thisId}`;
           } else {
             const userId = decodedToken.sub as string;
-            endpoint = `${apiLinks.user.fetch}/${email}`;
+            endpoint = `${apiLinks.user.fetchEmail}/${email}`;
           }
 
           const response = await fetch(endpoint, {

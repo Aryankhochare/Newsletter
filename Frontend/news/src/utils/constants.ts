@@ -21,7 +21,8 @@ export const apiLinks = {
         fetch: `${baseUrl}/api/comments`,
     },
     user:{
-        fetch: `${baseUrl}/api/users`
+        fetch: `${baseUrl}/api/users`,
+        fetchEmail: `${baseUrl}/api/users`
     },
     admin:{
         fetchUser: `${baseUrl}/api/admin/users`
