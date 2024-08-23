@@ -298,7 +298,7 @@ namespace Newsletter.Controllers
             try
             {
                 // Fetch articles
-                var articlesResponse = await client.From<NewsArticle>().Get();
+                var articlesResponse = await client.From<NewsArticle>().Where(x => x.IsDrafted==false).Get();
                 if (articlesResponse?.Models == null || !articlesResponse.Models.Any())
                 {
                     return NotFound("Didn't find any article");
