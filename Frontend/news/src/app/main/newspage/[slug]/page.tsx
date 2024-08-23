@@ -11,6 +11,7 @@ import { useParams } from "next/navigation";
 import { apiLinks } from "@/utils/constants";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
+import { BsChatText } from "react-icons/bs";
 
 interface NewsPageProps {
   params: { slug: string };
@@ -165,18 +166,14 @@ const NewsPage: React.FC<NewsPageProps> = ({ params }) => {
               </div>
             )}
           </article>
+          {!showComments && (
           <button
-            className="fixed bottom-14 right-4 p-2 z-50 transition-colors duration-200"
+            className="fixed bottom-6 sm:bottom-14 right-4 sm:right-6 p-2 z-50 transition-colors duration-200"
             onClick={() => setShowComments(!showComments)}
           >
-            <Image
-              src="https://i.postimg.cc/HkQpPgZZ/icongrey-removebg-preview.png"
-              alt="Comments button"
-              width={36}
-              height={36}
-              className="object-contain"
-            />
+            <BsChatText className="w-8 sm:w-9 h-8 sm:h-9 text-gray-600 hover:text-indigo-600" />
           </button>
+        )}
           <div
             className={`fixed inset-y-0 right-0 w-full sm:w-96 bg-gray-900 shadow-lg z-40 transition-transform duration-300 ease-in-out transform ${
               showComments ? "translate-x-0" : "translate-x-full"

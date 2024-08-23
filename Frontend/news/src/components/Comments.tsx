@@ -158,7 +158,6 @@ import { parseISO, formatDistanceToNow } from 'date-fns';
           <div key={comment.comment_id} className="bg-gray-800 p-4 rounded-lg">
           <p className="text-gray-200 mb-2">{comment.Users.username}</p>
           <p className="text-gray-200 mb-2">{comment.comment}</p>
-          <p className="text-gray-200 mb-1">{formatDistanceToNow(parseISO(comment.posted_on.toLocaleString()))}</p>
           {isAdmin || userId === comment.user_id  ? (
           <button
             onClick={() => handleDelete(comment.comment_id.toString())}

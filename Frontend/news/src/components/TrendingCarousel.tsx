@@ -110,7 +110,7 @@ const TrendingCarousel: React.FC<TrendingCarouselProps> = ({ articles_ }) => {
               <Image
                 src={article.coverImage}
                 alt={article.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-fit"
               />
             </div>
             <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-6">
