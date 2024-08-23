@@ -142,7 +142,7 @@ const LatestNewsCarousel: React.FC<latestnewsProps> = ({articles_}) => {
                 <img
                   src={article.coverImage}
                   alt={article.title}
-                  className="w-full h-full object-fit"
+                  className="w-full h-full object-contain"
                 />
               </div>
               <div className="p-4 flex-grow">

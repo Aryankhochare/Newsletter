@@ -113,6 +113,12 @@ const ProfilePage = () => {
         <ProfileField label="Roles" value={userDetails.userRoleNames.join(', ') || 'No roles assigned'} />
         <ProfileField label="Categories Preferred" value={userDetails.categoryNames.join(', ') || 'No categories assigned'} />
         <ProfileField label="Joined Date" value={new Date(userDetails.createdDate).toLocaleDateString()} />
+        <div className="mt-8">        
+          <button onClick={handleDeleteAccount} className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              Delete Account        
+          </button>      
+        </div>       
+ 
       </div>
     </div>
   );
