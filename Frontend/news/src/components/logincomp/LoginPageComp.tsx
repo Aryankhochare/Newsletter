@@ -20,6 +20,8 @@ const LoginPageComp = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
 
+  
+
   const handleChange = (e : any) => {
     const { name, value } = e.target;
     setUsername(name === 'username' ? value.trim() : value);
@@ -27,6 +29,8 @@ const LoginPageComp = () => {
 
   const onSubmit = async (e : any) => {
     e.preventDefault();
+
+
     setError("");
 
     try {

@@ -178,11 +178,13 @@ export default function SignUpComp() {
     const passwordError = validatePassword(formData.password);
     if (passwordError) {
        alert(passwordError);
+       return;
     }
 
     const emailError = validateEmail(formData.email);
     if(emailError){
       alert(emailError);
+      return;
     }
     
     try {
