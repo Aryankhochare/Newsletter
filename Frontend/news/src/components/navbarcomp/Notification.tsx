@@ -47,6 +47,14 @@ const Notification: React.FC<NotificationProps> = ({ unreadCount, setUnreadNotif
       }
     };
     fetchNotifications();
+
+    const intervalId = setInterval(fetchNotifications, 30000);
+
+    return () =>{
+      clearInterval(intervalId)
+    };
+
+    
   }, [session?.accessToken]);
 
   useEffect(() => {
