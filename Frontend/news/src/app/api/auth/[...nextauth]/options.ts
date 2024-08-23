@@ -11,6 +11,7 @@ import { apiLinks } from "@/utils/constants";
 import axios from "axios";
 import Categories from "@/app/(auth)/categorychoice/page";
 import { supabase } from '@/lib/supabaseClient';
+import { Session } from "inspector";
 
 
 interface CustomUser extends User {

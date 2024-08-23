@@ -11,6 +11,7 @@
         public ICollection<int>? UserRoles { get; set; }
 
         public ICollection<string> Categories { get; set; }
+
        
     }
 }
