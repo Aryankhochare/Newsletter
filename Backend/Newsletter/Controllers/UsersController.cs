@@ -220,6 +220,10 @@ namespace Newsletter.Controllers
 
                 if (checkUser.Models.Count == 0) return NotFound($"user with id = {id} not found");
 
+                await _client.From<NewsArticle>().
+                    Where(c => c.UserId == id)
+                    .Delete();
+
                 await _client.From<UserUserRoles>()
                     .Where(uur => uur.UserId == id)
                     .Delete();
