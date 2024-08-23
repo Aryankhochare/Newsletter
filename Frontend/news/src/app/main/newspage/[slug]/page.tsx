@@ -187,7 +187,7 @@ const NewsPage: React.FC<NewsPageProps> = ({ params }) => {
               height: `calc(100vh - ${navbarHeight + footerHeight}px)`,
             }}
           >
-            <div className="flex justify-between items-center p-4 border-b border-gray-700">
+            <div className="flex justify-between items-center p-4 border-b border-gray-700 mt-6">
               <h2 className="text-lg sm:text-2xl font-bold text-white">
                 Comments
               </h2>
