@@ -146,7 +146,7 @@ const Notification: React.FC<NotificationProps> = ({ unreadCount, setUnreadNotif
     const fetchNotifications = async () => {
       if (session?.accessToken) {
         const decodedToken = jwt.decode(session.accessToken) as { sub: string };
-        const userId = decodedToken.sub;
+        const userId = decodedToken.sub.toString();
         const response = await fetch(`${apiLinks.notfication.fetch}/${userId}`);
 
         const data = await response.json();
