@@ -45,6 +45,7 @@ namespace Newsletter.Controllers
 
             try
             {
+                if (editorId == id) { return StatusCode(StatusCodes.Status401Unauthorized); }
                 var updateResult = await client
                     .From<NewsArticle>()
                     .Where(x => x.Id == id)
@@ -121,6 +122,7 @@ namespace Newsletter.Controllers
 
             try
             {
+                if (editorId == id) { return StatusCode(StatusCodes.Status401Unauthorized); }
                 var updateResult = await client
                     .From<NewsArticle>()
                     .Where(x => x.Id == id)
