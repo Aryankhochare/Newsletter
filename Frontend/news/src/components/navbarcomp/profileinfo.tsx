@@ -69,6 +69,19 @@ export default function ProfileInfo() {
         </>
       );
     }
+    else if (userRoles.includes('USER')) {
+      return (
+        <>
+        <Link href="/main/profile">
+          <DropdownMenuItem>
+            <User className="mr-2 h-4 w-4" />
+            <span>Profile</span>
+          </DropdownMenuItem>
+          </Link>
+         
+        </>
+      );
+    }
     return null;
   };
  

@@ -85,7 +85,7 @@ namespace Newsletter.Controllers
             {
                 var userId = await ValidateAndGetUserId();
                 if (userId == null) return Unauthorized("User not found");
-                var newComment = new Comments { UserId = userId, NewsId = vm.NewsId, Comment = vm.Comment };
+                var newComment = new Comments { UserId = userId, NewsId = vm.NewsId, Comment = vm.Comment};
                 var response = await client.From<Comments>().Insert(newComment);
                 var commentResp = response.Models.FirstOrDefault();
 
@@ -99,6 +99,7 @@ namespace Newsletter.Controllers
                     userId = userId,
                     NewsId = commentResp.NewsId,
                     Comment = commentResp.Comment,
+                    PosetedOn = DateTime.UtcNow,
 
                 };
 

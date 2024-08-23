@@ -28,7 +28,7 @@ import { apiLinks } from '@/utils/constants';
         </div>
         <main className="min-h-screen mx-auto py-8 px-4 sm:px-6 lg:px-8">
         <div className="bg-black p-2 shadow-lg rounded-lg h-20">
-          <h1 className="text-2xl font-bold text-white mb-10 text-center">User Management</h1></div>
+          <h1 className="text-2xl font-bold text-white justify-center text-center">User Management</h1></div>
           <Suspense fallback={<div>Loading users...</div>}>
             <UserManagement initialUserData={userData} />
           </Suspense>

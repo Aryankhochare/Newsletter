@@ -177,15 +177,15 @@ function EditorButtons({ Data }: { Data: News[] }) {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="bg-gradient-to-r from-black via-gray-800 to-black p-4 shadow-lg rounded-lg">
-        <div className="flex flex-col md:flex-row items-center justify-between">
-          <h1 className="text-2xl md:text-3xl font-extrabold text-white mb-4 md:mb-0">
+        <div className="flex flex-col sm:flex-row items-center justify-between">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white mb-4 sm:mb-0">
             Post Requests
           </h1>
-          <div className="relative">
+          <div className="relative w-full sm:w-auto">
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
-              className="pl-2 pr-3 py-2 rounded border-none bg-slate-100 text-gray-900 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-indigo-200"
+              className="w-full sm:w-auto pl-2 pr-3 py-2 rounded border-none bg-slate-100 text-gray-900 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-indigo-200"
             >
               <option value="all">Status</option>
               <option value="approved">Approved</option>
@@ -198,15 +198,15 @@ function EditorButtons({ Data }: { Data: News[] }) {
 
       <div className="overflow-x-auto mt-4">
         <table className="w-full min-w-full table-auto border-collapse">
-          <thead className="hidden md:table-header-group">
+          <thead className="hidden sm:table-header-group">
             <tr className="bg-muted text-muted-foreground">
-              <th className="px-4 py-2 text-left text-sm md:text-base font-medium">
+              <th className="px-4 py-2 text-left text-sm sm:text-base font-medium">
                 Title
               </th>
-              <th className="px-4 py-2 text-left text-sm md:text-base font-medium">
+              <th className="px-4 py-2 text-left text-sm sm:text-base font-medium">
                 Status
               </th>
-              <th className="px-4 py-2 text-right text-sm md:text-base font-medium">
+              <th className="px-4 py-2 text-right text-sm sm:text-base font-medium">
                 Actions
               </th>
             </tr>
@@ -222,7 +222,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
                     <Skeleton className="h-6 w-20" />
                   </td>
                   <td className="px-4 py-2 text-right">
-                    <div className="flex flex-col md:flex-row justify-end gap-2">
+                    <div className="flex flex-col sm:flex-row justify-end gap-2">
                       <Skeleton className="h-8 w-20" />
                       <Skeleton className="h-8 w-20" />
                       <Skeleton className="h-8 w-8" />
@@ -234,7 +234,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
               <tr>
                 <td
                   colSpan={3}
-                  className="text-center py-4 text-sm md:text-base"
+                  className="text-center py-4 text-sm sm:text-base"
                 >
                   No articles found
                 </td>
@@ -249,41 +249,42 @@ function EditorButtons({ Data }: { Data: News[] }) {
                 return (
                   <tr key={article.id} className="border-b">
                     <td
-                      className="px-4 py-2 cursor-pointer text-sm md:text-base"
+                      className="px-4 py-2 cursor-pointer text-sm sm:text-base"
                       onClick={() => handleTitleClick(article.id)}
                     >
                       <div className="font-medium">{article.title}</div>
                     </td>
-                    <td className="px-4 py-2 text-sm md:text-base">
+                    <td className="px-4 py-2 text-sm sm:text-base">
                       <Badge
                         variant="outline"
-                        className={
+                        className={`${
                           status === "Approved"
                             ? "bg-green-500 text-green-50"
                             : status === "Rejected"
                             ? "bg-red-500 text-red-50"
                             : "bg-yellow-500 text-yellow-50"
-                        }
+                        } inline-block`}
                       >
                         {status}
                       </Badge>
                     </td>
-                    <td className="px-4 py-2 text-right text-sm md:text-base">
-                      <div className="flex flex-col md:flex-row justify-end gap-2">
+                    <td className="px-4 py-2 text-right text-sm sm:text-base">
+                      <div className="flex flex-col sm:flex-row justify-end gap-2">
                         {!article.isVerified && (
                           <>
                             <Button
                               size="sm"
                               variant="outline"
                               onClick={() => handleVerify(article.id)}
+                              className="w-full sm:w-auto"
                             >
                               Approve
                             </Button>
-
                             <Button
                               size="sm"
                               variant="outline"
                               onClick={() => handleReject(article.id)}
+                              className="w-full sm:w-auto"
                             >
                               Sendback
                             </Button>
@@ -293,7 +294,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
                           size="sm"
                           variant="outline"
                           onClick={() => handleDelete(article.id)}
-                          className="text-red-600"
+                          className="text-red-600 w-full sm:w-auto"
                         >
                           <FiTrash2 />
                         </Button>
@@ -309,8 +310,8 @@ function EditorButtons({ Data }: { Data: News[] }) {
 
       {/* Feedback Dialog */}
       {showFeedbackDialog && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md mx-4">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
             <h2 className="text-xl font-semibold mb-4">Send Back Feedback</h2>
             <textarea
               className="w-full p-2 border rounded"
@@ -323,13 +324,13 @@ function EditorButtons({ Data }: { Data: News[] }) {
               <Button
                 variant="outline"
                 onClick={() => setShowFeedbackDialog(false)}
+                className="mr-2"
               >
                 Cancel
               </Button>
               <div>
                 <Toaster />
                 <Button
-                  className="ml-2"
                   onClick={() => {
                     handleSendBackConfirm();
                     toast("Feedback Sent!");
@@ -346,21 +347,21 @@ function EditorButtons({ Data }: { Data: News[] }) {
 
       {/* Approve Confirmation Dialog */}
       {showApproveDialog && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md mx-4">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
             <h2 className="text-xl font-semibold mb-4">Confirm Approval</h2>
             <p>Do you want to approve this article?</p>
             <div className="flex justify-end mt-4">
               <Button
                 variant="outline"
                 onClick={() => setShowApproveDialog(false)}
+                className="mr-2"
               >
                 Cancel
               </Button>
               <div>
                 <Toaster />
                 <Button
-                  className="ml-2"
                   onClick={() => {
                     handleVerifyConfirm();
                     toast("Approved!");
@@ -377,21 +378,22 @@ function EditorButtons({ Data }: { Data: News[] }) {
 
       {/* Delete Confirmation Dialog */}
       {showDeleteDialog && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md mx-4">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
             <h2 className="text-xl font-semibold mb-4">Confirm Deletion</h2>
             <p>Do you want to delete this article?</p>
             <div className="flex justify-end mt-4">
               <Button
                 variant="outline"
                 onClick={() => setShowDeleteDialog(false)}
+                className="mr-2"
               >
                 Cancel
               </Button>
               <div>
                 <Toaster />
                 <Button
-                  className="ml-2 bg-red-500 text-white"
+                  className="bg-red-500 text-white"
                   onClick={() => {
                     handleDeleteConfirm();
                     toast("Deleted!");
@@ -409,4 +411,4 @@ function EditorButtons({ Data }: { Data: News[] }) {
   );
 }
 
-export default EditorButtons;
+export default EditorButtons;
