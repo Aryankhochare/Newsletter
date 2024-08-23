@@ -47,6 +47,14 @@ const Notification: React.FC<NotificationProps> = ({ unreadCount, setUnreadNotif
       }
     };
     fetchNotifications();
+
+    const intervalId = setInterval(fetchNotifications, 30000);
+
+    return () =>{
+      clearInterval(intervalId)
+    };
+
+    
   }, [session?.accessToken]);
 
   useEffect(() => {
@@ -120,7 +128,7 @@ const Notification: React.FC<NotificationProps> = ({ unreadCount, setUnreadNotif
         )}
       </button>
       {isOpen && (
-        <div className="fixed inset-x-0 top-16 sm:right-0 sm:left-auto sm:absolute sm:top-full text-black bg-white shadow-lg p-4 mt-2 w-full sm:w-80 md:w-96 max-h-[80vh] overflow-y-auto z-50">
+        <div className="fixed inset-x-0 rounded-md top-16 sm:right-0 sm:left-auto sm:absolute sm:top-full text-black bg-white shadow-lg p-4 mt-2 w-full sm:w-80 md:w-96 max-h-[80vh] overflow-y-auto z-50 scrollbar-hide">
           {notifications.length === 0 ? (
             <p className="text-center">No new notifications</p>
           ) : (
