@@ -8,6 +8,7 @@ import { FiTrash2 } from "react-icons/fi";
 import { useSession } from "next-auth/react";
 import { Skeleton } from "./ui/skeleton";
 import { apiLinks } from "@/utils/constants";
+import { toast, Toaster } from "sonner";
 
 interface News {
   id: string;
@@ -56,17 +57,17 @@ function EditorButtons({ Data }: { Data: News[] }) {
     if (currentArticleId) {
       try {
         setLoading(true);
-        if(!session.data?.accessToken) return;
-        await fetch(
-          `${apiLinks.editor.verify}/${currentArticleId}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ id: currentArticleId, from: session.data?.accessToken }),
-          }
-        );
+        if (!session.data?.accessToken) return;
+        await fetch(`${apiLinks.editor.verify}/${currentArticleId}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: currentArticleId,
+            from: session.data?.accessToken,
+          }),
+        });
 
         setArticles((prevArticles) =>
           prevArticles.map((article) =>
@@ -94,16 +95,17 @@ function EditorButtons({ Data }: { Data: News[] }) {
     if (currentArticleId) {
       try {
         setLoading(true);
-        await fetch(
-          `${apiLinks.editor.reject}/${currentArticleId}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ id: currentArticleId, message: feedback, from: session.data?.accessToken }),
-          }
-        );
+        await fetch(`${apiLinks.editor.reject}/${currentArticleId}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: currentArticleId,
+            message: feedback,
+            from: session.data?.accessToken,
+          }),
+        });
 
         setArticles((prevArticles) =>
           prevArticles.map((article) =>
@@ -277,6 +279,7 @@ function EditorButtons({ Data }: { Data: News[] }) {
                             >
                               Approve
                             </Button>
+
                             <Button
                               size="sm"
                               variant="outline"
@@ -323,13 +326,19 @@ function EditorButtons({ Data }: { Data: News[] }) {
               >
                 Cancel
               </Button>
-              <Button
-                className="ml-2"
-                onClick={handleSendBackConfirm}
-                disabled={loading}
-              >
-                Send Back
-              </Button>
+              <div>
+                <Toaster />
+                <Button
+                  className="ml-2"
+                  onClick={() => {
+                    handleSendBackConfirm();
+                    toast("Feedback Sent!");
+                  }}
+                  disabled={loading}
+                >
+                  Send Back
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -348,13 +357,19 @@ function EditorButtons({ Data }: { Data: News[] }) {
               >
                 Cancel
               </Button>
-              <Button
-                className="ml-2"
-                onClick={handleVerifyConfirm}
-                disabled={loading}
-              >
-                Approve
-              </Button>
+              <div>
+                <Toaster />
+                <Button
+                  className="ml-2"
+                  onClick={() => {
+                    handleVerifyConfirm();
+                    toast("Approved!");
+                  }}
+                  disabled={loading}
+                >
+                  Approve
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -373,13 +388,19 @@ function EditorButtons({ Data }: { Data: News[] }) {
               >
                 Cancel
               </Button>
-              <Button
-                className="ml-2 bg-red-500 text-white"
-                onClick={handleDeleteConfirm}
-                disabled={loading}
-              >
-                Delete
-              </Button>
+              <div>
+                <Toaster />
+                <Button
+                  className="ml-2 bg-red-500 text-white"
+                  onClick={() => {
+                    handleDeleteConfirm();
+                    toast("Deleted!");
+                  }}
+                  disabled={loading}
+                >
+                  Delete
+                </Button>
+              </div>
             </div>
           </div>
         </div>

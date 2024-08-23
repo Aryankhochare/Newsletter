@@ -27,7 +27,8 @@ import { apiLinks } from '@/utils/constants';
           <Navbar />
         </div>
         <main className="min-h-screen mx-auto py-8 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center">User Management</h1>
+        <div className="bg-black p-4 shadow-lg rounded-lg h-20">
+          <h1 className="text-3xl font-bold text-white mb-8 text-center">User Management</h1></div>
           <Suspense fallback={<div>Loading users...</div>}>
             <UserManagement initialUserData={userData} />
           </Suspense>

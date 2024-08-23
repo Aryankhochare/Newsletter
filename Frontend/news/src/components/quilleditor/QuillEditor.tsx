@@ -7,6 +7,7 @@ import ImageUploader from "./ImageUploader";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { UUID } from "crypto";
+import { toast, Toaster } from "sonner";
 
 const ReactQuill = dynamic(
   async () => {
@@ -328,14 +329,32 @@ const QuillEditor: React.FC<QuillEditorProps> = memo(({initialId = '', initialTi
         <br/>
         <div className=" py-0 justify-center mt-1 flex flex-grow sm:z-5">
           <div className="hover:bg-gray-800 rounded-md px-4 py-2 m-2 text-center bg-black ">
-            <button onClick={(e) => saveNews(e, true)} className="text-white transition duration-300 ease-in-out text-center">
+          <div>
+            <Toaster />
+            <button
+              onClick={(e) => {
+                toast('Saved as Draft!');
+                saveNews(e, true);
+              }}
+              className="text-white transition duration-300 ease-in-out text-center"
+            >
               Save as Draft
             </button>
           </div>
+          </div>
           <div className=" hover:bg-gray-800 rounded-md px-4 py-2 bg-black m-2">
-            <button onClick={(e) => saveNews(e, false)} className="text-white transition duration-300 ease-in-out text-center">
-              Send for Review
+          <div>
+            <Toaster />
+            <button
+              onClick={(e) => {
+                toast('Sent for Review!');
+                saveNews(e, true);
+              }}
+              className="text-white transition duration-300 ease-in-out text-center"
+            >
+              Send For Review
             </button>
+          </div>
           </div>
         </div>
       </div>

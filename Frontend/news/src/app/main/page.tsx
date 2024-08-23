@@ -23,21 +23,22 @@ export default async function Home() {
   const articles = await getArticles();
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100">
-      <div className="sticky top-0 z-50">
-        <Navbar />
-      </div>
-      <main className="flex-grow">
-        <section className="mb-12">
-          <TrendingCarousel articles_={articles} />
-        </section>
-
-        <section className="container mx-auto px-4 mb-12">
-          <h2 className="text-3xl font-bold mb-4">Latest News</h2>
-          <LatestNewsCarousel articles_={articles} />
-        </section>
-      </main>
-      <Footer />
-    </div>
-  );
-}
+    <>
+       <div className="sticky top-0 z-50">
+         <Navbar />
+       </div>
+       <main className="flex-grow min-h-screen">
+         <section className="mb-12">
+           <TrendingCarousel articles_={articles} />
+         </section>
+  
+         <section className="container mx-auto px-4 mb-12">
+           <h2 className="text-3xl font-bold mb-4">Latest News</h2>
+           <LatestNewsCarousel articles_={articles} />
+         </section>
+       </main>
+       <Footer />
+       </>
+  
+   );
+ }

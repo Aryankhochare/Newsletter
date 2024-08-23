@@ -67,96 +67,88 @@ const fetchContent = async () => {
 };
 
 
+return (
+  <>
+  <div className="bg-white min-h-screen flex flex-col text-black">
+    <div id="navbar" className="sticky top-0 z-50">
+      <Navbar />
+    </div>
 
-
-
-  
-
-  return (
-    <>
-    <div className="bg-white min-h-screen flex flex-col text-black">
-      <div id="navbar" className="sticky top-0 z-50">
-        <Navbar />
-      </div>
-
-      <main className=" min-h-screen flex-grow overflow-hidden relative">
-        <article className={`m-10 transition-all duration-300 ease-in-out ${showComments ? 'w-full lg:w-3/5 xl:w-3/4' : 'w-full'} overflow-y-auto`}>
-          <div className="max-w-5xl mx-auto p-6 sm:p-10 bg-white shadow-xl rounded-lg">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-6 text-black leading-tight">
-              {parse(article_title)}
-            </h1>
-            <div className="flex flex-col items-start text-md text-gray-600 mb-8">
-              <span className="mr-4">Author: {article_writer}</span>
-              <span>Published: {article_date}</span>
-            </div>
-            <Image
-              src={article_image}
-              alt="Article image"
-              className="object-fit h-auto mb-8 rounded-lg shadow-md"
-            />
-            <div className="prose prose-xl max-w-none">
-              <div className="mb-6 text-lg leading-relaxed">{parse(article_content)}</div>
-            </div>
+    <main className="min-h-screen flex-grow overflow-hidden relative">
+      <article className={`sm-m-10 transition-all duration-300 ease-in-out ${showComments ? 'w-full lg:w-3/5 xl:w-3/4' : 'w-full'} overflow-y-auto`}>
+        <div className="max-w-full sm:max-w-5xl mx-auto p-4 sm:p-10 bg-white shadow-xl rounded-lg">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-black leading-tight">
+            {parse(article_title)}
+          </h1>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center text-sm sm:text-md text-gray-600 mb-8">
+            <span className="mb-2 sm:mb-0 sm:mr-4">Author: {article_writer}</span>
+            <span>Published: {format(parseISO(article_date), 'dd-MMM-yyyy')}</span>
+           
           </div>
-        </article>
-
-        <button
-          className="fixed bottom-14 right-4 p-2 z-50 transition-colors duration-200"
-          onClick={() => setShowComments(!showComments)}
-        >
           <Image
-            src="https://i.postimg.cc/HkQpPgZZ/icongrey-removebg-preview.png"
-            alt="Comments button"
-            className="w-9 h-9 object-fit"
+            src={article_image}
+            alt="Article image"
+            className="object-contain w-full h-auto mb-6 sm:mb-8 rounded-lg shadow-md"
           />
-        </button>
-
-        <div
-          className={`fixed mt-4 inset-y-0 right-0 w-full sm:w-96 bg-gray-900 shadow-lg z-40 transition-transform duration-300 ease-in-out transform ${
-            showComments ? 'translate-x-0' : 'translate-x-full'
-          } flex flex-col`}
-          style={{
-            top: `${navbarHeight}px`,
-            bottom: `${footerHeight}px`,
-            height: `calc(100vh - ${navbarHeight}px)`
-          }}
-        >
-          <div className="flex justify-between items-center p-4 border-b border-gray-700">
-            <h2 className="text-lg sm:text-2xl font-bold text-white">Comments</h2>
-            <button
-              className="text-gray-400 hover:text-white transition-colors duration-200"
-              onClick={() => setShowComments(false)}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-          </div>
-
-          <div className="flex-grow overflow-y-auto scrollbar-hide ">
-            <Comments article_id={article_id} />
+          <div className="prose prose-sm sm:prose-base md:prose-lg lg:prose-xl max-w-none">
+            <div className="mb-6 text-base sm:text-lg leading-relaxed">{parse(article_content)}</div>
           </div>
         </div>
-      </main>
-      <div className="relative z-50">
+      </article>
 
-<Footer/>
-</div>
+      {!showComments && (
+        <button
+          className="fixed bottom-6 sm:bottom-14 right-4 sm:right-6 p-2 z-50 transition-colors duration-200"
+          onClick={() => setShowComments(!showComments)}
+        >
+          <BsChatText className="w-8 sm:w-9 h-8 sm:h-9 text-gray-600 hover:text-indigo-600" />
+        </button>
+      )}
+     
+      <div
+        className={`fixed inset-y-0 right-0 w-full sm:w-96 bg-gray-900 shadow-lg z-40 transition-transform duration-300 ease-in-out transform ${
+          showComments ? 'translate-x-0' : 'translate-x-full'
+        } flex flex-col`}
+        style={{
+          top: `${navbarHeight}px`,
+          bottom: `${footerHeight}px`,
+          height: `calc(100vh - ${navbarHeight}px)`
+        }}
+      >
+        <div className="flex justify-between items-center p-4 border-b border-gray-700">
+          <h2 className="text-lg sm:text-2xl font-bold text-white">Comments</h2>
+          <button
+            className="text-gray-400 hover:text-white transition-colors duration-200"
+            onClick={() => setShowComments(false)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <div className="flex-grow overflow-y-auto scrollbar-hide">
+          <Comments article_id={article_id} />
+        </div>
+      </div>
+    </main>
+    <div id="footer" className="relative z-50">
+      <Footer/>
     </div>
-   
-    </>
-  );
+  </div>
+  </>
+);
 };
 
 export default NewsPage;

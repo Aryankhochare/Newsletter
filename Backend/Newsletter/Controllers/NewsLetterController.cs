@@ -474,27 +474,24 @@ namespace Newsletter.Controllers
 
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteArticleById(string id)
-        {
-            try
-            {
-                var articleResponse = await client.From<NewsArticle>().Where(x => x.Id == id).Get();
-                if (articleResponse?.Models == null || !articleResponse.Models.Any())
-                {
-                    return NotFound("Article not found");
-                }
-
-                await client.From<NewsArticle>().Where(x => x.Id == id).Delete();
-
-
-                return Ok("Article deleted successfully");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error deleting article: {ex}");
-                return StatusCode(500, "An error occurred while deleting the article");
-            }
-        }
+     public async Task<IActionResult> DeleteComment(string id)
+      {
+    try
+    {
+        var findarticle = await client.From<NewsArticle>().Where(c => c.Id == id).Get();
+ 
+        if (findarticle.Models.Count == 0) return NotFound($"Article with id = {id} was not found");
+ 
+        await client.From<NewsArticle>().Where(x => x.Id == id).Delete();
+ 
+        //return NoContent();
+        return Ok(new { message = "Article deleted successfully" });
+    }
+    catch (Exception)
+    {
+        return StatusCode(StatusCodes.Status500InternalServerError, $"Error occured while deleting Article with id = {id}");
+     }
+ }
 
 
 
