@@ -55,7 +55,7 @@ const QuillEditor: React.FC<QuillEditorProps> = memo(({initialId = '', initialTi
   const [editorcontent, setEditorContent] = useState<string>(initialContent); //News Content
   const [resetTrigger, setResetTrigger] = useState(0);
   const [image, setImage] = useState<ImageData[]>([]);
-  const [categories, setCategories] = useState<string[]>(["Politics", "Business", "Finance"]);
+  const [categories, setCategories] = useState<string[]>(["Politics", "Business", "Finance","Sports","Technology","Food","Tourism","Health","Crime","Education","Lifestyle","Environment"]);
   const [alertMessage, setAlertMessage] = useState<string | null>(null); //ADDED ALERT USE STATE
 
   const handleCloseAlert = () => { //Closing alert !

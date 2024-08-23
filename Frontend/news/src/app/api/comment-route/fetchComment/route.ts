@@ -17,7 +17,8 @@ export async function GET(req: NextRequest) {
                 *,
                 Users:user_id (username)
             `)
-            .eq('news_id', id);
+            .eq('news_id', id)
+            .order('posted_on', {ascending:false});
 
         if (error) throw error;
 

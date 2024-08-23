@@ -1,6 +1,9 @@
   'use client'
 
-  import React, { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import React, { useState, useEffect } from 'react';
+import jwt from 'jsonwebtoken'
+import { parseISO, formatDistanceToNow } from 'date-fns';
 
   interface username { //Added this !
     username : string;
@@ -10,6 +13,7 @@
     user_id: string;
     news_id: string;
     comment: string;
+    posted_on: Date;
     Users : username; //Added this !
   }
 
@@ -17,10 +21,24 @@
     article_id: string;
   }
 
+  interface decodedToken {
+    roles : string[]
+  }
+
   const Comments: React.FC<CommentsProps> = ({ article_id }) => {
     const [comments, setComments] = useState<Comment[]>([]);
     const [commentBody, setCommentBody] = useState('');
-    const [userId, getUserId] = useState<string>('');
+    const [userId, setUserId] = useState<string>('');
+    const [isAdmin, setIsAdmin] = useState<boolean>(false);
+    const session = useSession();
+
+    useEffect(() => {
+      if (session.data?.accessToken) {
+        const decodedToken = jwt.decode(session.data.accessToken) as decodedToken;
+        setUserId(decodedToken.roles.toString());
+        setIsAdmin(decodedToken.roles.includes('admin'));
+      }
+    }, [session.data]);
 
     const fetchUserId = async () => {
       if (userId == null) return;
@@ -33,7 +51,7 @@
         });
         const data = await response.json();
         const userIdFromData = data.userId; 
-        getUserId(userIdFromData); 
+        setUserId(userIdFromData); 
         console.log(userIdFromData, typeof userIdFromData); 
       } catch (error) {
         console.log("Error fetching comments!", error);
@@ -106,7 +124,7 @@
       fetchUserId();
     }, []);
 
-    // fetchComments(article_id);
+    
     useEffect(() => {
       fetchComments(article_id);
     }, [article_id]);
@@ -118,22 +136,6 @@
 
     return (
       <div className="p-6 bg-gray-900 min-h-screen text-whitez z-0">
-        {/* <h2 className="text-3xl font-bold mb-6">Comments</h2> */}
-        {/* <div className="flex items-center mb-8">
-          <input
-            type="text"
-            className="border rounded-l-lg p-3 flex-grow bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Add a comment..."
-            value={commentBody}
-            onChange={(event) => setCommentBody(event.target.value)}
-            required
-          />
-          <button 
-            className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-r-lg transition duration-200 ease-in-out" 
-            onClick={handleComment}
-          >
-          </button>
-        </div> */}
         <div className="flex items-center mb-8 space-x-2">
   <input
     type="text"
@@ -156,7 +158,8 @@
           <div key={comment.comment_id} className="bg-gray-800 p-4 rounded-lg">
           <p className="text-gray-200 mb-2">{comment.Users.username}</p>
           <p className="text-gray-200 mb-2">{comment.comment}</p>
-          {userId === comment.user_id ? (
+          <p className="text-gray-200 mb-1">{formatDistanceToNow(parseISO(comment.posted_on.toLocaleString()))}</p>
+          {isAdmin || userId === comment.user_id  ? (
           <button
             onClick={() => handleDelete(comment.comment_id.toString())}
             className="text-red-500 hover:text-red-600 text-sm transition duration-200 ease-in-out"

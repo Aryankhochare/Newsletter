@@ -13,20 +13,7 @@ import Footer from '@/components/navbarcomp/footer';
 import { apiLinks } from '@/utils/constants';
 import { parseISO, format } from 'date-fns';
 
-// interface Article {
-//   id: string;
-//   userId: string;
-//   userName: string;
-//   categoryId: string;
-//   categoryName: string;
-//   title: string;
-//   editorContent: string;
-//   postedOn: string;
-//   modifiedDate: string;
-//   isVerified: boolean;
-//   coverImage: string;
-//   isRejected: boolean;
-// }
+
 
 interface Article {
   id: string;
@@ -145,7 +132,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                     alt={article.title} 
                     width={180} 
                     height={100} 
-                    className='w-full h-40 object-fit' 
+                    className='w-full h-40 object-contain' 
                   />
                 </div>
               </div>

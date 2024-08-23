@@ -13,5 +13,7 @@
             public string NewsId { get; set; }
             [Column("comment")]
             public string Comment { get; set; }
+            [Column("posted_on")]
+             public DateTime PostedOn { get; set; }
         }
     }
