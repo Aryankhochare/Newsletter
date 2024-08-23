@@ -22,14 +22,45 @@ import {
   History, 
   CreditCard, 
   LogOut, 
-  SignpostBig
+  SignpostBig,
+  Trash2
 } from 'lucide-react';
 import { signOut, useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
+import jwt from 'jsonwebtoken'
+import { apiLinks } from '@/utils/constants';
+
+
 
 export default function ProfileInfo() {
   const { data: session } = useSession();
   const userRoles =  (session?.user as any)?.roles || [];
+
+  const router = useRouter()
+
+const handleDeleteAccount = async () => {
+  if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+    try {
+      if (session?.accessToken) {
+        const decodedToken = jwt.decode(session.accessToken) as { sub: string };
+        const userId = decodedToken.sub;
+      const response = await fetch(`${apiLinks.user.fetch}/${userId}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        await signOut();
+        router.push('/');
+      } else {
+        alert('Failed to delete account. Please try again.');
+      }
+    }
+    } catch (error) {
+      console.error('Error deleting account:', error);
+      alert('An error occurred while deleting your account.');
+    }
+  }
+};
+
 
   const renderMenuItems = () => {
     if (userRoles.includes('ADMIN')) {
@@ -119,7 +150,7 @@ export default function ProfileInfo() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div className="bg-white h-10 w-10 rounded-full">
-          <img src="https://i.postimg.cc/2jxbrbYd/download.png" alt="profile" width={40} height={40}/>
+          <Image src="https://i.postimg.cc/2jxbrbYd/download.png" alt="profile" width={40} height={40}/>
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-8">
@@ -130,6 +161,11 @@ export default function ProfileInfo() {
           <LogOut className="mr-2 h-4 w-4" onClick={() => signOut()} />
           <span>Log out</span>
         </DropdownMenuItem>
+        <DropdownMenuSeparator />
+  <DropdownMenuItem onClick={handleDeleteAccount} className="text-red-600">
+    <Trash2 className="mr-2 h-4 w-4" />
+    <span>Delete Account</span>
+  </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
