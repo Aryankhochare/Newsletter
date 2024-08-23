@@ -94,8 +94,7 @@
               "RelativeToolTip": "Newsletter\\Models\\NewsArticle.cs",
               "ViewState": "AQIAAA8AAAAAAAAAAAAYwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-23T09:35:12.078Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-23T09:35:12.078Z"
             },
             {
               "$type": "Document",
@@ -107,8 +106,7 @@
               "RelativeToolTip": "Newsletter\\ViewModels\\CreateCommentVM.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-23T09:32:34.455Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-23T09:32:34.455Z"
             },
             {
               "$type": "Document",
@@ -120,8 +118,7 @@
               "RelativeToolTip": "Newsletter\\Models\\Comments.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAeAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-23T09:31:18.569Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-23T09:31:18.569Z"
             },
             {
               "$type": "Document",
@@ -133,8 +130,7 @@
               "RelativeToolTip": "Newsletter\\ViewModels\\CreateUserVM.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-23T07:01:32.893Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-23T07:01:32.893Z"
             },
             {
               "$type": "Document",
@@ -146,8 +142,7 @@
               "RelativeToolTip": "Newsletter\\Models\\Users.cs",
               "ViewState": "AQIAAAoAAAAAAAAAAAAQwBcAAAAyAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-23T07:00:46.451Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-23T07:00:46.451Z"
             },
             {
               "$type": "Document",
@@ -159,8 +154,7 @@
               "RelativeToolTip": "Newsletter\\Program.cs",
               "ViewState": "AQIAADkAAAAAAAAAAAAAADQAAAASAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-22T12:21:23.026Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-22T12:21:23.026Z"
             },
             {
               "$type": "Document",
@@ -172,8 +166,7 @@
               "RelativeToolTip": "Newsletter\\ViewModels\\ArticleVM.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-22T09:49:25.286Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-22T09:49:25.286Z"
             },
             {
               "$type": "Document",
@@ -197,8 +190,7 @@
               "RelativeToolTip": "Newsletter\\Models\\Notifications.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-21T16:00:19.972Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-21T16:00:19.972Z"
             },
             {
               "$type": "Document",
@@ -234,8 +226,7 @@
               "RelativeToolTip": "Newsletter\\Controllers\\EditorController.cs",
               "ViewState": "AQIAAJ4AAAAAAAAAAAAgwHwAAABdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-21T04:09:24.96Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-21T04:09:24.96Z"
             },
             {
               "$type": "Document",
@@ -247,8 +238,7 @@
               "RelativeToolTip": "Newsletter\\Controllers\\NewsLetterController.cs",
               "ViewState": "AQIAALYAAAAAAAAAAAAgwL0AAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-20T10:06:28.458Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-20T10:06:28.458Z"
             },
             {
               "$type": "Document",
@@ -273,8 +263,7 @@
               "RelativeToolTip": "Newsletter\\Controllers\\UsersController.cs",
               "ViewState": "AQIAACEAAAAAAAAAAAAYwC8AAAAnAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-19T16:05:30.527Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-19T16:05:30.527Z"
             }
           ]
         }
