@@ -5,7 +5,6 @@ import ImageUploader from "@/components/quilleditor/ImageUploader";
 import Navbar from '@/components/navbarcomp/navbar';
 import { PenTool } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import Footer from '@/components/navbarcomp/footer';
 import { supabase } from '@/lib/supabaseClient';
 
 interface userNews {
@@ -21,12 +20,11 @@ interface userNews {
 
 export default function Home() {
   const router = useRouter();
-  const [userId, setUserId] = useState<any>(''); //User ID
+  const [userId, setUserId] = useState<any>(''); 
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [userArticles, setUserArticles] = useState<userNews[]>([]);
   const [selectedNews, setSelectedNews] = useState<userNews | null>(null); 
-
   const handleSave = (title: string, content: string) => {
     console.log('Updated news:', { title, content });
   };
@@ -50,7 +48,6 @@ export default function Home() {
       const data = await response.json();
       const userIdFromData = data.userId;
       setUserId(userIdFromData);
-      console.log('userId:', userIdFromData);
     } catch (error) {
       console.log("Error fetching comments!", error);
     }
@@ -68,6 +65,26 @@ export default function Home() {
       } else {
         setUserArticles(data || []);
       }
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      const response = await fetch('/api/newsletter', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Network response was not okay');
+      }
+      
+      await fetchUserArticles();
+    } catch (error) {
+      console.log("Error deleting articles!", error);
     }
   };
 
@@ -95,15 +112,20 @@ export default function Home() {
     setDrafted(draftArticles);
   }, [userArticles]);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleEdit = (id: string) => {
+  setIsLoading(true);
+  setSelectedNews(null);
+  setTimeout(() => {
     const newsItem = userArticles.find((item) => item.news_id === id) || null;
     if (newsItem == null) {
       alert("No news selected!");
-      setSelectedNews(null);
     } else {
       setSelectedNews(newsItem);
-      console.log(selectedNews);
-    }
+      }
+    setIsLoading(false);
+    }, 0);
   };
 
   const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({
@@ -120,11 +142,10 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100">
+    <main className="flex flex-col min-h-screen bg-gray-100">
       <div className="sticky top-0 z-50">
         <Navbar />
       </div>
-      <main className='min-h-screen'>
       <div className="flex justify-center text-center mt-4">
         <PenTool className="mr-2 h-8 w-8" />
         <span className="text-2xl text-center font-bold">Writer Workspace</span>
@@ -132,27 +153,38 @@ export default function Home() {
       <div className="w-full container mx-auto px-4 py-8 flex-grow flex items-center justify-center">
         <div className="w-full lg:w-full flex flex-col lg:flex-row">
           {/* Left Sidebar */}
-          <div className="w-full mr-1 lg:w-1/2 bg-white shadow-lg rounded-lg p-6 flex flex-col">
+          <div className="w-full lg:w-1/2 bg-white shadow-lg rounded-lg p-6 flex flex-col">
             <h2 className="text-xl font-semibold mb-4">Article Status</h2>
-            <div className="flex flex-col gap-4">
-              {/* Rejected Articles Accordion */}
-              <div className="border-b border-gray-300">
-                <button
-                  onClick={() => toggleSection('rejected')}
-                  className="flex justify-between items-center w-full py-2 text-left text-gray-800 font-medium"
-                >
-                  Review Rejected Articles
-                  <span>{openSections.rejected ? '-' : '+'}</span>
-                </button>
-                {openSections.rejected && (
-                  <div className="flex flex-col gap-4">
-                    <ul className="space-y-4">
-                      {rejected.map((unv) => (
-                        <li key={unv.news_id} className="bg-gray-100 border border-gray-300 rounded-lg p-4 flex items-center justify-between">
-                          <span className="text-gray-800 font-medium">{unv.news_title}</span>
-                          <button onClick={() => handleEdit(unv.news_id)} className="bg-black text-white px-3 py-1.5 rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black">
-                            Edit Article
-                          </button>
+              <div className="flex flex-col gap-4">
+                {/* Rejected Articles Accordion */}
+                <div className="border-b border-gray-300">
+                  <button
+                    onClick={() => toggleSection('rejected')}
+                    className="flex justify-between items-center w-full py-2 text-left text-gray-800 font-medium"
+                  >
+                    Review Rejected Articles
+                    <span>{openSections.rejected ? '-' : '+'}</span>
+                  </button>
+                  {openSections.rejected && (
+                    <div className="flex flex-col gap-4">
+                      <ul className="space-y-4">
+                        {rejected.map((unv) => (
+                          <li key={unv.news_id} className="bg-gray-100 border border-gray-300 rounded-lg p-4 flex items-center justify-between">
+                            <span className="text-gray-800 font-medium">{unv.news_title}</span>
+                            <div className="flex space-x-2">
+                            <button
+                              onClick={() => handleEdit(unv.news_id)}
+                              className="bg-black text-white px-3 py-1.5 rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black"
+                            >
+                              Edit Article
+                            </button>
+                            <button
+                              onClick={() => handleDelete(unv.news_id)}
+                              className="bg-red-600 text-white px-3 py-1.5 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out"
+                            >
+                              Delete
+                            </button>
+                          </div>
                         </li>
                       ))}
                     </ul>
@@ -195,9 +227,20 @@ export default function Home() {
                       {draft.map((unv) => (
                         <li key={unv.news_id} className="bg-gray-100 border border-gray-300 rounded-lg p-4 flex items-center justify-between">
                           <span className="text-gray-800 font-medium">{unv.news_title}</span>
-                          <button onClick={() => handleEdit(unv.news_id)} className="bg-black text-white px-3 py-1.5 rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black">
-                            Edit Article
-                          </button>
+                          <div className="flex space-x-2">
+                            <button
+                              onClick={() => handleEdit(unv.news_id)}
+                              className="bg-black text-white px-3 py-1.5 rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black"
+                            >
+                              Edit Article
+                            </button>
+                            <button
+                              onClick={() => handleDelete(unv.news_id)}
+                              className="bg-red-600 text-white px-3 py-1.5 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out"
+                            >
+                              Delete
+                            </button>
+                          </div>
                         </li>
                       ))}
                     </ul>
@@ -210,7 +253,9 @@ export default function Home() {
           <div className="w-full lg:w-full bg-white shadow-lg rounded-lg p-6 flex flex-col">
             <h2 className="text-xl font-semibold mb-4">Article Content</h2>
             <div className="flex-grow w-full h-full">
-              {selectedNews ? (
+              {isLoading ? (
+                <div>Loading...</div>
+                ) : selectedNews ? (
                 <QuillEditor
                   key={selectedNews.news_id}
                   initialId={selectedNews.news_id}
@@ -218,7 +263,7 @@ export default function Home() {
                   initialContent={selectedNews.content}
                   onSuccess={fetchUserArticles}
                 />
-              ) : (
+                ) : (
                 <QuillEditor
                   initialContent=""
                   initialTitle=""
@@ -229,9 +274,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      </main>
-      <Footer/>
-    </div>
+    </main>
   );
 }
 
