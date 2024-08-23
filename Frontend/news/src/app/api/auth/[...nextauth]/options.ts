@@ -178,7 +178,7 @@ export const authOptions: NextAuthOptions = {
           const newUser: CustomUser = {
             id: user.id,
             name: user.name,
-            email: user.email,
+            email: user.email,  
           };
   
           const createdUser = await createUser(newUser);

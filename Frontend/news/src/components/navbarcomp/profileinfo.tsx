@@ -178,7 +178,7 @@ export default function ProfileInfo() {
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-8">
-        <DropdownMenuLabel>My Account ({session?.user?.name})</DropdownMenuLabel>
+        <DropdownMenuLabel>My Account ({session?.user?.name}) ({userRoles})</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {renderMenuItems()}
         <DropdownMenuItem onClick={() => signOut()}>

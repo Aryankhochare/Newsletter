@@ -131,6 +131,11 @@ interface Notification {
   createdAt: Date;
 }
 
+interface decodedToken {
+  sub: string;
+  email: string;
+}
+
 interface NotificationProps {
   unreadCount: number;
   setUnreadNotificationCount: React.Dispatch<React.SetStateAction<number>>;
@@ -145,8 +150,9 @@ const Notification: React.FC<NotificationProps> = ({ unreadCount, setUnreadNotif
   useEffect(() => {
     const fetchNotifications = async () => {
       if (session?.accessToken) {
-        const decodedToken = jwt.decode(session.accessToken) as { sub: string };
+        const decodedToken = jwt.decode(session.accessToken) as decodedToken;
         const userId = decodedToken.sub.toString();
+        const email = decodedToken.email.toString();
         const response = await fetch(`${apiLinks.notfication.fetch}/${userId}`);
 
         const data = await response.json();

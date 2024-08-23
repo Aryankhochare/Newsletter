@@ -148,6 +148,7 @@ import {
   LogOut, 
   SignpostBig
 } from 'lucide-react';
+import { apiLinks } from '@/utils/constants';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -196,7 +197,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch('https://globalbuzz.azurewebsites.net/api/category');
+      const response = await fetch(`${apiLinks.category.fetch}`);
       const data = await response.json();
       setCategories(data);
     } catch (error) {
