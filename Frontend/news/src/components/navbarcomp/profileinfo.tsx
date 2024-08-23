@@ -43,7 +43,7 @@ const handleDeleteAccount = async () => {
     try {
       if (session?.accessToken) {
         const decodedToken = jwt.decode(session.accessToken) as { sub: string };
-        const userId = decodedToken.sub;
+        const userId = decodedToken.sub.toString();
       const response = await fetch(`${apiLinks.user.fetch}/${userId}`, {
         method: 'DELETE',
       });
